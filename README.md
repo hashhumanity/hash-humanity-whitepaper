@@ -1,4 +1,11 @@
-![Hash Humanity Logo](path/to/logo.png)
+<p align="center">
+  <img src="./logo.png" alt="Hash Humanity Logo" width="110">
+</p>
+
+<p align="center"><em>Figure 1. Hash Humanity project mark. Hash Humanity is a privately developed platform and is not affiliated with any government agency.</em></p>
+
+# Hash Humanity White Paper Repository
+Official Documentation Format Consistent with Federal Information Publications
 
 Hash Humanity White Paper Repository
 
