@@ -1,12 +1,12 @@
 Hash Humanity: A Human-Verified Social Network Utilizing Zero-Knowledge Proofs
-White Paper – Author: Marilyn [Last Name]
+White Paper – Author: Hash Humanity Developement Team
 2025
 
 1. Title Page
 Hash Humanity: A Human-Verified Framework for Authentic Digital Interaction Using World ID and Decentralized Web Architecture
 
 Prepared by:
-Marilyn [Last Name]
+Hash Humanity Development Team
 
 Date:
 2025
