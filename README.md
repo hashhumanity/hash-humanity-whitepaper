@@ -4,7 +4,7 @@
 
 <br><br>
 
-# **Hash Humanity White Paper Repository**
+# **Hash Humanity White Paper**
 
 **Prepared for Public Distribution**  
 **Technical Documentation Format Consistent with Federal Information Publications**
