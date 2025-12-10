@@ -4,10 +4,10 @@
 
 <br><br>
 
-# **Hash Humanity White Paper**
+Hash Humanity White Paper
 
-**Prepared for Public Distribution**  
-**Technical Documentation Format Consistent with Federal Information Publications**
+Prepared for Public Distribution  
+Technical Documentation Format Consistent with Federal Information Publications
 
 <br>
 
