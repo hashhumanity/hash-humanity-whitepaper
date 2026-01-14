@@ -1,265 +1,140 @@
-<div align="center">
-  <img src="./logo.png" alt="Hash Humanity Logo" width="130">
-</div>
+Hash Humanity
 
-<br>
+Human-Verified Access Layer for the Modern Internet
+Powered by World ID Zero Knowledge Proofs
+White Paper Version 1.1
 
-# Hash Humanity White Paper  
-**Version 1.0 — December 2025**
+Executive Summary
 
+Hash Humanity is a privacy-preserving human verification layer designed to restore trust, authenticity, and integrity to digital interaction. The modern internet has lost the ability to reliably distinguish real human participants from automated agents, AI-generated personas, and synthetic identities. This failure has degraded online discourse, enabled large-scale manipulation, compromised governance systems, and eroded confidence in digital communities.
 
-# Executive Summary
-Hash Humanity is a privacy‑preserving human‑verification platform designed to confirm human uniqueness without collecting or storing biometric information or personally identifiable information (PII). The system uses zero‑knowledge proofs (ZKPs) to validate that each participant represents a distinct human being while revealing no underlying identity attributes. This enables digital environments to distinguish real humans from bots, synthetic identities, and coordinated manipulation efforts without compromising user privacy.
+Existing solutions attempt to solve this problem by identifying users. Hash Humanity takes a fundamentally different approach. Instead of proving who a person is, Hash Humanity proves only that a participant is a unique real human being. This distinction allows platforms to enforce human authenticity without collecting, storing, or processing personal, biometric, or identity data.
 
-The platform operates within a non‑custodial framework, ensuring that users retain full control of their data and credentials. Hash Humanity does not issue a token, hold user assets, or collect fees. Its architecture emphasizes data minimization, cryptographic integrity, transparent rule enforcement, and interoperability with decentralized identity standards.
+Hash Humanity is not a blockchain, not a token, and not a new identity protocol. It is an application-layer access and verification system built on top of World ID’s zero-knowledge Proof of Personhood. Its purpose is to make cryptographic human verification usable, scalable, and privacy-preserving for real-world platforms.
 
-This white paper provides a comprehensive overview of the system’s verification methodology, architectural components, threat model, security and privacy considerations, economic structure, and development roadmap. It is intended to support organizations, researchers, and public institutions evaluating the platform for integration or analysis.
+1. The Problem
 
----
+Digital systems today cannot reliably distinguish between humans and machines. Automated bots generate content, influence opinions, manipulate markets, and participate in governance systems at scale. AI models can now convincingly imitate human communication. Identity farms create thousands of synthetic accounts. Together, these forces undermine the foundational assumption that a digital participant represents a real person.
 
-# 1. Purpose
-This document provides a detailed technical description of the Hash Humanity platform. It outlines the system’s verification methodology, architectural design, privacy‑preserving mechanisms, and operational considerations. The information supports analysis, research, interoperability planning, and evaluation by organizations that may interact with or integrate the platform.
+Traditional identity-based solutions attempt to address this by requiring government identification, biometric scanning, or centralized identity providers. While these methods can increase confidence in uniqueness, they introduce significant risks. They require users to surrender sensitive personal information, create centralized databases that become high-value attack targets, and enable surveillance, tracking, and long-term profiling.
 
-This publication does not establish policy, regulatory interpretation, or compliance determinations.
+The core issue is that digital platforms do not need identity. They need authenticity. They need to know that each participant represents a real, unique human being — nothing more.
 
----
+2. Hash Humanity’s Approach
 
-# 2. Scope
-This documentation covers:
+Hash Humanity provides a verification layer that allows a user to prove their humanity without revealing any personal information. The system integrates World ID’s zero-knowledge Proof of Personhood, enabling users to generate cryptographic proofs locally on their device. These proofs demonstrate membership in the global set of verified humans without disclosing identity, biometrics, or any identifying attributes.
 
-- Verification methodology and zero‑knowledge proof processes  
-- Architectural components and data flows  
-- Threat model and risk‑mitigation objectives  
-- Security and privacy considerations  
-- Economic and operational constraints  
-- Intended use cases  
-- Development roadmap  
-- References and supporting research  
+Hash Humanity validates these proofs and issues short-lived access tokens that grant entry into human-verified environments. At no point does Hash Humanity store biometric data, identity attributes, or persistent user profiles. The system operates entirely on cryptographic assurance rather than trust in stored information.
 
-This document does not prescribe operational requirements for external entities.
+This architecture enables platforms to build communities, governance systems, financial interactions, and communication environments that are provably human while remaining privacy-preserving.
 
----
+3. Design Principles
 
-# 3. System Overview
-Hash Humanity is a privacy‑preserving human‑verification platform designed to confirm human uniqueness without collecting or storing biometric data or personally identifiable information. The system uses zero‑knowledge proofs to validate that a user is a unique human participant while revealing no underlying identity attributes.
+Hash Humanity is built around strict architectural principles. The system minimizes data collection, minimizes trust requirements, and minimizes attack surfaces. All sensitive computation occurs on the user’s device. Backend services remain stateless and privacy-preserving. No persistent identifiers are created. No cross-session tracking is possible. Every interaction is independently verified through cryptographic proof.
 
-The platform maintains strict separation between:
+The goal is not merely compliance with privacy regulations, but the elimination of privacy risk by design.
 
-- Verification functions (cryptographic, non‑identifying)  
-- User‑generated content (non‑custodial, user‑owned)  
+4. System Overview
 
-Hash Humanity aims to reduce the influence of automated agents, synthetic identities, and coordinated manipulation within digital communication environments.
+When a user interacts with Hash Humanity, they authenticate using the World ID widget. This process produces a zero-knowledge proof on the user’s device. The proof demonstrates that the user is a member of the verified human set without revealing which member they are.
 
----
+The proof is submitted to the Hash Humanity backend, where it is validated using Firebase Cloud Functions. The system checks proof integrity and verifies that the associated nullifier has not been previously used for the same action. If the proof is valid, the system issues a short-lived access token that allows the user to enter human-verified environments.
 
-# 4. Zero‑Knowledge Verification Flow
+The backend stores only hashed nullifiers for replay protection. These hashes cannot be reverse-engineered or linked back to any individual.
 
-## 4.1 Proof Generation
-A one‑time verification event produces a cryptographic commitment representing a unique human presence. No biometric data, images, or personal identifiers are captured.
+5. Cryptographic Foundations
 
-## 4.2 Prover Construction
-The user’s device locally generates a proof that:
+Hash Humanity relies on the Semaphore protocol provided by World ID. Semaphore combines zk-SNARKs, Merkle tree membership proofs, and nullifiers to enable anonymous yet verifiable participation.
 
-- A valid verification occurred  
-- The resulting commitment is unique  
-- No identity attributes are disclosed  
+The Merkle tree represents the global set of verified humans. Each user occupies a leaf in the tree. When a user generates a proof, they demonstrate membership in the tree without revealing their leaf position. This preserves anonymity while ensuring uniqueness.
 
-## 4.3 Verification
-The platform validates the proof’s mathematical correctness. The verifier learns only:
+Nullifiers prevent Sybil attacks. Each action produces a unique nullifier that cannot be reused. This ensures that one human cannot perform the same restricted action multiple times under different identities.
 
-- The user is a unique human  
-- The proof is not linked to any other identity  
+Because all cryptographic computation occurs locally, Hash Humanity never handles biometric data or identity attributes.
 
-## 4.4 Credential Issuance
-A non‑custodial credential is issued to the user and stored locally or in a decentralized identity wallet. The platform never holds or stores this credential.
+6. Frontend Architecture
 
----
+The frontend is built using React and Vite. These technologies were chosen for their performance, modularity, and compatibility with cryptographic workflows in the browser.
 
-# 5. Threat Model
+The frontend integrates the World ID widget, orchestrates proof generation, manages ephemeral session data, and communicates with backend validation services. No user accounts, passwords, or personal information are required. The user experience is intentionally simple: verify once and gain access.
 
-## 5.1 Automated and Synthetic Actors
-- Bot networks  
-- Large‑scale Sybil attacks  
-- AI‑generated synthetic identities  
+Sensitive operations remain isolated to the client environment, ensuring that privacy boundaries are preserved.
 
-## 5.2 Manipulation of Digital Communication
-- Coordinated influence operations  
-- Artificial amplification  
-- Identity spoofing  
+7. Backend Architecture
 
-## 5.3 Fraud and Abuse
-- Duplicate account creation  
-- Credential sharing  
-- Unauthorized access attempts  
+The backend is implemented using Firebase and Cloudflare.
 
-## 5.4 Privacy and Data Exploitation
-- Centralized biometric storage  
-- Identity correlation across platforms  
-- Surveillance‑driven profiling  
+Firebase Cloud Functions validate proofs, verify nullifiers, and issue short-lived access tokens. Firestore stores only hashed nullifiers required to prevent replay attacks. Firebase Authentication provides token infrastructure without maintaining user identity.
 
-The system is not designed to prevent endpoint compromise, device‑level malware, or out‑of‑band social engineering.
+Cloudflare provides global routing, DDoS protection, bot mitigation, and Web Application Firewall capabilities. Cloudflare Workers may perform edge validation and rate limiting to reduce backend load. Cloudflare WebRTC enables encrypted peer-to-peer audio communication.
 
----
+This hybrid architecture ensures global scalability, resilience, and performance while maintaining strict privacy guarantees.
 
-# 6. Intended Use Cases
-Hash Humanity supports environments requiring human uniqueness without identity disclosure:
+8. Voice Room
 
-- Social platforms seeking to reduce bot activity  
-- Public‑sector communication systems requiring verified human participation  
-- Online governance and community voting (eligibility verification only)  
-- Marketplaces and peer‑to‑peer networks needing fraud‑resistant identity assurance  
-- Decentralized applications (dApps) requiring Sybil‑resistant participation  
-- Research environments studying digital identity integrity  
+Voice Room is a real-time audio communication environment restricted to verified humans. It uses Cloudflare WebRTC to establish encrypted peer-to-peer audio channels between participants.
 
-The platform is not intended for law‑enforcement identification, biometric matching, or regulatory KYC/AML processes.
+No audio is recorded, stored, or analyzed. The system exists solely as a human-verified communication layer. Communities can host discussions, debates, governance sessions, or social interactions without fear of bots, impersonators, or AI voices.
 
----
+9. Pulse: Peer-to-Peer Crypto Transfers
 
-# 7. Document Access
-The following materials are available through this repository:
+Pulse enables direct crypto transfers between verified humans. Hash Humanity does not custody funds, store wallet addresses, or log transactions. Its role is limited to verifying that both participants are unique humans at the moment of interaction.
 
-- White Paper Version 1.0  
-- Technical documentation and supporting materials  
-- Supplemental references and research citations  
+Transfers occur directly through the user’s chosen blockchain or wallet infrastructure. This creates a new trust primitive for decentralized finance, where authenticity is guaranteed without compromising privacy.
 
-All documents are publicly accessible without restriction.
+10. Security Model
 
----
+Hash Humanity is designed around minimizing trust. There is no identity database to breach. There are no biometric records to steal. There are no user profiles to correlate.
 
-# 8. System Architecture
+All backend services are stateless. Nullifiers prevent replay attacks. Cloudflare protects against network-level abuse. The cryptographic guarantees of World ID ensure uniqueness without disclosure.
 
-## 8.1 Human‑Verification Module
-- Zero‑knowledge proof generation  
-- Uniqueness validation  
-- Non‑custodial credential issuance  
+The system reduces risk by eliminating sensitive data entirely.
 
-## 8.2 Content Distribution and Communication Services
-- Real‑time messaging  
-- Event propagation  
-- Rate‑limiting and abuse‑prevention controls  
+11. Privacy and Compliance
 
-## 8.3 User Profile and Media Storage Systems
-- User‑owned data  
-- Non‑custodial storage integrations  
-- Optional decentralized storage support  
+Hash Humanity is compliant with GDPR, CCPA, and global privacy regulations by design. Because no personal data is collected, stored, or processed, regulatory risk is inherently minimized.
 
-## 8.4 Notification and Event‑Handling Services
-- Subscription‑based event routing  
-- Localized alerting mechanisms  
+Users cannot be tracked across sessions. No behavioral profiles can be constructed. No identity information exists within the system.
 
-## 8.5 Peer‑to‑Peer Value Transfer
-- Direct user‑to‑user transactions  
-- No custodial wallet services  
-- No platform‑issued token  
+Privacy is not a policy. It is an architectural consequence.
 
-## 8.6 Access‑Control Enforcement
-- Rule‑based security  
-- Transparent enforcement logs  
-- Minimal data exposure  
+12. Applications
 
----
+Hash Humanity can be used for human-verified social platforms, governance voting systems, DAO participation, research studies, financial interaction gating, and AI-safe communication environments. Any system that requires authentic human participation without identity exposure can integrate Hash Humanity.
 
-# 9. Security and Privacy Considerations
-The platform adheres to widely recognized principles:
+13. Roadmap
 
-- Data minimization  
-- Least privilege access  
-- Separation of duties  
-- Transparent rule enforcement  
-- Non‑custodial user control  
-- Cryptographic validation without identity disclosure  
+Hash Humanity begins as a centralized application layer built on Firebase. Future phases include federated verification endpoints, open-source validation libraries, and ultimately a decentralized verification network. Each phase reduces centralization while preserving cryptographic guarantees.
 
-Security controls include:
+14. Governance
 
-- Input sanitization  
-- Rate‑limiting  
-- Audit logging  
-- Cryptographic integrity checks  
-- Defense‑in‑depth design patterns  
+As the system matures, governance will transition toward transparent, auditable frameworks aligned with decentralization and community oversight.
 
-No biometric data or PII is collected or retained.
+15. License
 
----
+Hash Humanity core components are released under the MIT License.
 
-# 10. Economic Structure
-Hash Humanity does not:
+16. World App Mini-App Compatibility
 
-- Issue a platform token  
-- Operate custodial financial services  
-- Collect fees  
-- Hold or manage user assets  
+Hash Humanity is designed to operate within WebView environments such as the World App Mini-App ecosystem. The system requires no persistent storage, no background processes, and no platform-specific dependencies, making it fully compatible with Mini-App constraints.
 
-All value transfers occur directly between users.
+17. Philosophy
 
-The economic model is designed to:
+Humanity should be provable without being traceable.
+Trust should be mathematical.
+Identity should remain private.
 
-- Avoid speculative behavior  
-- Minimize regulatory exposure  
-- Support user autonomy  
-- Reduce attack surface  
+Conclusion
 
----
+Hash Humanity restores authenticity to digital interaction without creating a surveillance system. It proves humanity, not identity. It replaces trust with cryptography. It enables human-verified digital spaces at global scale.
 
-# 11. Development Roadmap
+Footer
 
-## Short‑Term
-- Reliability and performance enhancements  
-- Expanded decentralized identity (DID) support  
+Hash Humanity
+Privacy-preserving human verification layer for the modern internet
 
-## Mid‑Term
-- Interoperability with third‑party systems  
-- Strengthened audit and security controls  
+Powered by World ID zero knowledge proofs
 
-## Long‑Term
-- Additional non‑custodial economic features  
-- Advanced ZKP‑based verification methods  
+Built with React, Vite, Firebase, and Cloudflare
 
----
-
-# 12. Limitations
-This documentation does not:
-
-- Provide operational guarantees  
-- Establish compliance determinations  
-- Serve as a regulatory filing  
-- Represent a risk assessment for external organizations  
-- Create obligations for government use or adoption  
-
-Organizations must conduct independent evaluations before relying on the system for mission‑critical or regulated environments.
-
----
-
-# 13. Glossary
-**Zero‑Knowledge Proof (ZKP):** A cryptographic method allowing one party to prove a statement is true without revealing underlying data.  
-**Non‑Custodial:** A system where users retain full control of their data or assets.  
-**Decentralized Identifier (DID):** A self‑owned, cryptographically verifiable digital identifier.  
-**Sybil Attack:** A scenario where one actor creates many fake identities to manipulate a system.  
-**Human Uniqueness:** The assurance that each participant represents a distinct human being.  
-
----
-
-# 14. References
-References include publicly available standards and research related to:
-
-- Zero‑knowledge proofs  
-- Identity verification  
-- Decentralized identifiers  
-- Distributed systems  
-- Cryptographic mechanisms  
-- Non‑custodial architectures  
-
----
-
-# 15. Contact
-For inquiries regarding this documentation:
-
-**Email:** support@hashhumanity.world  
-
-Public communication channels are available for general questions.
-
----
-
-# 16. Current Version
-**White Paper Version 1.0**  
-**Published December 2025**
-
+Contact: support@hashhumanity.world
