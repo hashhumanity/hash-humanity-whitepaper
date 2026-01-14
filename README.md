@@ -1,3 +1,18 @@
+<p align="center">
+  <img src="logo.png" alt="Hash Humanity Logo" width="180"/>
+</p>
+
+<h1 align="center">Hash Humanity</h1>
+
+<p align="center">
+  <strong>Human-Verified Access Layer for the Modern Internet</strong><br/>
+  Powered by World ID Zero Knowledge Proofs
+</p>
+
+<p align="center">
+  <em>White Paper – Version 1.1</em>
+</p>
+
 Hash Humanity
 
 Human-Verified Access Layer for the Modern Internet
