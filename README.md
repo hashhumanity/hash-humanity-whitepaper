@@ -66,20 +66,47 @@ The Merkle tree represents the global set of verified humans. Each user occupies
 Nullifiers prevent Sybil attacks. Each action produces a unique nullifier that cannot be reused. This ensures that one human cannot perform the same restricted action multiple times under different identities.
 
 Because all cryptographic computation occurs locally, Hash Humanity never handles biometric data or identity attributes.
+### Proof Generation Flow
 
 ```mermaid
-graph TD
-    A[User Device] --> B[World ID Widget]
-    B --> C[Generate zk-SNARK Proof]
-    C --> D[Include Merkle Path & Root]
-    D --> E[Send Proof + Nullifier]
-    E --> F[Hash Humanity Backend]
-    F --> G[Verify Proof Against Merkle Root]
-    G --> H{Nullifier Used?}
-    H -- No --> I[Store Hashed Nullifier]
-    I --> J[Issue Short-Lived Access Token]
-    H -- Yes --> K[Reject Request]
+flowchart TD
+
+    %% ====== SUPPORTED COLOR CLASSES ======
+    classDef device fill:#ffffff,stroke:#000000,color:#000000;
+    classDef backend fill:#000000,stroke:#ff0000,color:#ffffff;
+    classDef platform fill:#ff0000,stroke:#000000,color:#ffffff;
+    classDef decision fill:#ffffff,stroke:#ff0000,color:#000000;
+
+    %% ====== NODES ======
+    A[Start Verification]
+    B[World ID Widget]
+    C[Generate zk-SNARK Proof]
+    D[Include Merkle Path & Root]
+    E[Create Nullifier]
+
+    F[Submit Proof + Nullifier]
+    G[Verify Proof Against Merkle Root]
+    H{Nullifier Used?}
+    I[Store Hashed Nullifier]
+    J[Issue Access Token]
+    K[Reject Request]
+
+    L[Access Human-Only Environment]
+
+    %% ====== FLOWS ======
+    A --> B --> C --> D --> E --> F
+    F --> G --> H
+    H -- No --> I --> J --> L
+    H -- Yes --> K
+
+    %% ====== APPLY CLASSES ======
+    class A,B,C,D,E device;
+    class F,G,I,J backend;
+    class L platform;
+    class H decision;
 ```
+
+
 
 
 6. Frontend Architecture
@@ -167,4 +194,17 @@ Powered by World ID zero knowledge proofs
 
 Built with React, Vite, Firebase, and Cloudflare
 
-Contact: support@hashhumanity.world
+Contact: support@hashhumanity.world<hr style="border: 1px solid #ff0000;"/>
+
+<hr style="border: 1px solid #ff0000;"/>
+
+<p align="center" style="color:#000000;">
+  <strong style="color:#ff0000;">Hash Humanity</strong><br/>
+  <span style="color:#000000;">Human‑Verified Access Layer for the Modern Internet</span><br/>
+  <span style="color:#ff0000;">Powered by World ID Zero‑Knowledge Proofs</span>
+</p>
+
+<p align="center" style="color:#000000;">
+  <em>© 2026 Hash Humanity — Privacy by Design</em>
+</p>
+
