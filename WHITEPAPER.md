@@ -74,3 +74,121 @@ flowchart TD
     E --> F[Hashed Nullifier Store]
     D --> G[Short-Lived Access Token]
     G --> H[Human-Verified Platform Access]
+---
+
+## Cryptographic Foundations
+
+Hash Humanity relies on the Semaphore protocol provided by World ID. Semaphore combines zk-SNARKs, Merkle tree membership proofs, and nullifiers to enable anonymous yet verifiable participation.
+
+Nullifiers prevent Sybil attacks. Each action produces a unique nullifier that cannot be reused.
+
+All cryptographic computation occurs locally.
+
+---
+
+## Frontend Architecture
+
+The frontend is built using React and Vite. It integrates the World ID widget, orchestrates proof generation, manages ephemeral session data, and communicates with backend validation services.
+
+No user accounts or personal data are required.
+
+---
+
+## Backend Architecture
+
+The backend uses Firebase and Cloudflare.
+
+Firebase Cloud Functions validate proofs and issue tokens. Firestore stores only hashed nullifiers. Firebase Authentication provides token infrastructure without identity storage.
+
+Cloudflare provides routing, DDoS protection, WAF, and encrypted WebRTC audio transport.
+
+---
+
+## Voice Room
+
+Voice Room is a real-time audio environment restricted to verified humans using Cloudflare WebRTC. No audio is stored, recorded, or analyzed.
+
+---
+
+## Pulse: Peer-to-Peer Crypto Transfers
+
+Pulse enables crypto transfers between verified humans without custody, storage, or logging of wallets.
+
+Hash Humanity verifies only human uniqueness at the moment of interaction.
+
+---
+
+## Security Model
+
+There is no identity database to breach. No biometric records. No user profiles.
+
+Nullifiers prevent replay attacks. Backend services remain stateless.
+
+---
+
+## Privacy and Compliance
+
+Hash Humanity is compliant with GDPR, CCPA, and global privacy regulations by design. No personal data is collected or stored.
+
+Privacy is an architectural outcome.
+
+---
+
+## Applications
+
+- Human-verified social platforms  
+- Governance voting systems  
+- DAO participation  
+- Research studies  
+- Financial interaction gating  
+- AI-safe communication environments  
+
+---
+
+## Roadmap
+
+Initial deployment uses Firebase. Future phases introduce federated and decentralized validation networks.
+
+---
+
+## Governance
+
+Governance will transition toward transparent, auditable community oversight.
+
+---
+
+## License
+
+MIT License.
+
+---
+
+## World App Mini-App Compatibility
+
+Hash Humanity is designed to operate within World App Mini-App WebView constraints without persistent storage or background processes.
+
+---
+
+## Philosophy
+
+Humanity should be provable without being traceable.  
+Trust should be mathematical.  
+Identity should remain private.
+
+---
+
+## Conclusion
+
+Hash Humanity restores authenticity to digital interaction without surveillance. It proves humanity, not identity.
+
+---
+
+### Hash Humanity  
+
+Privacy-preserving human verification layer for the modern internet  
+
+Powered by World ID zero-knowledge proofs  
+
+Built with React, Vite, Firebase, and Cloudflare  
+
+Contact: support@hashhumanity.world
