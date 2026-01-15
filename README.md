@@ -67,6 +67,21 @@ Nullifiers prevent Sybil attacks. Each action produces a unique nullifier that c
 
 Because all cryptographic computation occurs locally, Hash Humanity never handles biometric data or identity attributes.
 
+```mermaid
+graph TD
+    A[User Device] --> B[World ID Widget]
+    B --> C[Generate zk-SNARK Proof]
+    C --> D[Include Merkle Path & Root]
+    D --> E[Send Proof + Nullifier]
+    E --> F[Hash Humanity Backend]
+    F --> G[Verify Proof Against Merkle Root]
+    G --> H{Nullifier Used?}
+    H -- No --> I[Store Hashed Nullifier]
+    I --> J[Issue Short-Lived Access Token]
+    H -- Yes --> K[Reject Request]
+```
+
+
 6. Frontend Architecture
 
 The frontend is built using React and Vite. These technologies were chosen for their performance, modularity, and compatibility with cryptographic workflows in the browser.
