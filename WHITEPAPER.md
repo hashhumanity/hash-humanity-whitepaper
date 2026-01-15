@@ -70,6 +70,8 @@ flowchart TD
     E --> F[Hashed Nullifier Store]
     D --> G[Short-Lived Access Token]
     G --> H[Human-Verified Platform Access]
+
+
 Cryptographic Foundations
 
 Hash Humanity relies on the Semaphore protocol provided by World ID. Semaphore combines zk-SNARKs, Merkle tree membership proofs, and nullifiers to enable anonymous yet verifiable participation.
