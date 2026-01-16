@@ -1,485 +1,960 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<title>Hash Humanity White Paper</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Hash Humanity White Paper v1.1</title>
+  <meta name="description" content="Hash Humanity is a privacy-preserving human identity and trust layer powered by World ID zero-knowledge proofs." />
 
-<style>
-  :root{
-    --bg:#000;
-    --panel:#0a0a0a;
-    --panel2:#070707;
-    --ink:#fff;
-    --muted:#d7d7d7;
-    --muted2:#b5b5b5;
-    --line:rgba(255,255,255,.14);
-    --red:#ff2b2b;
-    --red2:#ff4d4d;
-    --radius:14px;
-    --shadow: 0 18px 55px rgba(0,0,0,.55);
-  }
+  <style>
+    :root{
+      --bg:#000000;
+      --panel:#0b0b0b;
+      --panel2:#070707;
+      --ink:#ffffff;
+      --muted:rgba(255,255,255,.82);
+      --muted2:rgba(255,255,255,.66);
+      --line:rgba(255,255,255,.14);
+      --line2:rgba(255,255,255,.10);
+      --red:#ff0000;
+      --red2:#ff2b2b;
+      --radius:18px;
+      --shadow: 0 18px 60px rgba(0,0,0,.62);
+      --shadow2: 0 10px 30px rgba(0,0,0,.55);
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    }
 
-  *{ box-sizing:border-box; }
-  body{
-    margin:0;
-    background: radial-gradient(900px 540px at 20% 0%, rgba(255,43,43,.15), transparent 60%),
-                radial-gradient(700px 480px at 90% 10%, rgba(255,255,255,.08), transparent 58%),
-                linear-gradient(180deg, #000, #04040a);
-    color:var(--ink);
-    font-family: Arial, Helvetica, sans-serif;
-  }
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; scroll-behavior:smooth; }
 
-  a{ color: var(--red2); text-decoration:none; }
-  a:hover{ text-decoration:underline; }
+    body{
+      margin:0;
+      font-family: var(--sans);
+      color: var(--ink);
+      background:
+        radial-gradient(1000px 620px at 18% 0%, rgba(255,0,0,.20), transparent 60%),
+        radial-gradient(780px 520px at 88% 10%, rgba(255,255,255,.08), transparent 58%),
+        linear-gradient(180deg, #000000, #04040a);
+    }
 
-  .container{
-    max-width:1100px;
-    margin:auto;
-    padding:42px 18px 70px;
-  }
+    a{ color: var(--red2); text-decoration:none; }
+    a:hover{ text-decoration:underline; }
 
-  .topbar{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:14px;
-    flex-wrap:wrap;
-    margin-bottom:26px;
-  }
+    .wrap{
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 34px 18px 90px;
+    }
 
-  .brand{
-    display:flex;
-    align-items:center;
-    gap:14px;
-  }
+    /* Hero */
+    .hero{
+      position:relative;
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.02));
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      isolation:isolate;
+    }
 
-  .brand img{
-    width:56px;
-    height:56px;
-    object-fit:contain;
-    border-radius:10px;
-    border:1px solid rgba(255,255,255,.10);
-    background: rgba(0,0,0,.35);
-    padding:8px;
-  }
+    .hero::before{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      background:
+        radial-gradient(900px 320px at 50% 0%, rgba(255,0,0,.20), transparent 65%),
+        radial-gradient(700px 260px at 15% 20%, rgba(255,255,255,.06), transparent 70%);
+      pointer-events:none;
+      z-index:0;
+    }
 
-  .brandTitle{
-    display:flex;
-    flex-direction:column;
-    gap:3px;
-  }
+    /* Subtle scan line that moves */
+    .hero::after{
+      content:"";
+      position:absolute;
+      left:-20%;
+      right:-20%;
+      top:-40%;
+      height: 50%;
+      background: linear-gradient(90deg, transparent, rgba(255,0,0,.10), transparent);
+      transform: rotate(8deg);
+      animation: scan 6.5s linear infinite;
+      pointer-events:none;
+      z-index:0;
+      filter: blur(0.2px);
+    }
 
-  .brandTitle .name{
-    font-size:18px;
-    font-weight:700;
-    letter-spacing:.2px;
-  }
+    @keyframes scan{
+      0%{ transform: translateY(-40%) rotate(8deg); opacity: .2; }
+      30%{ opacity: .35; }
+      60%{ opacity: .22; }
+      100%{ transform: translateY(220%) rotate(8deg); opacity: .2; }
+    }
 
-  .brandTitle .tag{
-    font-size:12.5px;
-    color: rgba(255,255,255,.72);
-  }
+    .heroInner{
+      position:relative;
+      padding: 22px 20px 18px;
+      z-index:1;
+    }
 
-  .navlinks{
-    display:flex;
-    gap:10px;
-    flex-wrap:wrap;
-  }
+    .topRow{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      flex-wrap:wrap;
+    }
 
-  .pillLink{
-    display:inline-flex;
-    align-items:center;
-    padding:8px 12px;
-    border-radius:999px;
-    border:1px solid var(--line);
-    background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
-    color: rgba(255,255,255,.92);
-    font-size:12.5px;
-    box-shadow: 0 10px 26px rgba(0,0,0,.35);
-  }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:14px;
+    }
 
-  h1{
-    margin: 10px 0 6px;
-    font-size: 34px;
-    color: var(--red);
-    letter-spacing:.2px;
-  }
+    .logoBox{
+      width:66px;
+      height:66px;
+      border-radius: 18px;
+      border:1px solid rgba(255,255,255,.16);
+      background: rgba(0,0,0,.38);
+      box-shadow: var(--shadow2);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:10px;
+      position:relative;
+      overflow:hidden;
+    }
 
-  .subtitle{
-    margin:0 0 18px;
-    color: rgba(255,255,255,.78);
-    font-size: 15.5px;
-    line-height:1.55;
-    max-width: 920px;
-  }
+    .logoBox::before{
+      content:"";
+      position:absolute;
+      inset:-1px;
+      background: radial-gradient(180px 140px at 30% 20%, rgba(255,0,0,.18), transparent 60%);
+      pointer-events:none;
+    }
 
-  .meta{
-    display:flex;
-    gap:10px;
-    flex-wrap:wrap;
-    margin: 12px 0 22px;
-  }
+    .logoBox img{
+      width:100%;
+      height:100%;
+      object-fit:contain;
+      display:block;
+      position:relative;
+      z-index:1;
+    }
 
-  .meta span{
-    display:inline-flex;
-    gap:8px;
-    align-items:center;
-    padding:8px 12px;
-    border-radius:999px;
-    border:1px solid var(--line);
-    background: rgba(0,0,0,.25);
-    color: rgba(255,255,255,.86);
-    font-size:12.5px;
-  }
+    .brandText{
+      display:flex;
+      flex-direction:column;
+      gap:4px;
+    }
 
-  .dot{
-    width:9px;
-    height:9px;
-    border-radius:50%;
-    background: var(--red);
-    box-shadow: 0 0 0 4px rgba(255,43,43,.13);
-  }
+    .brandText .name{
+      font-size:18px;
+      font-weight:900;
+      letter-spacing:.2px;
+    }
 
-  .section{
-    margin: 22px 0 26px;
-    padding: 18px 18px 16px;
-    border-radius: var(--radius);
-    border: 1px solid var(--line);
-    background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
-    box-shadow: var(--shadow);
-  }
+    .brandText .tag{
+      font-size:13px;
+      color: rgba(255,255,255,.72);
+      line-height:1.25;
+    }
 
-  h2{
-    margin: 0 0 12px;
-    font-size: 18px;
-    letter-spacing:.35px;
-    text-transform: uppercase;
-    color: rgba(255,255,255,.94);
-  }
+    .navPills{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
 
-  p{
-    margin: 0 0 12px;
-    color: rgba(255,255,255,.84);
-    font-size: 15.5px;
-    line-height: 1.7;
-  }
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border:1px solid var(--line);
+      background: rgba(0,0,0,.26);
+      color: rgba(255,255,255,.90);
+      font-size:12.5px;
+      white-space:nowrap;
+      box-shadow: 0 10px 24px rgba(0,0,0,.35);
+    }
 
-  ul{
-    margin: 10px 0 0 18px;
-    color: rgba(255,255,255,.84);
-    line-height: 1.65;
-    font-size: 15px;
-  }
+    .dot{
+      width:9px; height:9px;
+      border-radius:50%;
+      background: var(--red);
+      box-shadow: 0 0 0 4px rgba(255,0,0,.14);
+    }
 
-  .graph-box{
-    background: radial-gradient(900px 380px at 50% 0%, rgba(255,43,43,.11), transparent 60%),
-                linear-gradient(180deg, rgba(0,0,0,.30), rgba(0,0,0,.12));
-    border:1px solid rgba(255,255,255,.10);
-    border-radius: 14px;
-    padding: 14px;
-    margin: 14px 0 10px;
-    overflow-x:auto;
-  }
+    h1{
+      margin: 16px 0 8px;
+      font-size: clamp(28px, 3.6vw, 44px);
+      letter-spacing:.2px;
+    }
 
-  .caption{
-    margin-top:8px;
-    font-size: 12.5px;
-    color: rgba(255,255,255,.70);
-    line-height:1.45;
-  }
+    .subtitle{
+      margin:0 0 10px;
+      max-width: 980px;
+      color: var(--muted);
+      font-size: 15.8px;
+      line-height:1.7;
+    }
 
-  /* SVG styles */
-  svg{ width:100%; height:auto; display:block; }
-  .node{
-    fill: rgba(0,0,0,.46);
-    stroke: rgba(255,255,255,.25);
-    stroke-width: 1.2;
-  }
-  .nodeRed{
-    stroke: rgba(255,43,43,.92);
-    stroke-width: 1.7;
-  }
-  .label{
-    fill: rgba(255,255,255,.92);
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: .2px;
-  }
-  .sublabel{
-    fill: rgba(255,255,255,.74);
-    font-size: 11.5px;
-    font-weight: 600;
-  }
-  .mono{ font-family: "Courier New", Courier, monospace; }
-  .arrow{
-    stroke: rgba(255,255,255,.55);
-    stroke-width: 1.6;
-    fill:none;
-    marker-end: url(#ah);
-  }
-  .arrowRed{
-    stroke: rgba(255,43,43,.92);
-    stroke-width: 1.8;
-    fill:none;
-    marker-end: url(#ahr);
-  }
+    .meta{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top: 10px;
+    }
 
-  .footer{
-    margin-top: 26px;
-    padding: 18px 18px 16px;
-    border-radius: var(--radius);
-    border: 1px solid var(--line);
-    background: rgba(0,0,0,.25);
-    color: rgba(255,255,255,.72);
-  }
+    .meta span{
+      display:inline-flex;
+      gap:8px;
+      align-items:center;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--line2);
+      background: rgba(0,0,0,.22);
+      color: rgba(255,255,255,.82);
+      font-size: 12.5px;
+    }
 
-  .footerGrid{
-    display:grid;
-    grid-template-columns: 1fr;
-    gap: 14px;
-  }
-  @media (min-width: 900px){
-    .footerGrid{ grid-template-columns: 1fr 1fr; }
-  }
+    /* Layout */
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      margin-top: 16px;
+    }
 
-  .footer h3{
-    margin:0 0 8px;
-    font-size: 14px;
-    color: rgba(255,255,255,.92);
-    letter-spacing:.25px;
-    text-transform: uppercase;
-  }
+    @media (min-width: 980px){
+      .grid{
+        grid-template-columns: 320px 1fr;
+        align-items:start;
+      }
+    }
 
-  .small{
-    font-size: 12.5px;
-    line-height: 1.55;
-    color: rgba(255,255,255,.70);
-  }
+    /* TOC */
+    .toc{
+      border: 1px solid var(--line);
+      background: rgba(0,0,0,.26);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 14px 14px 12px;
+      position: sticky;
+      top: 14px;
+      overflow:hidden;
+      isolation:isolate;
+    }
 
-  .linkList{
-    display:flex;
-    flex-direction:column;
-    gap:7px;
-    font-size: 13px;
-  }
+    .toc::before{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      background: radial-gradient(420px 220px at 30% 10%, rgba(255,0,0,.10), transparent 60%);
+      pointer-events:none;
+      z-index:0;
+    }
 
-  .legal{
-    margin-top: 12px;
-    padding-top: 12px;
-    border-top: 1px solid rgba(255,255,255,.10);
-  }
+    .tocInner{ position:relative; z-index:1; }
 
-  .copyright{
-    margin-top: 10px;
-    font-size: 12px;
-    color: rgba(255,255,255,.55);
-  }
-</style>
+    .toc h2{
+      margin:0 0 10px;
+      font-size:13px;
+      text-transform: uppercase;
+      letter-spacing:.35px;
+      color: rgba(255,255,255,.92);
+    }
+
+    .toc a{
+      display:block;
+      padding: 7px 8px;
+      border-radius: 12px;
+      color: rgba(255,255,255,.84);
+      font-size: 13px;
+      border:1px solid transparent;
+    }
+
+    .toc a:hover{
+      text-decoration:none;
+      border-color: rgba(255,0,0,.50);
+      background: rgba(255,0,0,.07);
+    }
+
+    /* Cards */
+    .card{
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 18px 18px 16px;
+      position:relative;
+      overflow:hidden;
+      isolation:isolate;
+    }
+
+    /* Tiny red edge glow */
+    .card::before{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      background: radial-gradient(480px 180px at 20% 0%, rgba(255,0,0,.10), transparent 65%);
+      pointer-events:none;
+      z-index:0;
+    }
+
+    .cardInner{ position:relative; z-index:1; }
+
+    .card h2{
+      margin:0 0 12px;
+      font-size: 16px;
+      letter-spacing:.35px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.94);
+    }
+
+    .card p{
+      margin:0 0 12px;
+      color: rgba(255,255,255,.86);
+      font-size: 15.6px;
+      line-height:1.7;
+    }
+
+    /* Figure */
+    .figure{
+      border:1px solid rgba(255,255,255,.12);
+      border-radius: 16px;
+      padding: 12px;
+      background:
+        radial-gradient(900px 360px at 50% 0%, rgba(255,0,0,.12), transparent 60%),
+        linear-gradient(180deg, rgba(0,0,0,.32), rgba(0,0,0,.12));
+      overflow-x:auto;
+    }
+
+    .caption{
+      margin-top:10px;
+      font-size:12.5px;
+      color: rgba(255,255,255,.72);
+      line-height:1.45;
+    }
+
+    .note{
+      margin-top:10px;
+      padding: 10px 12px;
+      border-radius: 14px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.24);
+      color: rgba(255,255,255,.70);
+      font-size:12.5px;
+      line-height:1.55;
+    }
+
+    /* Footer */
+    .footer{
+      margin-top: 16px;
+      border:1px solid var(--line);
+      background: rgba(0,0,0,.26);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 16px 18px 14px;
+      position:relative;
+      overflow:hidden;
+      isolation:isolate;
+    }
+
+    .footer::before{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      background: radial-gradient(700px 260px at 20% 0%, rgba(255,0,0,.10), transparent 65%);
+      pointer-events:none;
+      z-index:0;
+    }
+
+    .footerInner{ position:relative; z-index:1; }
+
+    .footerGrid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:14px;
+    }
+    @media (min-width: 900px){
+      .footerGrid{ grid-template-columns: 1fr 1fr; }
+    }
+
+    .footer h3{
+      margin:0 0 8px;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing:.35px;
+      color: rgba(255,255,255,.92);
+    }
+
+    .linkList{
+      display:flex;
+      flex-direction:column;
+      gap:7px;
+      font-size:13px;
+    }
+
+    .small{
+      font-size:12.5px;
+      line-height:1.55;
+      color: rgba(255,255,255,.72);
+    }
+
+    .legal{
+      margin-top: 12px;
+      padding-top:12px;
+      border-top:1px solid rgba(255,255,255,.10);
+    }
+
+    .copyright{
+      margin-top:10px;
+      font-size:12px;
+      color: rgba(255,255,255,.56);
+    }
+
+    /* Mermaid */
+    .mermaid{ background: transparent !important; }
+    .mermaid svg{ max-width: 100%; height: auto; }
+
+    /* SVG fallback diagram */
+    .fallbackWrap{ display:none; }
+    .fallbackWrap.show{ display:block; }
+    .fallbackSvg{ width: 980px; max-width: 100%; height: auto; display:block; margin: 0 auto; }
+
+    /* Reduce motion preference */
+    @media (prefers-reduced-motion: reduce){
+      .hero::after{ animation:none; }
+      html,body{ scroll-behavior:auto; }
+    }
+  </style>
+
+  <!-- Mermaid (optional, we also provide an SVG fallback) -->
+  <script type="module">
+    // If Mermaid CDN is blocked, the fallback SVG will display.
+    try{
+      const mermaid = (await import("https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs")).default;
+      mermaid.initialize({
+        startOnLoad: true,
+        securityLevel: "strict",
+        theme: "base",
+        themeVariables: {
+          background: "#000000",
+          primaryColor: "#ffffff",
+          primaryTextColor: "#000000",
+          primaryBorderColor: "#ff0000",
+          lineColor: "#ffffff",
+          secondaryColor: "#000000",
+          tertiaryColor: "#ff0000",
+          fontFamily: "Arial, Helvetica, sans-serif",
+          fontSize: "14px"
+        },
+        flowchart: { curve: "basis", padding: 12 }
+      });
+
+      // After load, if Mermaid rendered, hide fallback.
+      window.addEventListener("load", () => {
+        const mermaidSvg = document.querySelector("#mermaidGraph svg");
+        const fallback = document.querySelector("#fallbackGraph");
+        if (mermaidSvg && fallback) fallback.classList.remove("show");
+      });
+    }catch(e){
+      // Mermaid failed, show fallback SVG
+      window.addEventListener("load", () => {
+        const fallback = document.querySelector("#fallbackGraph");
+        if (fallback) fallback.classList.add("show");
+      });
+    }
+  </script>
 </head>
 
 <body>
-<div class="container">
+  <div class="wrap">
 
-  <div class="topbar">
-    <div class="brand">
-      <img src="logo.png" alt="Hash Humanity Logo">
-      <div class="brandTitle">
-        <div class="name">Hash Humanity</div>
-        <div class="tag">Human verification and trust infrastructure built on World ID</div>
-      </div>
-    </div>
+    <header class="hero">
+      <div class="heroInner">
+        <div class="topRow">
+          <div class="brand">
+            <div class="logoBox">
+              <img src="logo.png" alt="Hash Humanity Logo" />
+            </div>
+            <div class="brandText">
+              <div class="name">Hash Humanity</div>
+              <div class="tag">
+                Human Verified Identity and Trust Layer for the Modern Internet<br />
+                Powered by World ID Zero Knowledge Proofs
+              </div>
+            </div>
+          </div>
 
-    <div class="navlinks">
-      <a class="pillLink" href="https://hashhumanity.world" target="_blank" rel="noopener">Website</a>
-      <a class="pillLink" href="https://hashhumanity.github.io/hash-humanity-whitepaper/" target="_blank" rel="noopener">White Paper</a>
-      <a class="pillLink" href="https://github.com/hashhumanity" target="_blank" rel="noopener">GitHub</a>
-      <a class="pillLink" href="mailto:contact@hashhumanity.world">Contact</a>
-    </div>
-  </div>
+          <div class="navPills">
+            <span class="pill"><span class="dot"></span> Privacy preserving</span>
+            <span class="pill"><span class="dot"></span> Proof of personhood</span>
+            <span class="pill"><span class="dot"></span> Bot resistance</span>
+          </div>
+        </div>
 
-  <h1>White Paper</h1>
-  <p class="subtitle">
-    Hash Humanity is designed to verify unique human participation in digital communities without collecting identity data or relying on behavioral profiling.
-    The system uses privacy-preserving proofs from World ID and validates them against the public registry state.
-  </p>
+        <h1>White Paper</h1>
+        <p class="subtitle">
+          Hash Humanity is a privacy preserving human verification and trust layer designed to restore trust, authenticity, and integrity to digital interaction.
+          It proves human uniqueness without collecting identity data and without creating a surveillance system.
+        </p>
 
-  <div class="meta">
-    <span><span class="dot"></span> Red, white, black trust layout</span>
-    <span><span class="dot"></span> World ID proof validation</span>
-    <span><span class="dot"></span> Merkle membership integrity</span>
-  </div>
-
-  <div class="section">
-    <h2>World ID Verification Flow</h2>
-
-    <p>
-      Hash Humanity verifies uniqueness using World ID zero-knowledge proofs. A user does not transmit identity or biometric information.
-      Instead, the system validates a proof of membership in the verified-human set, and uses a nullifier to prevent reuse for protected actions.
-    </p>
-
-    <div class="graph-box">
-      <svg viewBox="0 0 980 520" role="img" aria-label="World ID verification flow diagram">
-        <defs>
-          <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
-            <path d="M 0 0 L 10 5 L 0 10 z" fill="rgba(255,255,255,.55)"></path>
-          </marker>
-          <marker id="ahr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
-            <path d="M 0 0 L 10 5 L 0 10 z" fill="rgba(255,43,43,.92)"></path>
-          </marker>
-        </defs>
-
-        <rect x="0" y="0" width="980" height="520" fill="rgba(0,0,0,.12)"/>
-
-        <rect class="node nodeRed" x="60" y="60" width="260" height="96" rx="14" ry="14"/>
-        <text class="label" x="84" y="98">User</text>
-        <text class="sublabel" x="84" y="122">Initiates verification in World App</text>
-
-        <rect class="node" x="360" y="60" width="280" height="96" rx="14" ry="14"/>
-        <text class="label" x="384" y="98">World App</text>
-        <text class="sublabel" x="384" y="122">Generates zero-knowledge proof</text>
-
-        <rect class="node" x="60" y="220" width="260" height="110" rx="14" ry="14"/>
-        <text class="label" x="84" y="262">Hash Humanity</text>
-        <text class="sublabel" x="84" y="286">Receives proof package</text>
-        <text class="sublabel mono" x="84" y="308">proof + nullifier + action</text>
-
-        <rect class="node nodeRed" x="360" y="220" width="560" height="110" rx="14" ry="14"/>
-        <text class="label" x="384" y="262">World ID Verification Endpoint</text>
-        <text class="sublabel" x="384" y="286">Validates proof against registry root</text>
-        <text class="sublabel mono" x="384" y="308">checks: root, constraints, nullifier</text>
-
-        <rect class="node" x="60" y="390" width="860" height="90" rx="14" ry="14"/>
-        <text class="label" x="84" y="430">Result</text>
-        <text class="sublabel" x="84" y="454">Returns valid or invalid without revealing identity</text>
-
-        <path class="arrow" d="M320,108 L360,108" />
-        <path class="arrowRed" d="M500,156 L500,220" />
-        <path class="arrow" d="M320,275 L360,275" />
-        <path class="arrowRed" d="M640,330 L640,390" />
-        <path class="arrow" d="M190,330 L190,390" />
-      </svg>
-
-      <div class="caption">
-        <strong>Figure 1.</strong> The user generates a privacy-preserving proof inside World App. Hash Humanity verifies the proof against the World ID registry state without receiving identity data.
-      </div>
-    </div>
-
-    <ul>
-      <li><b>Proof:</b> Demonstrates membership in the verified set without revealing which identity the user is.</li>
-      <li><b>Merkle root:</b> Compact fingerprint of the full verified-human registry.</li>
-      <li><b>Nullifier:</b> Prevents the same credential from being reused for a protected action.</li>
-    </ul>
-  </div>
-
-  <div class="section">
-    <h2>Merkle Tree Membership and Proof Validation</h2>
-
-    <p>
-      World ID represents the verified-human registry as a Merkle tree. Each verified credential corresponds to a hashed leaf.
-      A short proof allows a verifier to recompute the root and confirm membership without revealing which leaf belongs to the user.
-    </p>
-
-    <div class="graph-box">
-      <svg viewBox="0 0 720 760" role="img" aria-label="Merkle tree diagram with root and leaves">
-        <defs>
-          <marker id="ah2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
-            <path d="M 0 0 L 10 5 L 0 10 z" fill="rgba(255,255,255,.55)"></path>
-          </marker>
-        </defs>
-
-        <rect x="0" y="0" width="720" height="760" fill="rgba(0,0,0,.12)"/>
-
-        <rect class="node nodeRed" x="210" y="44" width="300" height="80" rx="16" ry="16"/>
-        <text class="label" x="236" y="80">Merkle Root</text>
-        <text class="sublabel mono" x="236" y="104">root = H(H(A,B), H(C,D))</text>
-
-        <rect class="node" x="90" y="170" width="240" height="72" rx="14" ry="14"/>
-        <text class="label" x="114" y="202">Node AB</text>
-        <text class="sublabel mono" x="114" y="226">H(A,B)</text>
-
-        <rect class="node" x="390" y="170" width="240" height="72" rx="14" ry="14"/>
-        <text class="label" x="414" y="202">Node CD</text>
-        <text class="sublabel mono" x="414" y="226">H(C,D)</text>
-
-        <rect class="node" x="40" y="300" width="190" height="68" rx="14" ry="14"/>
-        <text class="label" x="60" y="332">Leaf A</text>
-        <text class="sublabel mono" x="60" y="354">H(credA)</text>
-
-        <rect class="node nodeRed" x="240" y="300" width="190" height="68" rx="14" ry="14"/>
-        <text class="label" x="260" y="332">Leaf B</text>
-        <text class="sublabel mono" x="260" y="354">H(credB)</text>
-
-        <rect class="node" x="290" y="430" width="190" height="68" rx="14" ry="14"/>
-        <text class="label" x="310" y="462">Leaf C</text>
-        <text class="sublabel mono" x="310" y="484">H(credC)</text>
-
-        <rect class="node" x="490" y="430" width="190" height="68" rx="14" ry="14"/>
-        <text class="label" x="510" y="462">Leaf D</text>
-        <text class="sublabel mono" x="510" y="484">H(credD)</text>
-
-        <path class="arrow" style="marker-end:url(#ah2)" d="M360,124 L210,170" />
-        <path class="arrow" style="marker-end:url(#ah2)" d="M360,124 L510,170" />
-        <path class="arrow" style="marker-end:url(#ah2)" d="M210,242 L135,300" />
-        <path class="arrow" style="marker-end:url(#ah2)" d="M210,242 L335,300" />
-        <path class="arrow" style="marker-end:url(#ah2)" d="M510,242 L385,430" />
-        <path class="arrow" style="marker-end:url(#ah2)" d="M510,242 L585,430" />
-
-        <text x="46" y="560" class="sublabel">Merkle proof concept:</text>
-        <text x="46" y="586" class="sublabel mono">sibling hashes allow recomputation of the root</text>
-        <text x="46" y="612" class="sublabel mono">membership is proven without revealing leaf identity</text>
-      </svg>
-
-      <div class="caption">
-        <strong>Figure 2.</strong> Merkle tree membership. The Merkle root commits to the entire registry. A proof shows membership in the set without revealing which credential is used.
-      </div>
-    </div>
-
-    <ul>
-      <li><b>Integrity:</b> any change to a leaf changes the root.</li>
-      <li><b>Efficiency:</b> proofs are compact and verification remains fast at large scale.</li>
-      <li><b>Privacy:</b> the verifier learns only that the user is a member, not which member.</li>
-    </ul>
-  </div>
-
-  <div class="footer">
-    <div class="footerGrid">
-      <div>
-        <h3>Links</h3>
-        <div class="linkList">
-          <a href="https://hashhumanity.world" target="_blank" rel="noopener">hashhumanity.world</a>
-          <a href="https://hashhumanity.github.io/hash-humanity-whitepaper/" target="_blank" rel="noopener">White paper</a>
-          <a href="https://github.com/hashhumanity" target="_blank" rel="noopener">GitHub organization</a>
-          <a href="mailto:contact@hashhumanity.world">contact@hashhumanity.world</a>
+        <div class="meta">
+          <span><span class="dot"></span> Version 1.1</span>
+          <span><span class="dot"></span> Merkle membership</span>
+          <span><span class="dot"></span> Nullifier replay protection</span>
+          <span><span class="dot"></span> RTDB minimal storage</span>
         </div>
       </div>
+    </header>
 
-      <div>
-        <h3>Legal</h3>
-        <div class="small">
-          This document is provided for informational purposes only and does not constitute legal, financial, or investment advice.
-          Hash Humanity is an independent project. World ID, World App, and related names may be trademarks of their respective owners.
-          Hash Humanity does not claim affiliation, endorsement, or partnership unless explicitly stated in writing.
-          Verification flows described here are high-level and may evolve as the underlying ecosystem and implementation changes.
+    <div class="grid">
+
+      <nav class="toc" aria-label="Table of contents">
+        <div class="tocInner">
+          <h2>Contents</h2>
+          <a href="#exec">Executive Summary</a>
+          <a href="#p1">1. The Problem</a>
+          <a href="#p2">2. Hash Humanity’s Approach</a>
+          <a href="#p3">3. Design Principles</a>
+          <a href="#p4">4. System Overview</a>
+          <a href="#p5">5. Cryptographic Foundations</a>
+          <a href="#flow">Proof Generation Flow</a>
+          <a href="#p6">6. Frontend Architecture</a>
+          <a href="#p7">7. Backend Architecture</a>
+          <a href="#p8">8. Voice Room</a>
+          <a href="#p9">9. Pulse</a>
+          <a href="#p10">10. Security Model</a>
+          <a href="#p11">11. Privacy and Compliance</a>
+          <a href="#p12">12. Applications</a>
+          <a href="#p13">13. Roadmap</a>
+          <a href="#p14">14. Governance</a>
+          <a href="#p15">15. License</a>
+          <a href="#p16">16. World App Mini-App Compatibility</a>
+          <a href="#p17">17. Philosophy</a>
+          <a href="#conclusion">Conclusion</a>
         </div>
-      </div>
-    </div>
+      </nav>
 
-    <div class="legal small">
-      Privacy posture: Hash Humanity is designed to verify uniqueness via zero-knowledge proofs and does not require biometric data.
-      Users should review any deployed implementation for current data handling and security practices.
-    </div>
+      <main>
 
-    <div class="copyright">
-      © <span id="y"></span> Hash Humanity. All rights reserved.
+        <section id="exec" class="card">
+          <div class="cardInner">
+            <h2>Executive Summary</h2>
+            <p>
+              Hash Humanity is a privacy-preserving human verification layer designed to restore trust, authenticity, and integrity to digital interaction.
+              The modern internet has lost the ability to reliably distinguish real human participants from automated agents, AI-generated personas, and synthetic identities.
+              This failure has degraded online discourse, enabled large-scale manipulation, compromised governance systems, and eroded confidence in digital communities.
+            </p>
+            <p>
+              Existing solutions attempt to solve this problem by identifying users. Hash Humanity takes a fundamentally different approach.
+              Instead of proving who a person is, Hash Humanity proves only that a participant is a unique real human being.
+              This distinction allows platforms to enforce human authenticity without collecting, storing, or processing personal, biometric, or identity data.
+            </p>
+            <p>
+              Hash Humanity is not a blockchain, not a token, and not a traditional identity protocol.
+              It is an application-layer access and verification system built on top of World ID’s zero-knowledge Proof of Personhood.
+              Its purpose is to make cryptographic human verification usable, scalable, and privacy-preserving for real-world platforms.
+            </p>
+          </div>
+        </section>
+
+        <section id="p1" class="card"><div class="cardInner">
+          <h2>1. The Problem</h2>
+          <p>
+            Digital systems today cannot reliably distinguish between humans and machines.
+            Automated bots generate content, influence opinions, manipulate markets, and participate in governance systems at scale.
+            AI models can now convincingly imitate human communication.
+            Identity farms create thousands of synthetic accounts.
+            Together, these forces undermine the foundational assumption that a digital participant represents a real person.
+          </p>
+          <p>
+            Traditional identity-based solutions attempt to address this by requiring government identification, biometric scanning, or centralized identity providers.
+            While these methods can increase confidence in uniqueness, they introduce significant risks.
+            They require users to surrender sensitive personal information, create centralized databases that become high-value attack targets, and enable surveillance, tracking, and long-term profiling.
+          </p>
+          <p>
+            The core issue is that digital platforms do not need identity.
+            They need authenticity.
+            They need to know that each participant represents a real, unique human being, nothing more.
+          </p>
+        </div></section>
+
+        <section id="p2" class="card"><div class="cardInner">
+          <h2>2. Hash Humanity’s Approach</h2>
+          <p>
+            Hash Humanity provides a verification layer that allows a user to prove their humanity without revealing any personal information.
+            The system integrates World ID’s zero-knowledge Proof of Personhood, enabling users to generate cryptographic proofs locally on their device.
+            These proofs demonstrate membership in the global set of verified humans without disclosing identity, biometrics, or any identifying attributes.
+          </p>
+          <p>
+            Hash Humanity validates these proofs and issues short-lived access tokens that grant entry into human-verified environments.
+            At no point does Hash Humanity store biometric data, identity attributes, or persistent user profiles.
+            The system operates entirely on cryptographic assurance rather than trust in stored information.
+          </p>
+          <p>
+            This architecture enables platforms to build communities, governance systems, financial interactions, and communication environments that are provably human while remaining privacy-preserving.
+          </p>
+        </div></section>
+
+        <section id="p3" class="card"><div class="cardInner">
+          <h2>3. Design Principles</h2>
+          <p>
+            Hash Humanity is built around strict architectural principles.
+            The system minimizes data collection, minimizes trust requirements, and minimizes attack surfaces.
+            All sensitive computation occurs on the user’s device.
+            Backend services are stateless with respect to identity, profiles, and user tracking.
+            The only persistent data stored is hashed nullifiers used for replay protection.
+            No cross-session tracking is possible.
+            Every interaction is independently verified through cryptographic proof.
+          </p>
+          <p>
+            The goal is not merely compliance with privacy regulations, but the elimination of privacy risk by design.
+          </p>
+        </div></section>
+
+        <section id="p4" class="card"><div class="cardInner">
+          <h2>4. System Overview</h2>
+          <p>
+            When a user interacts with Hash Humanity, they authenticate using the World ID widget.
+            This process produces a zero-knowledge proof on the user’s device.
+            The proof demonstrates that the user is a member of the verified human set without revealing which member they are.
+          </p>
+          <p>
+            The proof is submitted to the Hash Humanity backend, where it is validated using Firebase Cloud Functions.
+            The system checks proof integrity and verifies that the associated nullifier has not been previously used for the same action.
+            If the proof is valid, the system issues a short-lived access token that allows the user to enter human-verified environments.
+          </p>
+          <p>
+            Firebase Realtime Database stores only hashed nullifiers for replay protection.
+            These hashes cannot be reverse-engineered or linked back to any individual.
+          </p>
+        </div></section>
+
+        <section id="p5" class="card"><div class="cardInner">
+          <h2>5. Cryptographic Foundations</h2>
+          <p>
+            Hash Humanity relies on the Semaphore protocol provided by World ID.
+            Semaphore combines zk-SNARKs, Merkle tree membership proofs, and nullifiers to enable anonymous yet verifiable participation.
+          </p>
+          <p>
+            The Merkle tree represents the global set of verified humans.
+            Each user occupies a leaf in the tree.
+            When a user generates a proof, they demonstrate membership in the tree without revealing their leaf position.
+            This preserves anonymity while ensuring uniqueness.
+          </p>
+          <p>
+            Nullifiers prevent Sybil attacks.
+            Each action produces a unique nullifier that cannot be reused.
+            This ensures that one human cannot perform the same restricted action multiple times under different identities.
+          </p>
+          <p>
+            Because all cryptographic computation occurs locally, Hash Humanity never handles biometric data or identity attributes.
+          </p>
+        </div></section>
+
+        <section id="flow" class="card"><div class="cardInner">
+          <h2>Proof Generation Flow</h2>
+
+          <div class="figure">
+            <div id="mermaidGraph" class="mermaid">
+flowchart TD
+  classDef device fill:#ffffff,stroke:#000000,color:#000000;
+  classDef backend fill:#000000,stroke:#ff0000,color:#ffffff;
+  classDef platform fill:#ff0000,stroke:#000000,color:#ffffff;
+  classDef decision fill:#ffffff,stroke:#ff0000,color:#000000;
+
+  A[Start Verification]
+  B[World ID Widget]
+  C[Generate zk-SNARK Proof]
+  D[Include Merkle Path and Root]
+  E[Create Nullifier]
+
+  F[Submit Proof and Nullifier]
+  G[Verify Proof Against Merkle Root]
+  H{Nullifier Used?}
+  I[Store Hashed Nullifier]
+  J[Issue Access Token]
+  K[Reject Request]
+
+  L[Access Human-Only Environment]
+
+  A --> B --> C --> D --> E --> F
+  F --> G --> H
+  H -- No --> I --> J --> L
+  H -- Yes --> K
+
+  class A,B,C,D,E device;
+  class F,G,I,J backend;
+  class L platform;
+  class H decision;
+            </div>
+
+            <!-- SVG fallback -->
+            <div id="fallbackGraph" class="fallbackWrap show">
+              <svg class="fallbackSvg" viewBox="0 0 1100 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Proof generation flow diagram">
+                <defs>
+                  <linearGradient id="g1" x1="0" x2="0" y1="0" y2="1">
+                    <stop offset="0" stop-color="#111"/>
+                    <stop offset="1" stop-color="#070707"/>
+                  </linearGradient>
+                  <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
+                    <feGaussianBlur stdDeviation="3.5" result="b"/>
+                    <feColorMatrix in="b" type="matrix"
+                      values="1 0 0 0 0
+                              0 0 0 0 0
+                              0 0 0 0 0
+                              0 0 0 .55 0" result="r"/>
+                    <feMerge>
+                      <feMergeNode in="r"/>
+                      <feMergeNode in="SourceGraphic"/>
+                    </feMerge>
+                  </filter>
+                </defs>
+
+                <!-- lines -->
+                <g stroke="#fff" stroke-width="2" opacity="0.9">
+                  <line x1="215" y1="140" x2="320" y2="140"/>
+                  <line x1="480" y1="140" x2="585" y2="140"/>
+                  <line x1="745" y1="140" x2="850" y2="140"/>
+                </g>
+
+                <!-- nodes -->
+                <g font-family="Arial, Helvetica, sans-serif" font-size="14">
+                  <g filter="url(#glow)">
+                    <rect x="70" y="110" width="145" height="60" rx="14" fill="#fff" stroke="#000" stroke-width="2"/>
+                    <text x="142.5" y="146" text-anchor="middle" fill="#000" font-weight="700">User</text>
+                  </g>
+
+                  <g filter="url(#glow)">
+                    <rect x="320" y="110" width="160" height="60" rx="14" fill="#fff" stroke="#000" stroke-width="2"/>
+                    <text x="400" y="137" text-anchor="middle" fill="#000" font-weight="700">World ID Widget</text>
+                    <text x="400" y="155" text-anchor="middle" fill="#000">Proof generation</text>
+                  </g>
+
+                  <g filter="url(#glow)">
+                    <rect x="585" y="110" width="160" height="60" rx="14" fill="url(#g1)" stroke="#ff0000" stroke-width="2"/>
+                    <text x="665" y="137" text-anchor="middle" fill="#fff" font-weight="700">Hash Humanity</text>
+                    <text x="665" y="155" text-anchor="middle" fill="#fff">Verify proof</text>
+                  </g>
+
+                  <g filter="url(#glow)">
+                    <rect x="850" y="110" width="180" height="60" rx="14" fill="#ff0000" stroke="#000" stroke-width="2"/>
+                    <text x="940" y="137" text-anchor="middle" fill="#fff" font-weight="800">Access Granted</text>
+                    <text x="940" y="155" text-anchor="middle" fill="#fff">Human-only environment</text>
+                  </g>
+                </g>
+
+                <!-- labels -->
+                <g font-family="Arial, Helvetica, sans-serif" font-size="12" fill="rgba(255,255,255,.9)">
+                  <text x="260" y="118" text-anchor="middle">zk-SNARK proof</text>
+                  <text x="530" y="118" text-anchor="middle">Merkle root and path</text>
+                  <text x="800" y="118" text-anchor="middle">Access token</text>
+                </g>
+              </svg>
+            </div>
+
+            <div class="caption">
+              Figure 1. Proof generation occurs on-device. Hash Humanity validates the proof against the Merkle root and enforces replay protection using a hashed nullifier stored in Firebase Realtime Database.
+            </div>
+
+            <div class="note">
+              If Mermaid renders, the diagram above will be the Mermaid version. If Mermaid is blocked, the SVG fallback is used automatically.
+            </div>
+          </div>
+        </div></section>
+
+        <section id="p6" class="card"><div class="cardInner">
+          <h2>6. Frontend Architecture</h2>
+          <p>
+            The frontend is built using React and Vite. These technologies were chosen for their performance, modularity, and compatibility with cryptographic workflows in the browser.
+          </p>
+          <p>
+            The frontend integrates the World ID widget, orchestrates proof generation, manages ephemeral session data, and communicates with backend validation services.
+            No user accounts, passwords, or personal information are required. The user experience is intentionally simple: verify once and gain access.
+          </p>
+          <p>
+            Sensitive operations remain isolated to the client environment, ensuring that privacy boundaries are preserved.
+          </p>
+        </div></section>
+
+        <section id="p7" class="card"><div class="cardInner">
+          <h2>7. Backend Architecture</h2>
+          <p>The backend is implemented using Firebase and Cloudflare.</p>
+          <p>
+            Firebase Cloud Functions validate proofs, verify nullifiers, and issue short-lived access tokens.
+            Firebase Realtime Database stores only hashed nullifiers required to prevent replay attacks.
+            Firebase Authentication provides token infrastructure without maintaining user identity.
+          </p>
+          <p>
+            Cloudflare provides global routing, DDoS protection, bot mitigation, and Web Application Firewall capabilities.
+            Cloudflare Workers may perform edge validation and rate limiting to reduce backend load.
+            Cloudflare WebRTC enables encrypted peer-to-peer audio communication.
+          </p>
+          <p>
+            This hybrid architecture ensures global scalability, resilience, and performance while maintaining strict privacy guarantees.
+          </p>
+        </div></section>
+
+        <section id="p8" class="card"><div class="cardInner">
+          <h2>8. Voice Room</h2>
+          <p>
+            Voice Room is a real-time audio communication environment restricted to verified humans.
+            It uses Cloudflare WebRTC to establish encrypted peer-to-peer audio channels between participants.
+          </p>
+          <p>
+            No audio is recorded, stored, or analyzed. The system exists solely as a human-verified communication layer.
+            Communities can host discussions, debates, governance sessions, or social interactions without fear of bots, impersonators, or AI voices.
+          </p>
+        </div></section>
+
+        <section id="p9" class="card"><div class="cardInner">
+          <h2>9. Pulse: Peer-to-Peer Crypto Transfers</h2>
+          <p>
+            Pulse enables direct crypto transfers between verified humans.
+            Hash Humanity does not custody funds, store wallet addresses, or log transactions.
+            Its role is limited to verifying that both participants are unique humans at the moment of interaction.
+          </p>
+          <p>
+            Transfers occur directly through the user’s chosen blockchain or wallet infrastructure.
+            This creates a new trust primitive for decentralized finance, where authenticity is guaranteed without compromising privacy.
+          </p>
+        </div></section>
+
+        <section id="p10" class="card"><div class="cardInner">
+          <h2>10. Security Model</h2>
+          <p>
+            Hash Humanity is designed around minimizing trust.
+            There is no identity database to breach.
+            There are no biometric records to steal.
+            There are no user profiles to correlate.
+          </p>
+          <p>
+            Backend services are stateless with respect to identity and tracking.
+            Nullifiers prevent replay attacks.
+            Cloudflare protects against network-level abuse.
+            The cryptographic guarantees of World ID ensure uniqueness without disclosure.
+          </p>
+          <p>
+            The system reduces risk by eliminating sensitive data entirely.
+          </p>
+        </div></section>
+
+        <section id="p11" class="card"><div class="cardInner">
+          <h2>11. Privacy and Compliance</h2>
+          <p>
+            Hash Humanity is compliant with GDPR, CCPA, and global privacy regulations by design.
+            Because no personal data is collected, stored, or processed, regulatory risk is inherently minimized.
+          </p>
+          <p>
+            Users cannot be tracked across sessions. No behavioral profiles can be constructed. No identity information exists within the system.
+          </p>
+          <p>
+            Privacy is not a policy. It is an architectural consequence.
+          </p>
+        </div></section>
+
+        <section id="p12" class="card"><div class="cardInner">
+          <h2>12. Applications</h2>
+          <p>
+            Hash Humanity can be used for human-verified social platforms, governance voting systems, DAO participation, research studies,
+            financial interaction gating, and AI-safe communication environments. Any system that requires authentic human participation without identity exposure can integrate Hash Humanity.
+          </p>
+        </div></section>
+
+        <section id="p13" class="card"><div class="cardInner">
+          <h2>13. Roadmap</h2>
+          <p>
+            Hash Humanity begins as a centralized application layer built on Firebase.
+            Future phases include federated verification endpoints, open-source validation libraries, and ultimately a decentralized verification network.
+            Each phase reduces centralization while preserving cryptographic guarantees.
+          </p>
+        </div></section>
+
+        <section id="p14" class="card"><div class="cardInner">
+          <h2>14. Governance</h2>
+          <p>
+            As the system matures, governance will transition toward transparent, auditable frameworks aligned with decentralization and community oversight.
+          </p>
+        </div></section>
+
+        <section id="p15" class="card"><div class="cardInner">
+          <h2>15. License</h2>
+          <p>Hash Humanity core components are released under the MIT License.</p>
+        </div></section>
+
+        <section id="p16" class="card"><div class="cardInner">
+          <h2>16. World App Mini-App Compatibility</h2>
+          <p>
+            Hash Humanity is designed to operate within WebView environments such as the World App Mini-App ecosystem.
+            The system requires no persistent storage, no background processes, and no platform-specific dependencies, making it fully compatible with Mini-App constraints.
+          </p>
+        </div></section>
+
+        <section id="p17" class="card"><div class="cardInner">
+          <h2>17. Philosophy</h2>
+          <p>Humanity should be provable without being traceable.</p>
+          <p>Trust should be mathematical.</p>
+          <p>Identity should remain private.</p>
+        </div></section>
+
+        <section id="conclusion" class="card"><div class="cardInner">
+          <h2>Conclusion</h2>
+          <p>
+            Hash Humanity restores authenticity to digital interaction without creating a surveillance system.
+            It proves humanity, not identity. It replaces trust with cryptography.
+            It enables human-verified digital spaces at global scale.
+          </p>
+        </div></section>
+
+        <footer class="footer">
+          <div class="footerInner">
+            <div class="footerGrid">
+              <div>
+                <h3>Links</h3>
+                <div class="linkList">
+                  <a href="https://hashhumanity.world" target="_blank" rel="noopener">hashhumanity.world</a>
+                  <a href="https://hashhumanity.github.io/hash-humanity-whitepaper/" target="_blank" rel="noopener">White paper</a>
+                  <a href="https://github.com/hashhumanity" target="_blank" rel="noopener">GitHub</a>
+                  <a href="mailto:contact@hashhumanity.world">contact@hashhumanity.world</a>
+                </div>
+              </div>
+
+              <div>
+                <h3>Legal</h3>
+                <div class="small">
+                  This document is provided for informational purposes only and does not constitute legal, financial, or investment advice.
+                  Hash Humanity is an independent project. World ID, World App, and related names may be trademarks of their respective owners.
+                  Hash Humanity does not claim affiliation, endorsement, or partnership unless explicitly stated in writing.
+                  Technical descriptions may evolve as underlying systems and implementations change.
+                </div>
+              </div>
+            </div>
+
+            <div class="legal small">
+              Privacy posture: Hash Humanity validates zero-knowledge proofs and does not require biometric data.
+              Users and integrators should review deployed implementations for current data handling, security practices, and applicable compliance requirements.
+            </div>
+
+            <div class="copyright">
+              © <span id="y"></span> Hash Humanity. Privacy by design.
+            </div>
+          </div>
+        </footer>
+
+      </main>
     </div>
   </div>
 
-</div>
-
-<script>
-  document.getElementById("y").textContent = new Date().getFullYear();
-</script>
-
+  <script>
+    document.getElementById("y").textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
