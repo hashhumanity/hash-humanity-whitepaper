@@ -463,6 +463,174 @@
         break-inside: avoid-page;
       }
     }
+    .footer-link-button,
+.footer-email-button {
+  appearance: none;
+  border: 0;
+  padding: 0;
+  background: none;
+  color: #d8d8d4;
+  font: inherit;
+  cursor: pointer;
+}
+
+.footer-link-button {
+  font-size: 13px;
+}
+
+.footer-email-button {
+  font-size: 12px;
+}
+
+.footer-link-button:hover,
+.footer-email-button:hover {
+  opacity: 0.65;
+}
+
+.contact-dialog {
+  width: min(calc(100% - 32px), 560px);
+  max-width: 560px;
+  padding: 0;
+  border: 0;
+  border-radius: 18px;
+  color: #f5f5f2;
+  background: #0a0a0a;
+  box-shadow:
+    0 28px 90px rgba(0, 0, 0, 0.72);
+}
+
+.contact-dialog::backdrop {
+  background: rgba(0, 0, 0, 0.78);
+  backdrop-filter: blur(8px);
+}
+
+.contact-form-shell {
+  position: relative;
+  padding: 34px;
+}
+
+.contact-close {
+  position: absolute;
+  top: 16px;
+  right: 18px;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.055);
+  color: #d8d8d4;
+  font-size: 23px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.contact-close:hover {
+  background: rgba(255, 255, 255, 0.09);
+}
+
+.contact-kicker {
+  margin-bottom: 8px;
+  color: #888883;
+  font-size: 10px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+
+.contact-form-shell h2 {
+  margin: 0 0 10px;
+  font-size: 32px;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  font-weight: 580;
+}
+
+.contact-intro {
+  margin: 0 0 24px;
+  color: #aaa9a4;
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.contact-field {
+  margin-bottom: 15px;
+}
+
+.contact-field label {
+  display: block;
+  margin-bottom: 6px;
+  color: #bcbcb7;
+  font-size: 12px;
+  font-weight: 550;
+}
+
+.contact-field input,
+.contact-field select,
+.contact-field textarea {
+  width: 100%;
+  border: 0;
+  border-radius: 10px;
+  outline: none;
+  padding: 12px 13px;
+  color: #f5f5f2;
+  background: rgba(255, 255, 255, 0.055);
+  font: inherit;
+  font-size: 14px;
+}
+
+.contact-field input:focus,
+.contact-field select:focus,
+.contact-field textarea:focus {
+  background: rgba(255, 255, 255, 0.085);
+}
+
+.contact-field textarea {
+  resize: vertical;
+  min-height: 130px;
+}
+
+.contact-field select {
+  cursor: pointer;
+}
+
+.contact-field option {
+  color: #111111;
+  background: #ffffff;
+}
+
+.contact-submit {
+  width: 100%;
+  margin-top: 4px;
+  padding: 12px 16px;
+  border: 0;
+  border-radius: 10px;
+  background: #f5f5f2;
+  color: #050505;
+  font-size: 14px;
+  font-weight: 650;
+  cursor: pointer;
+}
+
+.contact-submit:hover {
+  opacity: 0.9;
+}
+
+.contact-destination {
+  margin-top: 12px;
+  color: #6f6f6a;
+  font-size: 11px;
+  text-align: center;
+}
+
+@media (max-width: 700px) {
+  .contact-form-shell {
+    padding: 28px 20px 24px;
+  }
+
+  .contact-form-shell h2 {
+    font-size: 28px;
+  }
+}
   </style>
 
   <script type="application/ld+json">
@@ -1386,15 +1554,285 @@
 
   </main>
 
-  <footer>
-    <div class="footer-brand">
-      Hash Humanity &middot; HumanKey
+ <footer>
+
+  <div class="footer-brand">
+    Hash Humanity &middot; HumanKey
+  </div>
+
+  <div class="footer-statement">
+    Proof of personhood for a human internet.
+    One living human. One persistent participation identity. One account.
+  </div>
+
+  <nav class="footer-links" aria-label="Footer navigation">
+
+    <a href="https://hashhumanity.world/">
+      Hash Humanity
+    </a>
+
+    <a href="https://hashhumanity.world/humankey/">
+      HumanKey
+    </a>
+
+    <button
+      type="button"
+      class="footer-link-button"
+      onclick="openContactForm('Contact')"
+    >
+      Contact
+    </button>
+
+    <button
+      type="button"
+      class="footer-link-button"
+      onclick="openContactForm('Support')"
+    >
+      Support
+    </button>
+
+  </nav>
+
+  <div class="footer-contact">
+    Questions, technical inquiries, or support:
+    <button
+      type="button"
+      class="footer-email-button"
+      onclick="openContactForm('General Inquiry')"
+    >
+      support@hashhumanity.world
+    </button>
+  </div>
+
+  <div class="footer-legal">
+    <span>
+      HumanKey Technical White Paper &middot; Version 1.0 &middot; September 2026
+    </span>
+
+    <span>
+      &copy; 2026 Hash Humanity. All rights reserved.
+    </span>
+  </div>
+
+</footer>
+
+
+<dialog id="contactDialog" class="contact-dialog">
+
+  <div class="contact-form-shell">
+
+    <button
+      type="button"
+      class="contact-close"
+      aria-label="Close contact form"
+      onclick="closeContactForm()"
+    >
+      &times;
+    </button>
+
+    <div class="contact-kicker">
+      Hash Humanity
     </div>
 
-    <div>
-      One human. One account.
-    </div>
-  </footer>
+    <h2>Contact Us</h2>
+
+    <p class="contact-intro">
+      Questions about HumanKey, technical inquiries, support requests,
+      or partnership discussions can be sent directly to our team.
+    </p>
+
+    <form id="contactForm">
+
+      <div class="contact-field">
+        <label for="contactName">
+          Name
+        </label>
+
+        <input
+          id="contactName"
+          name="name"
+          type="text"
+          autocomplete="name"
+          required
+        >
+      </div>
+
+      <div class="contact-field">
+        <label for="contactEmail">
+          Email
+        </label>
+
+        <input
+          id="contactEmail"
+          name="email"
+          type="email"
+          autocomplete="email"
+          required
+        >
+      </div>
+
+      <div class="contact-field">
+        <label for="contactTopic">
+          Topic
+        </label>
+
+        <select
+          id="contactTopic"
+          name="topic"
+          required
+        >
+          <option value="General Inquiry">
+            General Inquiry
+          </option>
+
+          <option value="HumanKey Technical Inquiry">
+            HumanKey Technical Inquiry
+          </option>
+
+          <option value="Support">
+            Support
+          </option>
+
+          <option value="Security">
+            Security
+          </option>
+
+          <option value="Press or Media">
+            Press or Media
+          </option>
+
+          <option value="Partnership">
+            Partnership
+          </option>
+        </select>
+      </div>
+
+      <div class="contact-field">
+        <label for="contactMessage">
+          Message
+        </label>
+
+        <textarea
+          id="contactMessage"
+          name="message"
+          rows="6"
+          required
+        ></textarea>
+      </div>
+
+      <button
+        type="submit"
+        class="contact-submit"
+      >
+        Send Message
+      </button>
+
+      <div class="contact-destination">
+        Messages are addressed to
+        support@hashhumanity.world
+      </div>
+
+    </form>
+
+  </div>
+
+</dialog>
+
+
+<script>
+  function openContactForm(topic) {
+    const dialog =
+      document.getElementById("contactDialog");
+
+    const topicSelect =
+      document.getElementById("contactTopic");
+
+    if (topicSelect) {
+      if (topic === "Support") {
+        topicSelect.value = "Support";
+      } else {
+        topicSelect.value = "General Inquiry";
+      }
+    }
+
+    if (dialog && typeof dialog.showModal === "function") {
+      dialog.showModal();
+    }
+  }
+
+  function closeContactForm() {
+    const dialog =
+      document.getElementById("contactDialog");
+
+    if (dialog) {
+      dialog.close();
+    }
+  }
+
+  document
+    .getElementById("contactDialog")
+    ?.addEventListener(
+      "click",
+      function (event) {
+        if (event.target === this) {
+          this.close();
+        }
+      }
+    );
+
+  document
+    .getElementById("contactForm")
+    ?.addEventListener(
+      "submit",
+      function (event) {
+        event.preventDefault();
+
+        const name =
+          document
+            .getElementById("contactName")
+            .value
+            .trim();
+
+        const email =
+          document
+            .getElementById("contactEmail")
+            .value
+            .trim();
+
+        const topic =
+          document
+            .getElementById("contactTopic")
+            .value;
+
+        const message =
+          document
+            .getElementById("contactMessage")
+            .value
+            .trim();
+
+        const subject =
+          "Hash Humanity - " + topic;
+
+        const body = [
+          "Name: " + name,
+          "Email: " + email,
+          "",
+          "Topic: " + topic,
+          "",
+          message
+        ].join("\n");
+
+        const mailto =
+          "mailto:support@hashhumanity.world" +
+          "?subject=" +
+          encodeURIComponent(subject) +
+          "&body=" +
+          encodeURIComponent(body);
+
+        window.location.href = mailto;
+      }
+    );
+</script>
 
 </body>
 </html>
