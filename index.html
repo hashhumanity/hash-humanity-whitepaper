@@ -1,544 +1,876 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Hash Humanity White Paper v1.1</title>
-  <meta name="description" content="Hash Humanity is a privacy-preserving human verification layer powered by World ID zero-knowledge proofs." />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HumanKey White Paper v1.0 | Hash Humanity</title>
+  <meta name="description" content="HumanKey is Hash Humanity's proof-of-personhood protocol for a human internet: one living human, one persistent participation identity, one account.">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <link rel="canonical" href="https://hashhumanity.world/humankey/">
+  <meta property="og:title" content="HumanKey — Proof of Personhood for a Human Internet">
+  <meta property="og:description" content="Technical White Paper v1.0 by Hash Humanity.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://hashhumanity.world/humankey/">
+  <meta name="theme-color" content="#050505">
 
   <style>
-    :root{
-      --paper:#ffffff;
-      --bg:#f6f7fb;
-      --ink:#0b0b0b;
-      --muted:rgba(0,0,0,.72);
-      --line:rgba(0,0,0,.12);
-      --red:#ff0000;
-      --radius:16px;
-      --shadow: 0 18px 60px rgba(0,0,0,.08);
-      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    :root {
+      --bg: #050505;
+      --bg2: #0a0a0a;
+      --panel: rgba(255,255,255,.035);
+      --panel-strong: rgba(255,255,255,.055);
+      --line: rgba(255,255,255,.11);
+      --line-soft: rgba(255,255,255,.06);
+      --text: #f5f5f2;
+      --muted: #a7a7a2;
+      --soft: #d1d1cc;
+      --accent: #ffffff;
+      --max: 980px;
+      --reading: 760px;
     }
 
-    *{ box-sizing:border-box; }
-    html,body{ height:100%; }
-    body{
-      margin:0;
-      font-family:var(--sans);
-      color:var(--ink);
-      background: linear-gradient(180deg, #fbfcff, var(--bg));
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--text);
+      background:
+        radial-gradient(1200px 700px at 50% -180px, rgba(255,255,255,.09), transparent 58%),
+        linear-gradient(180deg, #080808 0%, #030303 45%, #080808 100%);
+      font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      line-height: 1.75;
+      -webkit-font-smoothing: antialiased;
     }
 
-    a{ color:var(--red); text-decoration:none; }
-    a:hover{ text-decoration:underline; }
+    a { color: inherit; }
+    .wrap { width: min(calc(100% - 36px), var(--max)); margin: 0 auto; }
 
-    .wrap{
-      max-width: 980px;
-      margin: 0 auto;
-      padding: 40px 16px 90px;
+    .hero {
+      min-height: 92vh;
+      display: grid;
+      place-items: center;
+      position: relative;
+      border-bottom: 1px solid var(--line);
+      overflow: hidden;
     }
 
-    /* "Markdown-like paper" */
-    .paper{
-      background: var(--paper);
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding: 28px 22px;
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px);
+      background-size: 44px 44px;
+      mask-image: linear-gradient(to bottom, black, transparent 78%);
+      pointer-events: none;
     }
 
-    @media (min-width: 720px){
-      .paper{ padding: 40px 46px; }
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      width: min(calc(100% - 36px), 920px);
+      text-align: center;
+      padding: 70px 0 90px;
     }
 
-    /* Header block like README */
-    .center{ text-align:center; }
-    .logo{
-      width: 180px;
-      height: auto;
-      display:inline-block;
-      margin: 0 auto 10px;
+    .brand-logo {
+      display: block;
+      width: clamp(74px, 9vw, 110px);
+      max-height: 110px;
+      object-fit: contain;
+      margin: 0 auto 28px;
+      filter: drop-shadow(0 0 24px rgba(255,255,255,.15));
     }
 
-    h1{
-      margin: 6px 0 8px;
-      font-size: clamp(28px, 4vw, 44px);
-      letter-spacing: .2px;
-      line-height: 1.12;
+    .eyebrow {
+      font-size: 11px;
+      letter-spacing: .34em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 20px;
     }
 
-    .tagline{
-      margin: 0 auto;
+    h1 {
+      margin: 0;
+      font-size: clamp(56px, 10vw, 118px);
+      line-height: .9;
+      letter-spacing: -.055em;
+      font-weight: 650;
+    }
+
+    .subtitle {
       max-width: 720px;
-      font-size: 15.5px;
-      line-height: 1.55;
+      margin: 28px auto 0;
+      font-size: clamp(20px, 2.4vw, 30px);
+      line-height: 1.3;
+      letter-spacing: -.02em;
+      color: var(--soft);
+      font-weight: 400;
+    }
+
+    .meta {
+      margin-top: 44px;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 8px 18px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .tagline {
+      margin-top: 54px;
+      font-size: 12px;
+      letter-spacing: .25em;
+      text-transform: uppercase;
+      color: #e9e9e6;
+    }
+
+    .abstract {
+      width: min(calc(100% - 36px), var(--reading));
+      margin: 0 auto;
+      padding: 100px 0 88px;
+    }
+
+    .label {
+      font-size: 11px;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 24px;
+    }
+
+    .abstract p:first-of-type {
+      font-size: clamp(25px, 3vw, 37px);
+      line-height: 1.3;
+      letter-spacing: -.025em;
+      color: #fafaf7;
+      margin-top: 0;
+    }
+
+    p {
+      color: var(--soft);
+      font-size: 17px;
+      margin: 0 0 1.35em;
+    }
+
+    .toc-shell {
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      background: rgba(255,255,255,.018);
+    }
+
+    .toc {
+      width: min(calc(100% - 36px), var(--max));
+      margin: 0 auto;
+      padding: 80px 0;
+    }
+
+    .toc h2 {
+      font-size: 34px;
+      letter-spacing: -.03em;
+      margin: 0 0 32px;
+      font-weight: 560;
+    }
+
+    .toc-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: 0 42px;
+    }
+
+    .toc a {
+      display: grid;
+      grid-template-columns: 42px 1fr;
+      gap: 12px;
+      text-decoration: none;
+      padding: 13px 0;
+      border-bottom: 1px solid var(--line-soft);
+      color: #d8d8d4;
+      font-size: 14px;
+      transition: opacity .2s ease, transform .2s ease;
+    }
+
+    .toc a:hover { opacity: .7; transform: translateX(3px); }
+    .toc a span { color: #777; font-variant-numeric: tabular-nums; }
+
+    main {
+      width: min(calc(100% - 36px), var(--reading));
+      margin: 0 auto;
+      padding: 50px 0 110px;
+    }
+
+    .paper-section {
+      padding: 78px 0 54px;
+      border-bottom: 1px solid var(--line-soft);
+      scroll-margin-top: 30px;
+    }
+
+    .section-kicker {
+      font-size: 11px;
+      letter-spacing: .25em;
+      color: #777;
+      margin-bottom: 10px;
+    }
+
+    .paper-section h2 {
+      margin: 0;
+      font-size: clamp(31px, 4.4vw, 48px);
+      line-height: 1.1;
+      letter-spacing: -.035em;
+      font-weight: 580;
+    }
+
+    .section-rule {
+      width: 56px;
+      height: 1px;
+      background: rgba(255,255,255,.55);
+      margin: 28px 0 34px;
+    }
+
+    .flow {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin: 26px 0 30px;
+      padding: 22px;
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.018));
+      border-radius: 14px;
+    }
+
+    .flow-step {
+      padding: 8px 10px;
+      border-radius: 8px;
+      background: rgba(255,255,255,.055);
+      color: #f0f0ed;
+      font-size: 13px;
+    }
+
+    .arrow { color: #777; font-size: 13px; }
+
+    .data-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--line-soft);
+      font-size: 15px;
+      color: var(--soft);
+    }
+
+    .data-row strong {
+      color: #fff;
+      font-weight: 560;
+      text-align: right;
+    }
+
+    .references {
+      padding-top: 88px;
+    }
+
+    .references h2 {
+      font-size: 42px;
+      margin: 0 0 30px;
+      letter-spacing: -.03em;
+    }
+
+    .references ol {
+      padding-left: 22px;
       color: var(--muted);
     }
 
-    .version{
-      margin-top: 10px;
-      font-style: italic;
-      color: rgba(0,0,0,.62);
+    .references li {
+      margin: 0 0 16px;
+      padding-left: 8px;
       font-size: 14px;
+      line-height: 1.65;
     }
 
-    .rule{
-      border:0;
-      height:1px;
-      background: linear-gradient(90deg, transparent, rgba(255,0,0,.55), transparent);
-      margin: 22px 0 26px;
+    footer {
+      border-top: 1px solid var(--line);
+      text-align: center;
+      padding: 70px 24px 90px;
+      color: #777;
     }
 
-    /* Content typography */
-    h2{
-      margin: 26px 0 10px;
-      font-size: 22px;
-      line-height: 1.2;
-    }
-
-    h3{
-      margin: 18px 0 8px;
-      font-size: 16px;
+    footer .footer-brand {
+      color: #d8d8d4;
+      letter-spacing: .22em;
       text-transform: uppercase;
-      letter-spacing: .35px;
-    }
-
-    p{
-      margin: 0 0 14px;
-      font-size: 15.8px;
-      line-height: 1.72;
-      color: rgba(0,0,0,.84);
-    }
-
-    /* Subtle “section anchor” look */
-    .sec{
-      scroll-margin-top: 14px;
-      padding-top: 6px;
-    }
-
-    /* Optional small “toc” that still feels README-ish */
-    .toc{
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      padding: 14px 14px 10px;
-      background: #fff;
-      margin: 10px 0 22px;
-    }
-    .tocTitle{
-      font-size: 13px;
-      text-transform: uppercase;
-      letter-spacing: .35px;
-      color: rgba(0,0,0,.72);
-      margin: 0 0 8px;
-    }
-    .toc a{
-      display:block;
-      padding: 6px 8px;
-      border-radius: 10px;
-      color: rgba(0,0,0,.76);
-      font-size: 14px;
-    }
-    .toc a:hover{
-      background: rgba(255,0,0,.05);
-      text-decoration:none;
-    }
-
-    /* Mermaid figure */
-    .figure{
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      padding: 12px;
-      background: #fff;
-      overflow-x:auto;
-      margin: 10px 0 8px;
-    }
-    .caption{
-      font-size: 12.8px;
-      color: rgba(0,0,0,.62);
-      line-height: 1.5;
-      margin-top: 10px;
-    }
-    .mermaid{
-      display:block;
-      padding: 2px 0;
-      background: transparent !important;
-    }
-    .mermaid svg{ max-width:100%; height:auto; }
-
-    /* Legal block: clear, professional, not scary */
-    .legalBox{
-      margin-top: 26px;
-      border: 1px solid rgba(255,0,0,.20);
-      background: rgba(255,0,0,.03);
-      border-radius: 14px;
-      padding: 16px 16px 12px;
-    }
-    .legalBox p{
-      font-size: 13.6px;
-      line-height: 1.6;
-      color: rgba(0,0,0,.78);
-      margin-bottom: 10px;
-    }
-    .legalLabel{
-      font-family: var(--mono);
       font-size: 12px;
-      color: rgba(0,0,0,.62);
-      margin-bottom: 8px;
+      margin-bottom: 14px;
     }
 
-    footer{
-      margin-top: 26px;
-      text-align:center;
-      color: rgba(0,0,0,.62);
-      font-size: 13px;
-      line-height: 1.55;
+    @media (max-width: 700px) {
+      .hero { min-height: 84vh; }
+      .hero-inner { padding-top: 48px; }
+      h1 { font-size: clamp(52px, 18vw, 78px); }
+      .subtitle { font-size: 21px; }
+      .toc-grid { grid-template-columns: 1fr; }
+      .toc { padding: 58px 0; }
+      .abstract { padding: 72px 0 58px; }
+      main { padding-top: 20px; }
+      .paper-section { padding: 62px 0 40px; }
+      .data-row { grid-template-columns: 1fr; gap: 2px; }
+      .data-row strong { text-align: left; }
     }
-    footer strong{ color: var(--red); }
+
+    @media print {
+      body { background: white; color: black; }
+      .hero, .toc-shell, .paper-section, footer { border-color: #ddd; }
+      .hero::before { display: none; }
+      .hero { min-height: auto; padding: 80px 0; }
+      .toc-shell { background: transparent; }
+      p, .abstract p, .toc a, .references li, .data-row { color: #222 !important; }
+      h1, h2, strong, .tagline, .footer-brand { color: #000 !important; }
+      .paper-section { break-inside: avoid-page; }
+      .flow { background: #f7f7f7; border-color: #ddd; }
+      .flow-step { background: #eee; color: #111; }
+    }
   </style>
 
-  <!-- Mermaid (GitHub Pages friendly) -->
-  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      mermaid.initialize({
-        startOnLoad: true,
-        theme: "base",
-        securityLevel: "loose",
-        themeVariables: {
-          background: "#ffffff",
-          primaryColor: "#ffffff",
-          primaryTextColor: "#000000",
-          primaryBorderColor: "#ff0000",
-          lineColor: "#000000",
-          secondaryColor: "#ffffff",
-          tertiaryColor: "#ff0000",
-          fontFamily: "Arial, Helvetica, sans-serif",
-          fontSize: "14px"
-        },
-        flowchart: { curve: "basis", padding: 12 }
-      });
-    });
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "HumanKey: Proof of Personhood for a Human Internet",
+    "alternativeHeadline": "HumanKey White Paper v1.0",
+    "datePublished": "2026-09-01",
+    "author": {
+      "@type": "Organization",
+      "name": "Hash Humanity"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Hash Humanity"
+    },
+    "description": "Technical white paper describing HumanKey, Hash Humanity's proof-of-personhood protocol.",
+    "mainEntityOfPage": "https://hashhumanity.world/humankey/"
+  }
   </script>
 </head>
 
 <body>
-  <div class="wrap">
-    <article class="paper">
-
-      <div class="center">
-        <img class="logo" src="logo.png" alt="Hash Humanity Logo" />
-        <h1>Hash Humanity</h1>
-        <p class="tagline">
-          <strong>Human-Verified Access Layer for the Modern Internet</strong><br/>
-          Powered by World ID Zero Knowledge Proofs
-        </p>
-        <div class="version"><em>White Paper – Version 1.1</em></div>
+  <header class="hero">
+    <div class="hero-inner">
+      <!-- Change only this src if your repo uses a different logo filename/path. -->
+      <img class="brand-logo" src="/logo.png" alt="Hash Humanity logo">
+      <div class="eyebrow">Hash Humanity · Technical White Paper</div>
+      <h1>HumanKey</h1>
+      <div class="subtitle">Proof of Personhood for a Human Internet</div>
+      <div class="meta">
+        <span>Version 1.0</span>
+        <span>September 2026</span>
+        <span>Hash Humanity</span>
       </div>
+      <div class="tagline">You are the proof, not the product.</div>
+    </div>
+  </header>
 
-      <hr class="rule"/>
+  <section class="abstract">
+    <div class="label">Abstract</div>
+    <p>The internet has an identity problem.</p>
+<p>We built systems that are exceptionally good at verifying accounts, devices, passwords, email addresses, phone numbers, and credentials. What we never really solved was something far more basic: Is there actually one human being behind this account, and is that human already represented somewhere else on the platform?</p>
+<p>An account is not a human being. An email address is not a human being. A phone number is not a human being. An IP address is not a human being. A CAPTCHA can make basic automation more difficult, but successfully completing one does not prove that the person behind it has not already created twenty other accounts.</p>
+<p>Imperva reported that automated systems generated more than 53 percent of global web traffic during 2025, compared with approximately 47 percent generated by humans. That does not mean 53 percent of social media accounts are bots. It means machines now generate the majority of measured web traffic.</p>
+<p>Artificial intelligence has also made synthetic identities cheaper, faster, and far more convincing. A modern bot can write differently, argue, translate, maintain a personality, generate profile imagery, respond to current events, and operate continuously.</p>
+<p>The problem is not simply that a bot can talk. The problem is that one person, organization, or government can pretend to be a crowd.</p>
+<p>HumanKey is the proof-of-personhood protocol behind Hash Humanity. Its foundation is deliberately simple: One living human. One persistent participation identity. One account.</p>
+<p>HumanKey combines explicit biometric consent, AWS Face Liveness, biometric uniqueness searching, mathematical biometric representations, zero-knowledge membership mechanisms, passkey authentication, controlled biometric account recovery, server-side state management, replay protections, rate limits, and automated security testing.</p>
+<p>HumanKey does not decide whether somebody is telling the truth. It does not decide what somebody should believe. It does not require people to publish their legal identity. It answers a narrower question: Is there a unique living human behind this participation identity?</p>
+  </section>
 
-      <nav class="toc" aria-label="Table of contents">
-        <div class="tocTitle">Contents</div>
-        <a href="#exec">Executive Summary</a>
-        <a href="#p1">1. The Problem</a>
-        <a href="#p2">2. Hash Humanity’s Approach</a>
-        <a href="#p3">3. Design Principles</a>
-        <a href="#p4">4. System Overview</a>
-        <a href="#p5">5. Cryptographic Foundations</a>
-        <a href="#flow">Proof Generation Flow</a>
-        <a href="#p6">6. Frontend Architecture</a>
-        <a href="#p7">7. Backend Architecture</a>
-        <a href="#p8">8. Voice Room</a>
-        <a href="#p9">9. Pulse: Peer-to-Peer Crypto Transfers</a>
-        <a href="#p10">10. Security Model</a>
-        <a href="#p11">11. Privacy and Compliance</a>
-        <a href="#p12">12. Applications</a>
-        <a href="#p13">13. Roadmap</a>
-        <a href="#p14">14. Governance</a>
-        <a href="#p15">15. License</a>
-        <a href="#p16">16. World App Mini-App Compatibility</a>
-        <a href="#p17">17. Philosophy</a>
-        <a href="#conclusion">Conclusion</a>
-      </nav>
-
-      <section id="exec" class="sec">
-        <h2>Executive Summary</h2>
-        <p>
-          Hash Humanity is a privacy-preserving human verification layer designed to restore trust, authenticity, and integrity to digital interaction. The modern internet has lost the ability to reliably distinguish real human participants from automated agents, AI-generated personas, and synthetic identities. This failure has degraded online discourse, enabled large-scale manipulation, compromised governance systems, and eroded confidence in digital communities.
-        </p>
-        <p>
-          Existing solutions attempt to solve this problem by identifying users. Hash Humanity takes a fundamentally different approach. Instead of proving who a person is, Hash Humanity proves only that a participant is a unique real human being. This distinction allows platforms to enforce human authenticity without collecting, storing, or processing personal, biometric, or identity data.
-        </p>
-        <p>
-          Hash Humanity is not a blockchain, not a token, and not a new identity protocol. It is an application-layer access and verification system built on top of World ID’s zero-knowledge Proof of Personhood. Its purpose is to make cryptographic human verification usable, scalable, and privacy-preserving for real-world platforms.
-        </p>
-      </section>
-
-      <hr class="rule"/>
-
-      <section id="p1" class="sec">
-        <h2>1. The Problem</h2>
-        <p>
-          Digital systems today cannot reliably distinguish between humans and machines. Automated bots generate content, influence opinions, manipulate markets, and participate in governance systems at scale. AI models can now convincingly imitate human communication. Identity farms create thousands of synthetic accounts. Together, these forces undermine the foundational assumption that a digital participant represents a real person.
-        </p>
-        <p>
-          Traditional identity-based solutions attempt to address this by requiring government identification, biometric scanning, or centralized identity providers. While these methods can increase confidence in uniqueness, they introduce significant risks. They require users to surrender sensitive personal information, create centralized databases that become high-value attack targets, and enable surveillance, tracking, and long-term profiling.
-        </p>
-        <p>
-          The core issue is that digital platforms do not need identity. They need authenticity. They need to know that each participant represents a real, unique human being — nothing more.
-        </p>
-      </section>
-
-      <section id="p2" class="sec">
-        <h2>2. Hash Humanity’s Approach</h2>
-        <p>
-          Hash Humanity provides a verification layer that allows a user to prove their humanity without revealing any personal information. The system integrates World ID’s zero-knowledge Proof of Personhood, enabling users to generate cryptographic proofs locally on their device. These proofs demonstrate membership in the global set of verified humans without disclosing identity, biometrics, or any identifying attributes.
-        </p>
-        <p>
-          Hash Humanity validates these proofs and issues short-lived access tokens that grant entry into human-verified environments. At no point does Hash Humanity store biometric data, identity attributes, or persistent user profiles. The system operates entirely on cryptographic assurance rather than trust in stored information.
-        </p>
-        <p>
-          This architecture enables platforms to build communities, governance systems, financial interactions, and communication environments that are provably human while remaining privacy-preserving.
-        </p>
-      </section>
-
-      <section id="p3" class="sec">
-        <h2>3. Design Principles</h2>
-        <p>
-          Hash Humanity is built around strict architectural principles. The system minimizes data collection, minimizes trust requirements, and minimizes attack surfaces. All sensitive computation occurs on the user’s device. Backend services remain stateless and privacy-preserving. No persistent identifiers are created. No cross-session tracking is possible. Every interaction is independently verified through cryptographic proof.
-        </p>
-        <p>
-          The goal is not merely compliance with privacy regulations, but the elimination of privacy risk by design.
-        </p>
-      </section>
-
-      <section id="p4" class="sec">
-        <h2>4. System Overview</h2>
-        <p>
-          When a user interacts with Hash Humanity, they authenticate using the World ID widget. This process produces a zero-knowledge proof on the user’s device. The proof demonstrates that the user is a member of the verified human set without revealing which member they are.
-        </p>
-        <p>
-          The proof is submitted to the Hash Humanity backend, where it is validated using Firebase Cloud Functions. The system checks proof integrity and verifies that the associated nullifier has not been previously used for the same action. If the proof is valid, the system issues a short-lived access token that allows the user to enter human-verified environments.
-        </p>
-        <p>
-          The backend stores only hashed nullifiers for replay protection. These hashes cannot be reverse-engineered or linked back to any individual.
-        </p>
-      </section>
-
-      <section id="p5" class="sec">
-        <h2>5. Cryptographic Foundations</h2>
-        <p>
-          Hash Humanity relies on the Semaphore protocol provided by World ID. Semaphore combines zk-SNARKs, Merkle tree membership proofs, and nullifiers to enable anonymous yet verifiable participation.
-        </p>
-        <p>
-          The Merkle tree represents the global set of verified humans. Each user occupies a leaf in the tree. When a user generates a proof, they demonstrate membership in the tree without revealing their leaf position. This preserves anonymity while ensuring uniqueness.
-        </p>
-        <p>
-          Nullifiers prevent Sybil attacks. Each action produces a unique nullifier that cannot be reused. This ensures that one human cannot perform the same restricted action multiple times under different identities.
-        </p>
-        <p>
-          Because all cryptographic computation occurs locally, Hash Humanity never handles biometric data or identity attributes.
-        </p>
-      </section>
-
-      <section id="flow" class="sec">
-        <h2>Proof Generation Flow</h2>
-        <div class="figure">
-          <div class="mermaid">
-flowchart TD
-  classDef device fill:#ffffff,stroke:#000000,color:#000000;
-  classDef backend fill:#000000,stroke:#ff0000,color:#ffffff;
-  classDef platform fill:#ff0000,stroke:#000000,color:#ffffff;
-  classDef decision fill:#ffffff,stroke:#ff0000,color:#000000;
-
-  A[Start Verification]
-  B[World ID Widget]
-  C[Generate zk-SNARK Proof]
-  D[Include Merkle Path & Root]
-  E[Create Nullifier]
-
-  F[Submit Proof + Nullifier]
-  G[Verify Proof Against Merkle Root]
-  H{Nullifier Used?}
-  I[Store Hashed Nullifier]
-  J[Issue Access Token]
-  K[Reject Request]
-
-  L[Access Human-Only Environment]
-
-  A --> B --> C --> D --> E --> F
-  F --> G --> H
-  H -- No --> I --> J --> L
-  H -- Yes --> K
-
-  class A,B,C,D,E device;
-  class F,G,I,J backend;
-  class L platform;
-  class H decision;
-          </div>
-          <div class="caption">
-            Figure 1. Proof generation occurs on-device. The backend verifies the proof against the Merkle root and enforces replay protection using a hashed nullifier.
-          </div>
-        </div>
-      </section>
-
-      <section id="p6" class="sec">
-        <h2>6. Frontend Architecture</h2>
-        <p>
-          The frontend is built using React and Vite. These technologies were chosen for their performance, modularity, and compatibility with cryptographic workflows in the browser.
-        </p>
-        <p>
-          The frontend integrates the World ID widget, orchestrates proof generation, manages ephemeral session data, and communicates with backend validation services. No user accounts, passwords, or personal information are required. The user experience is intentionally simple: verify once and gain access.
-        </p>
-        <p>
-          Sensitive operations remain isolated to the client environment, ensuring that privacy boundaries are preserved.
-        </p>
-      </section>
-
-      <section id="p7" class="sec">
-        <h2>7. Backend Architecture</h2>
-        <p>The backend is implemented using Firebase and Cloudflare.</p>
-        <p>
-          Firebase Cloud Functions validate proofs, verify nullifiers, and issue short-lived access tokens. Firebase Realtime Database stores only hashed nullifiers required to prevent replay attacks. Firebase Authentication provides token infrastructure without maintaining user identity.
-        </p>
-        <p>
-          Cloudflare provides global routing, DDoS protection, bot mitigation, and Web Application Firewall capabilities. Cloudflare Workers may perform edge validation and rate limiting to reduce backend load. Cloudflare WebRTC enables encrypted peer-to-peer audio communication.
-        </p>
-        <p>
-          This hybrid architecture ensures global scalability, resilience, and performance while maintaining strict privacy guarantees.
-        </p>
-      </section>
-
-      <section id="p8" class="sec">
-        <h2>8. Voice Room</h2>
-        <p>
-          Voice Room is a real-time audio communication environment restricted to verified humans. It uses Cloudflare WebRTC to establish encrypted peer-to-peer audio channels between participants.
-        </p>
-        <p>
-          No audio is recorded, stored, or analyzed. The system exists solely as a human-verified communication layer. Communities can host discussions, debates, governance sessions, or social interactions without fear of bots, impersonators, or AI voices.
-        </p>
-      </section>
-
-      <section id="p9" class="sec">
-        <h2>9. Pulse: Peer-to-Peer Crypto Transfers</h2>
-        <p>
-          Pulse enables direct crypto transfers between verified humans. Hash Humanity does not custody funds, store wallet addresses, or log transactions. Its role is limited to verifying that both participants are unique humans at the moment of interaction.
-        </p>
-        <p>
-          Transfers occur directly through the user’s chosen blockchain or wallet infrastructure. This creates a new trust primitive for decentralized finance, where authenticity is guaranteed without compromising privacy.
-        </p>
-      </section>
-
-      <section id="p10" class="sec">
-        <h2>10. Security Model</h2>
-        <p>
-          Hash Humanity is designed around minimizing trust. There is no identity database to breach. There are no biometric records to steal. There are no user profiles to correlate.
-        </p>
-        <p>
-          All backend services are stateless. Nullifiers prevent replay attacks. Cloudflare protects against network-level abuse. The cryptographic guarantees of World ID ensure uniqueness without disclosure.
-        </p>
-        <p>
-          The system reduces risk by eliminating sensitive data entirely.
-        </p>
-      </section>
-
-      <section id="p11" class="sec">
-        <h2>11. Privacy and Compliance</h2>
-        <p>
-          Hash Humanity is designed to minimize personal data handling. Because no biometric or identity data is collected or stored by Hash Humanity, privacy risk is reduced by design.
-        </p>
-        <p>
-          Users cannot be tracked across sessions by Hash Humanity. No behavioral profiles are constructed. Verification is performed via cryptographic proofs rather than identity records.
-        </p>
-        <p>
-          Privacy is not a policy. It is an architectural consequence.
-        </p>
-      </section>
-
-      <section id="p12" class="sec">
-        <h2>12. Applications</h2>
-        <p>
-          Hash Humanity can be used for human-verified social platforms, governance voting systems, research studies, financial interaction gating, and AI-safe communication environments. Any system that requires authentic human participation without identity exposure can integrate Hash Humanity.
-        </p>
-      </section>
-
-      <section id="p13" class="sec">
-        <h2>13. Roadmap</h2>
-        <p>
-          Hash Humanity begins as an application layer with a hosted verification endpoint. Future phases may include open-source validation libraries, additional deployment targets, and architectures that reduce centralization while preserving cryptographic guarantees.
-        </p>
-      </section>
-
-      <section id="p14" class="sec">
-        <h2>14. Governance</h2>
-        <p>
-          As the system matures, governance may transition toward transparent, auditable frameworks aligned with community oversight.
-        </p>
-      </section>
-
-      <section id="p15" class="sec">
-        <h2>15. License</h2>
-        <p>Hash Humanity core components are released under the MIT License unless otherwise stated.</p>
-      </section>
-
-      <section id="p16" class="sec">
-        <h2>16. World App Mini-App Compatibility</h2>
-        <p>
-          Hash Humanity is designed to operate within WebView environments such as the World App Mini-App ecosystem. The system requires no persistent storage, no background processes, and no platform-specific dependencies, making it compatible with Mini-App constraints.
-        </p>
-      </section>
-
-      <section id="p17" class="sec">
-        <h2>17. Philosophy</h2>
-        <p>Humanity should be provable without being traceable.</p>
-        <p>Trust should be mathematical.</p>
-        <p>Identity should remain private.</p>
-      </section>
-
-      <section id="conclusion" class="sec">
-        <h2>Conclusion</h2>
-        <p>
-          Hash Humanity restores authenticity to digital interaction without creating a surveillance system. It proves humanity, not identity. It replaces trust with cryptography. It enables human-verified digital spaces at global scale.
-        </p>
-      </section>
-
-      <div class="legalBox" id="legal">
-        <div class="legalLabel">LEGAL & DISCLAIMER</div>
-        <p>
-          This white paper is provided for informational and discussion purposes only. It does not constitute legal advice, financial advice, investment advice, or an offer to sell or solicitation to buy any security, token, or financial instrument.
-        </p>
-        <p>
-          Hash Humanity is an independent project. “World ID,” “World App,” and related marks may be trademarks of their respective owners. Any references are for descriptive purposes only and do not imply affiliation, endorsement, partnership, or sponsorship unless explicitly stated in writing by the relevant parties.
-        </p>
-        <p>
-          Technical descriptions reflect an evolving implementation and may change over time. Features may be modified, delayed, or removed. No guarantees are made regarding availability, performance, security, or fitness for a particular purpose.
-        </p>
-        <p>
-          To the maximum extent permitted by applicable law, Hash Humanity and its contributors disclaim liability for any direct or indirect damages arising from use of, or reliance on, this document or related software.
-        </p>
-        <p>
-          Privacy posture: Hash Humanity is designed to validate zero-knowledge proofs and minimize personal data handling. Deployed implementations and integrators are responsible for reviewing current data flows, security controls, and compliance obligations for their specific use case and jurisdiction.
-        </p>
+  <div class="toc-shell">
+    <section class="toc">
+      <h2>Contents</h2>
+      <div class="toc-grid">
+        <a href="#section-1"><span>01</span>The Internet Was Never Designed to Count People</a>
+<a href="#section-2"><span>02</span>We Are Already Sharing the Internet With More Machines Than Humans</a>
+<a href="#section-3"><span>03</span>The Real Problem Is Not Bots. It Is Synthetic People.</a>
+<a href="#section-4"><span>04</span>Duplicate Accounts Distort Almost Everything</a>
+<a href="#section-5"><span>05</span>What a Bot Farm Can Actually Do</a>
+<a href="#section-6"><span>06</span>Russian Influence Operations</a>
+<a href="#section-7"><span>07</span>Chinese Influence Operations</a>
+<a href="#section-8"><span>08</span>Manufacturing Consensus</a>
+<a href="#section-9"><span>09</span>Hash Humanity</a>
+<a href="#section-10"><span>10</span>HumanKey Architecture</a>
+<a href="#section-11"><span>11</span>Consent Comes First</a>
+<a href="#section-12"><span>12</span>Liveness</a>
+<a href="#section-13"><span>13</span>What Happens to the Face</a>
+<a href="#section-14"><span>14</span>Duplicate Detection</a>
+<a href="#section-15"><span>15</span>Why Duplicate Resistance Matters So Much</a>
+<a href="#section-16"><span>16</span>Zero-Knowledge Membership</a>
+<a href="#section-17"><span>17</span>Nullifiers</a>
+<a href="#section-18"><span>18</span>Passkeys</a>
+<a href="#section-19"><span>19</span>Account Recovery</a>
+<a href="#section-20"><span>20</span>The HumanKey Recovery Process</a>
+<a href="#section-21"><span>21</span>The One-Scan Recovery Design</a>
+<a href="#section-22"><span>22</span>Recovery Preserves One Human, One Account</a>
+<a href="#section-23"><span>23</span>Recovery Failure</a>
+<a href="#section-24"><span>24</span>Recovery Security Testing</a>
+<a href="#section-25"><span>25</span>Broader HumanKey Testing</a>
+<a href="#section-26"><span>26</span>Rate Limiting</a>
+<a href="#section-27"><span>27</span>Replay Protection</a>
+<a href="#section-28"><span>28</span>Server-Side Authority</a>
+<a href="#section-29"><span>29</span>Software Architecture</a>
+<a href="#section-30"><span>30</span>Language Accessibility</a>
+<a href="#section-31"><span>31</span>Security Threat Model</a>
+<a href="#section-32"><span>32</span>What HumanKey Does Not Do</a>
+<a href="#section-33"><span>33</span>Why That Difference Matters</a>
+<a href="#section-34"><span>34</span>Toward a Social Graph of Humans</a>
+<a href="#section-35"><span>35</span>Current Validation Status</a>
+<a href="#section-36"><span>36</span>Security Is Never Finished</a>
+<a href="#section-37"><span>37</span>Where This Is Going</a>
+<a href="#section-38"><span>38</span>Conclusion</a>
       </div>
-
-      <hr class="rule"/>
-
-      <footer>
-        <p>
-          <strong>Hash Humanity</strong><br/>
-          Privacy-Preserving Human Verification for the Modern Internet<br/>
-          Powered by World ID Zero-Knowledge Proofs
-        </p>
-        <p>
-          <em>© <span id="y"></span> Hash Humanity — Privacy by Design</em>
-        </p>
-      </footer>
-
-    </article>
+    </section>
   </div>
 
-  <script>
-    document.getElementById("y").textContent = new Date().getFullYear();
-  </script>
+  <main>
+    
+    <section id="section-1" class="paper-section">
+      <div class="section-kicker">01</div>
+      <h2>The Internet Was Never Designed to Count People</h2>
+      <div class="section-rule"></div>
+      <p>Most internet authentication systems answer some version of the same question: Can you prove that you control this credential?</p>
+<p>That credential might be an email address, phone number, password, authentication application, OAuth account, security key, device, or passkey. Those systems can be extremely secure, but they still prove control of a credential. They do not prove human uniqueness.</p>
+<p>A platform can verify ten email addresses without knowing whether those addresses belong to ten humans or one human. Credential uniqueness is not human uniqueness.</p>
+<p>On most platforms, creating another identity is cheap. Create another email address. Buy another phone number. Clear the browser. Use another device. Change the IP address. Register another username. The credential changes. The human does not.</p>
+<p>HumanKey moves the uniqueness boundary from the credential to the person.</p>
+    </section>
+    
+    <section id="section-2" class="paper-section">
+      <div class="section-kicker">02</div>
+      <h2>We Are Already Sharing the Internet With More Machines Than Humans</h2>
+      <div class="section-rule"></div>
+      <p>Automation itself is not bad. Search engines, businesses, security systems, and accessibility tools all use automation. The problem begins when automated systems impersonate independent human participants.</p>
+<p>According to Imperva&#x27;s 2026 Bad Bot Report, automated systems accounted for more than 53 percent of global web traffic during 2025. Human traffic represented approximately 47 percent.</p>
+<p>Artificial intelligence makes this considerably more important. The old bot was obvious. Those clues are disappearing. A capable automated persona can intentionally make mistakes, use slang, wait before responding, remember conversations, disagree with another bot, and maintain a fictional history.</p>
+<p>Trying to determine whether somebody is human solely by examining what they write is going to become increasingly unreliable. HumanKey takes the opposite approach. Instead of asking whether content looks human, it asks whether the participation identity was established by a unique living human.</p>
+    </section>
+    
+    <section id="section-3" class="paper-section">
+      <div class="section-kicker">03</div>
+      <h2>The Real Problem Is Not Bots. It Is Synthetic People.</h2>
+      <div class="section-rule"></div>
+      <p>There is an important difference between automation and synthetic identity. A bot that retrieves weather information is automation. A bot pretending to be an ordinary citizen while arguing about a public issue is something entirely different. That is a synthetic person.</p>
+<p>Synthetic people become far more dangerous when they operate in groups. Five hundred apparently unrelated accounts supporting the same position can create a powerful social signal. If those accounts belong to one operator, the crowd exists only on the screen.</p>
+<p>That is synthetic consensus.</p>
+    </section>
+    
+    <section id="section-4" class="paper-section">
+      <div class="section-kicker">04</div>
+      <h2>Duplicate Accounts Distort Almost Everything</h2>
+      <div class="section-rule"></div>
+      <p>Duplicate accounts are not a minor moderation problem. They corrupt the meaning of the social graph itself.</p>
+<p>They can manipulate follower counts, likes, polls, comments, reports, trends, hashtags, apparent popularity, apparent opposition, political enthusiasm, product popularity, and community sentiment.</p>
+<p>They also enable ban evasion, reputation resets, harassment through alternate accounts, sockpuppeting, account farming, fake grassroots support, manufactured customers, and manufactured fans.</p>
+<div class="data-row"><span>The underlying vulnerability is the same</span><strong>one human can become many apparent humans.</strong></div>
+    </section>
+    
+    <section id="section-5" class="paper-section">
+      <div class="section-kicker">05</div>
+      <h2>What a Bot Farm Can Actually Do</h2>
+      <div class="section-rule"></div>
+      <p>A bot farm does not need to convince everybody. It only needs to alter the environment around the conversation.</p>
+<p>A coordinated network can introduce a narrative, repeat it through apparently unrelated accounts, like and share those accounts, attack competing narratives, create the appearance of momentum, expose genuine humans to the content, and encourage genuine humans to continue the amplification.</p>
+<p>The machine does not need to replace human opinion. It only needs to influence the environment in which human opinion develops.</p>
+    </section>
+    
+    <section id="section-6" class="paper-section">
+      <div class="section-kicker">06</div>
+      <h2>Russian Influence Operations</h2>
+      <div class="section-rule"></div>
+      <p>In July 2024, the United States Department of Justice announced action against a Russian government-linked social media bot farm involving 968 fictitious accounts. The operation incorporated artificial intelligence and created false personas that frequently purported to belong to people in the United States.</p>
+<p>Those personas were used to distribute narratives supporting Russian government objectives.</p>
+<p>A message openly issued by a foreign government is interpreted one way. The same message apparently coming from hundreds of ordinary Americans is interpreted another way. That difference is exactly why synthetic identities have value.</p>
+    </section>
+    
+    <section id="section-7" class="paper-section">
+      <div class="section-kicker">07</div>
+      <h2>Chinese Influence Operations</h2>
+      <div class="section-rule"></div>
+      <p>The United States Department of Justice has documented another example involving China&#x27;s Ministry of Public Security. Federal prosecutors alleged that members of the 912 Special Project Working Group created thousands of fake social media personas. Some purported to be Americans.</p>
+<p>According to DOJ, those personas were used to promote PRC narratives, attack critics, harass dissidents, and create the appearance that ordinary users supported positions favored by the Chinese government.</p>
+<p>The technological change is the ability to surround propaganda with synthetic citizens.</p>
+    </section>
+    
+    <section id="section-8" class="paper-section">
+      <div class="section-kicker">08</div>
+      <h2>Manufacturing Consensus</h2>
+      <div class="section-rule"></div>
+      <p>The traditional internet account model makes identity multiplication economically attractive.</p>
+<p>Without proof of personhood, one operator plus automation plus 10,000 credentials can appear to be 10,000 humans.</p>
+<p>HumanKey changes the resource requirement. The security objective is straightforward: 10,000 independent HumanKey identities should require something approaching 10,000 independently enrolled humans.</p>
+<p>That does not eliminate coordinated movements. Ten thousand real people can still organize. What changes is the ability of one person to impersonate those 10,000 people.</p>
+    </section>
+    
+    <section id="section-9" class="paper-section">
+      <div class="section-kicker">09</div>
+      <h2>Hash Humanity</h2>
+      <div class="section-rule"></div>
+      <p>Hash Humanity begins with a different assumption about social media. People should not have to compete with unlimited artificial identities simply to have a conversation.</p>
+<p>The platform is built around one human, one account; human verification without mandatory public identification; persistent identity; no engagement-ranking algorithm designed to maximize provocation; no behavioral advertising dependency; and freedom of human expression.</p>
+<p>HumanKey proves humanity and uniqueness. It does not determine whether somebody&#x27;s opinion is correct.</p>
+    </section>
+    
+    <section id="section-10" class="paper-section">
+      <div class="section-kicker">10</div>
+      <h2>HumanKey Architecture</h2>
+      <div class="section-rule"></div>
+      <p>HumanKey separates several security problems that are often incorrectly treated as one problem.</p>
+<p>It asks whether a live person is physically participating, whether that person appears to have enrolled already, whether the person can prove membership without publicly revealing biometric identity, whether the established human can authenticate securely later, and whether that human can recover the same identity after losing authentication credentials.</p>
+<div class="flow"><span class="flow-step">Enrollment flow:
+Human user</span><span class="arrow">→</span><span class="flow-step">Disclosure and consent</span><span class="arrow">→</span><span class="flow-step">AWS Face Liveness</span><span class="arrow">→</span><span class="flow-step">Biometric uniqueness search</span><span class="arrow">→</span><span class="flow-step">Existing human check.</span></div>
+<div class="data-row"><span>Existing match</span><strong>Block new identity or enter recovery.</strong></div>
+<div class="flow"><span class="flow-step">No existing match:
+Unique human</span><span class="arrow">→</span><span class="flow-step">Biometric representation associated</span><span class="arrow">→</span><span class="flow-step">Zero-knowledge membership</span><span class="arrow">→</span><span class="flow-step">Passkey binding</span><span class="arrow">→</span><span class="flow-step">Active HumanKey</span><span class="arrow">→</span><span class="flow-step">Hash Humanity.</span></div>
+<p>No single component is expected to solve the entire problem. HumanKey uses layers.</p>
+    </section>
+    
+    <section id="section-11" class="paper-section">
+      <div class="section-kicker">11</div>
+      <h2>Consent Comes First</h2>
+      <div class="section-rule"></div>
+      <p>HumanKey does not treat access to a camera as permission to conduct biometric processing.</p>
+<div class="data-row"><span>The sequence is deliberate</span><strong>Disclosure &gt; Consent &gt; Camera &gt; Liveness &gt; Uniqueness.</strong></div>
+<p>Biometrics are sensitive. HumanKey therefore gates biometric operations behind the required consent state. The implementation includes automated tests covering consent gating and invalid session behavior.</p>
+    </section>
+    
+    <section id="section-12" class="paper-section">
+      <div class="section-kicker">12</div>
+      <h2>Liveness</h2>
+      <div class="section-rule"></div>
+      <p>HumanKey uses AWS Face Liveness as its production liveness provider. The purpose is to determine whether a live participant is physically present rather than simply accepting a facial image.</p>
+<p>HumanKey&#x27;s implemented policy has used a liveness confidence threshold of 85.</p>
+<p>Liveness makes attacks involving photographs, displayed images, prerecorded material, and other presentation techniques more difficult. It is one part of a larger security system and is not presented as mathematically infallible.</p>
+    </section>
+    
+    <section id="section-13" class="paper-section">
+      <div class="section-kicker">13</div>
+      <h2>What Happens to the Face</h2>
+      <div class="section-rule"></div>
+      <p>HumanKey does process a person&#x27;s face. There is no honest way to perform facial biometric comparison without processing facial information.</p>
+<p>AWS Rekognition collections extract and retain mathematical facial representations used for comparison rather than operating as a conventional public photo album of enrolled users.</p>
+<div class="flow"><span class="flow-step">The process is: Live face</span><span class="arrow">→</span><span class="flow-step">Temporary visual input</span><span class="arrow">→</span><span class="flow-step">Facial feature extraction</span><span class="arrow">→</span><span class="flow-step">Mathematical representation</span><span class="arrow">→</span><span class="flow-step">Face vector</span><span class="arrow">→</span><span class="flow-step">Uniqueness comparison.</span></div>
+<p>The face vector is still biometric information and should be treated as sensitive. The privacy distinction is that the persistent biometric uniqueness record is a mathematical representation used for comparison, rather than an ordinary public photograph of the user&#x27;s face.</p>
+    </section>
+    
+    <section id="section-14" class="paper-section">
+      <div class="section-kicker">14</div>
+      <h2>Duplicate Detection</h2>
+      <div class="section-rule"></div>
+      <p>After liveness succeeds, HumanKey compares the candidate against the enrolled biometric population. The production AWS path has used SearchUsersByImage with a similarity threshold of 90.0.</p>
+<p>If the candidate strongly corresponds to an existing HumanKey participant, the system does not simply issue another identity. The event becomes duplicate protection or account recovery depending upon context.</p>
+<p>For a new unique participant, the AWS enrollment path includes creation of the Rekognition user and facial association process.</p>
+<div class="flow"><span class="flow-step">New candidate</span><span class="arrow">→</span><span class="flow-step">Liveness passed</span><span class="arrow">→</span><span class="flow-step">Search enrolled humans</span><span class="arrow">→</span><span class="flow-step">Match means stop new identity. No match means create user</span><span class="arrow">→</span><span class="flow-step">index face</span><span class="arrow">→</span><span class="flow-step">associate face</span><span class="arrow">→</span><span class="flow-step">HumanKey commit.</span></div>
+<p>This is the heart of HumanKey&#x27;s duplicate-account resistance.</p>
+    </section>
+    
+    <section id="section-15" class="paper-section">
+      <div class="section-kicker">15</div>
+      <h2>Why Duplicate Resistance Matters So Much</h2>
+      <div class="section-rule"></div>
+      <p>A banned user on a conventional platform can create another email address. A scammer can abandon a damaged reputation. A harasser can create five accounts. A political operator can create hundreds of credentials.</p>
+<p>HumanKey changes that equation. Another email address does not create another face. Another browser does not create another human. Another phone does not create another human. Another IP address does not create another human.</p>
+<p>The uniqueness check follows the human rather than the credential.</p>
+<p>That dramatically raises the cost of sockpuppeting, account farming, ban evasion, harassment through alternate accounts, follower inflation, poll manipulation, reputation resets, fake grassroots campaigns, coordinated artificial amplification, and manufactured consensus.</p>
+<p>This is not merely a login feature. It changes what an account means.</p>
+    </section>
+    
+    <section id="section-16" class="paper-section">
+      <div class="section-kicker">16</div>
+      <h2>Zero-Knowledge Membership</h2>
+      <div class="section-rule"></div>
+      <p>Proving human uniqueness creates an obvious privacy question. If biometrics establish that somebody is unique, does the social platform need access to those biometrics every time that person participates? No.</p>
+<p>HumanKey separates enrollment from participation.</p>
+<div class="flow"><span class="flow-step">Biometric verification</span><span class="arrow">→</span><span class="flow-step">Unique human established</span><span class="arrow">→</span><span class="flow-step">Membership commitment</span><span class="arrow">→</span><span class="flow-step">Semaphore membership.</span></div>
+<div class="flow"><span class="flow-step">On the social side:
+Membership witness</span><span class="arrow">→</span><span class="flow-step">Zero-knowledge proof</span><span class="arrow">→</span><span class="flow-step">Valid HumanKey participant.</span></div>
+<p>The point is to establish membership in a set of verified humans and allow that membership to be demonstrated without unnecessarily exposing the underlying biometric identity.</p>
+    </section>
+    
+    <section id="section-17" class="paper-section">
+      <div class="section-kicker">17</div>
+      <h2>Nullifiers</h2>
+      <div class="section-rule"></div>
+      <p>Anonymous participation creates another challenge. If the system does not publicly identify the person, how can it stop one valid member from repeatedly performing an action that should only happen once?</p>
+<p>Nullifiers provide scoped accountability. Conceptually, a nullifier is derived from an identity secret and an action scope.</p>
+<p>The system can determine that a valid HumanKey member has already performed a particular scoped action without necessarily determining the person&#x27;s public legal identity.</p>
+    </section>
+    
+    <section id="section-18" class="paper-section">
+      <div class="section-kicker">18</div>
+      <h2>Passkeys</h2>
+      <div class="section-rule"></div>
+      <p>A person should not need to perform biometric enrollment every time they log in. Once HumanKey establishes the human, routine authentication moves to passkeys.</p>
+<p>The server issues a cryptographic challenge. The user&#x27;s authenticator signs it with a private key. The signed response returns to the server. The server verifies it with the public key and authenticates the user.</p>
+<p>The private key remains with the authenticator. The face establishes the human. The passkey authenticates the established human afterward.</p>
+    </section>
+    
+    <section id="section-19" class="paper-section">
+      <div class="section-kicker">19</div>
+      <h2>Account Recovery</h2>
+      <div class="section-rule"></div>
+      <p>Recovery is not an afterthought in HumanKey. It is one of the most important security boundaries in the protocol.</p>
+<p>A user can lose a phone. A computer can fail. A passkey can be deleted. An authenticator can become inaccessible. The human still exists.</p>
+<p>HumanKey follows a simple recovery principle: Recover the human. Do not recreate the human.</p>
+<p>Enrollment asks whether this is a new unique human. Recovery asks whether this is the human who already owns an existing HumanKey. Those are completely different operations.</p>
+    </section>
+    
+    <section id="section-20" class="paper-section">
+      <div class="section-kicker">20</div>
+      <h2>The HumanKey Recovery Process</h2>
+      <div class="section-rule"></div>
+      <div class="flow"><span class="flow-step">Recovery request</span><span class="arrow">→</span><span class="flow-step">Recovery session created</span><span class="arrow">→</span><span class="flow-step">Biometric consent confirmed</span><span class="arrow">→</span><span class="flow-step">AWS Face Liveness</span><span class="arrow">→</span><span class="flow-step">Search existing biometric identity.</span></div>
+<div class="data-row"><span>If there is no valid match</span><strong>No valid match &gt; Safe failure or controlled retry.</strong></div>
+<div class="flow"><span class="flow-step">If there is a valid match:
+Existing match</span><span class="arrow">→</span><span class="flow-step">Resolve existing HumanKey</span><span class="arrow">→</span><span class="flow-step">Recovery authorized</span><span class="arrow">→</span><span class="flow-step">New passkey ceremony</span><span class="arrow">→</span><span class="flow-step">Existing account restored.</span></div>
+<p>Recovery does not intentionally create another HumanKey identity. The same human returns to the same account.</p>
+    </section>
+    
+    <section id="section-21" class="paper-section">
+      <div class="section-kicker">21</div>
+      <h2>The One-Scan Recovery Design</h2>
+      <div class="section-rule"></div>
+      <p>During development, a recovery problem was identified where facial verification could occur twice. That was not the intended architecture.</p>
+<p>Recovery should require one live biometric ceremony for the recovery event. The corrected design allows the successful liveness result to continue through identity resolution rather than automatically requiring another redundant scan.</p>
+<p>This reduces unnecessary biometric processing, user friction, provider calls, and the possibility of conflicting biometric state.</p>
+    </section>
+    
+    <section id="section-22" class="paper-section">
+      <div class="section-kicker">22</div>
+      <h2>Recovery Preserves One Human, One Account</h2>
+      <div class="section-rule"></div>
+      <div class="flow"><span class="flow-step">Without protected recovery:
+Passkey lost</span><span class="arrow">→</span><span class="flow-step">Create another account</span><span class="arrow">→</span><span class="flow-step">Same human, two identities.</span></div>
+<div class="flow"><span class="flow-step">HumanKey instead follows:
+Passkey lost</span><span class="arrow">→</span><span class="flow-step">Recovery request</span><span class="arrow">→</span><span class="flow-step">Live human verified</span><span class="arrow">→</span><span class="flow-step">Existing biometric identity found</span><span class="arrow">→</span><span class="flow-step">Existing HumanKey resolved</span><span class="arrow">→</span><span class="flow-step">New passkey</span><span class="arrow">→</span><span class="flow-step">Same human, same account, same identity.</span></div>
+<p>Recovery therefore reinforces HumanKey&#x27;s Sybil resistance rather than bypassing it.</p>
+    </section>
+    
+    <section id="section-23" class="paper-section">
+      <div class="section-kicker">23</div>
+      <h2>Recovery Failure</h2>
+      <div class="section-rule"></div>
+      <p>A failed recovery match must not become a shortcut to creating another account.</p>
+<p>If the system cannot establish a sufficiently strong relationship with an existing HumanKey, the correct result is controlled failure or retry.</p>
+<p>Security-sensitive ambiguity should fail closed. HumanKey development has also included handling for stale biometric-only states so legitimate users are not incorrectly trapped by inconsistent identity state.</p>
+    </section>
+    
+    <section id="section-24" class="paper-section">
+      <div class="section-kicker">24</div>
+      <h2>Recovery Security Testing</h2>
+      <div class="section-rule"></div>
+      <p>Recovery has been tested independently because of the damage a weak recovery system could do to the one-human-one-account model.</p>
+<p>HUMANKEY RECOVERY VALIDATION
+Tests executed: 10
+Tests passed: 10
+Tests failed: 0
+Result: PASS</p>
+<p>The test run followed investigation of the redundant face-scan behavior. When the corrective patch was subsequently checked, the implementation reported that the relevant correction was already present and no additional file changes were required.</p>
+<p>The regression suite completed 10 passed and 0 failed. This does not mean HumanKey can never contain another bug. It means every test in that recovery regression suite passed at that point in development.</p>
+    </section>
+    
+    <section id="section-25" class="paper-section">
+      <div class="section-kicker">25</div>
+      <h2>Broader HumanKey Testing</h2>
+      <div class="section-rule"></div>
+      <p>Recovery is only one part of the testing program.</p>
+<div class="data-row"><span>HUMANKEY SECURITY VALIDATION
+Tests passed</span><strong>182
+Tests skipped: 1
+Result: PASS</strong></div>
+<p>Testing has covered biometric consent, AWS gating, invalid sessions, required capture state, recovery, duplicate detection, provider response handling, biometric searching, passkey authorization, replay protection, state transitions, calibration, multi-template behavior, rate limiting, and blocked attempts.</p>
+<p>The purpose of the test suite is not merely to prove that legitimate enrollment works. A security system must also prove that invalid operations do not work.</p>
+    </section>
+    
+    <section id="section-26" class="paper-section">
+      <div class="section-kicker">26</div>
+      <h2>Rate Limiting</h2>
+      <div class="section-rule"></div>
+      <p>Proof of personhood does not make humans harmless. A real human can spam, scrape, automate activity, or attack an API.</p>
+<p>HumanKey combines identity scarcity with rate controls. Implemented safeguards have included 3 applicable liveness attempts within a 24-hour control window, a 60-second cooldown, a 500-per-day global AWS liveness ceiling, HTTP 429 rejection, idempotency protections, an administrative kill switch, and automated blocked-attempt testing.</p>
+<p>Proof of personhood limits identity multiplication. Rate limiting limits action multiplication.</p>
+    </section>
+    
+    <section id="section-27" class="paper-section">
+      <div class="section-kicker">27</div>
+      <h2>Replay Protection</h2>
+      <div class="section-rule"></div>
+      <p>A successful security ceremony should not become a permanent reusable ticket.</p>
+<div class="flow"><span class="flow-step">HumanKey treats authorization and verification state as consumable:
+Session created</span><span class="arrow">→</span><span class="flow-step">Security ceremony</span><span class="arrow">→</span><span class="flow-step">Result verified</span><span class="arrow">→</span><span class="flow-step">Result consumed</span><span class="arrow">→</span><span class="flow-step">State advances</span><span class="arrow">→</span><span class="flow-step">Replay attempt rejected.</span></div>
+<p>This principle applies particularly to credential authorization and security-sensitive enrollment state.</p>
+    </section>
+    
+    <section id="section-28" class="paper-section">
+      <div class="section-kicker">28</div>
+      <h2>Server-Side Authority</h2>
+      <div class="section-rule"></div>
+      <p>The browser is not trusted to decide whether somebody is human.</p>
+<p>A malicious user controls their browser. They can modify JavaScript, alter requests, manipulate local storage, and bypass interface screens.</p>
+<p>Security decisions therefore belong on the server. The interface can request a state transition. The server determines whether the transition is valid.</p>
+    </section>
+    
+    <section id="section-29" class="paper-section">
+      <div class="section-kicker">29</div>
+      <h2>Software Architecture</h2>
+      <div class="section-rule"></div>
+      <p>HumanKey and Hash Humanity use different technologies for different jobs.</p>
+<p>HumanKey uses Python for biometric and security service logic and testing, FastAPI for the API layer, Pydantic for structured validation, AWS Face Liveness for production liveness verification, AWS Rekognition for production biometric uniqueness and matching, Semaphore for zero-knowledge membership components, and passkeys for cryptographic routine authentication.</p>
+<p>Hash Humanity uses React, JavaScript and JSX, HTML, CSS, and Firebase for appropriate application, hosting, account, and real-time functionality.</p>
+<p>The biometric authority is deliberately separated from the presentation layer.</p>
+    </section>
+    
+    <section id="section-30" class="paper-section">
+      <div class="section-kicker">30</div>
+      <h2>Language Accessibility</h2>
+      <div class="section-rule"></div>
+      <p>A human network should not define humanity according to language.</p>
+<p>Hash Humanity has been developed with internationalization support including English, Spanish, Portuguese, Chinese, German, French, Malay, and Korean.</p>
+<p>If the objective is a human social network, geographical and linguistic boundaries should not determine who can participate in the conversation.</p>
+    </section>
+    
+    <section id="section-31" class="paper-section">
+      <div class="section-kicker">31</div>
+      <h2>Security Threat Model</h2>
+      <div class="section-rule"></div>
+      <p>HumanKey considers several attacker classes.</p>
+<p>Automated bot: attempts participation without a legitimate human. Defense includes liveness, server-side enrollment state, and identity controls.</p>
+<p>Single-human Sybil attacker: attempts to create many identities. Primary defense is biometric uniqueness.</p>
+<p>Account farm: attempts to manufacture large numbers of verified accounts. Defenses include liveness, uniqueness, and rate limits.</p>
+<p>Presentation attacker: attempts photographs or prerecorded imagery. Defense is AWS Face Liveness.</p>
+<p>Credential attacker: attempts to steal login access. Defense is passkey public-key authentication.</p>
+<p>Replay attacker: attempts to reuse previously valid security artifacts. Defenses include expiry, consumption state, and server-side transitions.</p>
+<p>Ban evader: attempts to return under another identity. Defense is persistent biometric uniqueness.</p>
+<p>Influence operation: attempts to manufacture thousands of apparent independent citizens. Defense is changing the scarce resource from accounts to actual humans.</p>
+    </section>
+    
+    <section id="section-32" class="paper-section">
+      <div class="section-kicker">32</div>
+      <h2>What HumanKey Does Not Do</h2>
+      <div class="section-rule"></div>
+      <p>HumanKey does not determine truth.</p>
+<p>A verified human can still lie, spread misinformation, be paid, participate in propaganda, harass somebody, or simply be an asshole.</p>
+<p>HumanKey does not attempt to technologically sanitize humanity. The protocol addresses a narrower problem: one human should not cheaply become a hundred apparent humans.</p>
+<p>Human disagreement remains. Synthetic population is what becomes dramatically harder.</p>
+    </section>
+    
+    <section id="section-33" class="paper-section">
+      <div class="section-kicker">33</div>
+      <h2>Why That Difference Matters</h2>
+      <div class="section-rule"></div>
+      <p>Consider two platforms.</p>
+<p>Platform A allows one human to create fifty accounts.</p>
+<p>Platform B restricts one human with high confidence to one persistent identity.</p>
+<p>Both platforms contain imperfect people, but they do not have the same social dynamics. On Platform A, one attacker can appear to be fifty people. On Platform B, fifty identities should require something approaching fifty enrolled humans.</p>
+<p>That changes reputation, moderation, polls, voting, follower counts, harassment, ban enforcement, community governance, apparent popularity, political organization, and synthetic consensus.</p>
+    </section>
+    
+    <section id="section-34" class="paper-section">
+      <div class="section-kicker">34</div>
+      <h2>Toward a Social Graph of Humans</h2>
+      <div class="section-rule"></div>
+      <p>Most social networks contain graphs of credentials. HumanKey attempts to create something closer to a graph of people.</p>
+<p>If ten conventional accounts disagree with you, you cannot automatically know whether ten people disagree with you. It might be ten. It might be five. It might be one.</p>
+<p>If ten valid HumanKey identities disagree with you, the architecture is specifically designed to provide substantially stronger evidence that ten independently enrolled humans are represented.</p>
+<p>That does not make them right. It makes them real participants.</p>
+    </section>
+    
+    <section id="section-35" class="paper-section">
+      <div class="section-kicker">35</div>
+      <h2>Current Validation Status</h2>
+      <div class="section-rule"></div>
+      <p>AWS Face Liveness: Implemented
+AWS biometric uniqueness: Implemented
+SearchUsersByImage: Implemented
+AWS user and face association: Implemented
+Biometric consent gating: Implemented
+Passkey authentication: Implemented
+Passkey replay protection: Implemented
+Semaphore membership components: Implemented
+Account recovery: Implemented
+Single-scan recovery correction: Implemented
+Recovery regression tests: 10 / 10 passed
+Broader security regression tests: 182 passed
+Broader regression skipped: 1
+Rate-limit safeguards: Implemented
+Global AWS liveness ceiling: 500 / day
+Administrative kill switch: Implemented</p>
+<p>These results represent the implementation and testing status documented at the time of this white paper. They should change as the system changes.</p>
+    </section>
+    
+    <section id="section-36" class="paper-section">
+      <div class="section-kicker">36</div>
+      <h2>Security Is Never Finished</h2>
+      <div class="section-rule"></div>
+      <p>No legitimate security engineer should claim that passing a test suite makes a system permanently secure.</p>
+<p>Attackers change. Providers change. Dependencies change. Browsers change. Artificial intelligence changes.</p>
+<p>HumanKey therefore requires continuing regression testing, adversarial testing, provider monitoring, dependency maintenance, threshold calibration, penetration testing, privacy review, abuse monitoring, incident response, and threat-model revision.</p>
+<p>The goal is not to claim that HumanKey is impossible to defeat. The goal is to make defeating one-human-one-account dramatically more difficult and expensive than simply creating another internet account.</p>
+    </section>
+    
+    <section id="section-37" class="paper-section">
+      <div class="section-kicker">37</div>
+      <h2>Where This Is Going</h2>
+      <div class="section-rule"></div>
+      <p>Artificial intelligence is going to become better at pretending to be us. That is not science fiction. It is already happening.</p>
+<p>Synthetic text will improve. Synthetic photographs will improve. Synthetic video will improve. Autonomous agents will improve. Persona management will improve.</p>
+<p>Eventually, asking whether a message sounds human will tell us almost nothing about whether a human actually produced it.</p>
+<p>So the question has to change.</p>
+<div class="data-row"><span>Not</span><strong>Does this look human?</strong></div>
+<div class="data-row"><span>But</span><strong>Is there actually a human behind this identity?</strong></div>
+<div class="data-row"><span>And then</span><strong>Is that human already represented?</strong></div>
+<p>That is the problem HumanKey was built to address.</p>
+    </section>
+    
+    <section id="section-38" class="paper-section">
+      <div class="section-kicker">38</div>
+      <h2>Conclusion</h2>
+      <div class="section-rule"></div>
+      <p>The internet does not have a shortage of accounts. It has a shortage of confidence in what those accounts actually represent.</p>
+<p>Machines now generate the majority of measured web traffic. Governments have deployed fake social media personas. Bot farms have impersonated citizens. Disposable accounts enable harassment, fraud, ban evasion, artificial popularity, account farming, and manufactured consensus. Artificial intelligence is making those operations cheaper and more convincing.</p>
+<div class="data-row"><span>Hash Humanity starts from a different foundation</span><strong>the human.</strong></div>
+<p>HumanKey uses liveness to establish live presence. It uses biometric uniqueness to make duplicate enrollment dramatically harder. It uses mathematical biometric representations so persistent uniqueness does not require turning the platform into a public gallery of enrollment photographs. It uses zero-knowledge membership to separate proof of humanity from public identity. It uses passkeys so users do not need to continually scan their faces just to log in. It uses biometric recovery to reconnect a person to the same identity when authentication credentials are lost. It uses rate limits to constrain abuse even when the actor is human. It uses server-side state controls and automated regression testing to enforce those boundaries.</p>
+<p>The objective is not to make everybody agree. I would not want that internet.</p>
+<p>The objective is not to decide what people are allowed to believe. I would not want that internet either.</p>
+<p>The objective is much simpler.</p>
+<p>Let humans argue with humans.</p>
+<p>Let people disagree. Let people change their minds. Let people be unpopular. Let people say things other people hate.</p>
+<p>But when 1,000 apparently independent people are speaking, there should be a meaningful technical reason to believe that something approaching 1,000 actual humans are behind those voices.</p>
+<p>Not one person with 1,000 email addresses. Not an account farm. Not a government running synthetic citizens. Not an AI system operating a crowd that does not exist.</p>
+<p>Actual people.</p>
+<p>That is what HumanKey is trying to restore to the internet.</p>
+<p>Not agreement. Not conformity. Not control.</p>
+<p>Human presence.</p>
+<p>Because in an internet increasingly filled with machines, proof that somebody is actually there is becoming one of the most valuable things we have.</p>
+<p>One human. One account.</p>
+<p>HumanKey.</p>
+    </section>
+    
+
+    <section class="references">
+      <div class="label">Source Material</div>
+      <h2>References</h2>
+      <ol>
+        <li>1. Imperva / Thales, 2026 Bad Bot Report. Automated systems generated more than 53 percent of measured global web traffic during 2025.</li>
+<li>2. United States Department of Justice, July 2024. Justice Department disruption of a covert Russian government-operated AI-enhanced social media bot farm involving 968 fictitious accounts.</li>
+<li>3. United States Department of Justice, Eastern District of New York, April 2023. Charges involving 34 officers of China&#x27;s Ministry of Public Security and allegations concerning thousands of false online personas operated by the 912 Special Project Working Group.</li>
+<li>4. Office of the Director of National Intelligence. Assessments concerning foreign malign influence operations and efforts by foreign governments to exploit social divisions in the United States.</li>
+<li>5. Amazon Web Services, Amazon Rekognition Developer Guide. Documentation concerning Rekognition collections, mathematical face vectors, face indexing, user vectors, facial searching, and biometric comparison.</li>
+<li>6. Amazon Web Services, Amazon Rekognition Face Liveness. Documentation concerning probabilistic liveness analysis, liveness confidence scoring, reference imagery, and presentation-attack defenses.</li>
+<li>7. Amazon Web Services, Responsible AI Service Card for Rekognition Face Matching. Documentation describing facial feature extraction, mathematical face-vector representations, and similarity-based matching.</li>
+      </ol>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-brand">Hash Humanity · HumanKey</div>
+    <div>One human. One account.</div>
+  </footer>
 </body>
 </html>
