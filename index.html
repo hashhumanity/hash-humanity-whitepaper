@@ -339,17 +339,67 @@
     }
 
     footer {
-      padding: 38px 24px 54px;
+      width: min(calc(100% - 36px), 880px);
+      margin: 0 auto;
+      padding: 46px 0 54px;
       text-align: center;
       color: #777772;
     }
 
-    footer .footer-brand {
-      margin-bottom: 7px;
-      color: #d7d7d2;
-      letter-spacing: 0.2em;
+    .footer-brand {
+      margin-bottom: 8px;
+      color: #f2f2ee;
+      font-size: 13px;
+      font-weight: 650;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
+    }
+
+    .footer-statement {
+      max-width: 600px;
+      margin: 0 auto 18px;
+      color: #a5a5a0;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .footer-links {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 8px 18px;
+      margin: 0 0 16px;
+    }
+
+    .footer-links a,
+    .footer-link-button {
+      color: #d8d8d4;
+      font-size: 13px;
+      text-decoration: none;
+      transition: opacity 0.18s ease;
+    }
+
+    .footer-links a:hover,
+    .footer-link-button:hover,
+    .footer-email-button:hover {
+      opacity: 0.65;
+    }
+
+    .footer-contact {
+      margin-bottom: 16px;
+      color: #888883;
+      font-size: 12px;
+    }
+
+    .footer-legal {
+      color: #656560;
       font-size: 11px;
+      line-height: 1.5;
+    }
+
+    .footer-legal span {
+      display: block;
     }
 
     @media (max-width: 700px) {
@@ -622,6 +672,35 @@
   text-align: center;
 }
 
+.contact-status {
+  min-height: 18px;
+  margin-top: 10px;
+  color: #bcbcb7;
+  font-size: 12px;
+  text-align: center;
+}
+
+.contact-status[data-state="success"] {
+  color: #f5f5f2;
+}
+
+.contact-status[data-state="error"] {
+  color: #f0b7b7;
+}
+
+.contact-submit:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.contact-honeypot {
+  position: absolute !important;
+  left: -9999px !important;
+  width: 1px !important;
+  height: 1px !important;
+  overflow: hidden !important;
+}
+
 @media (max-width: 700px) {
   .contact-form-shell {
     padding: 28px 20px 24px;
@@ -629,6 +708,18 @@
 
   .contact-form-shell h2 {
     font-size: 28px;
+  }
+
+  footer {
+    padding: 38px 0 46px;
+  }
+
+  .footer-links {
+    gap: 7px 14px;
+  }
+
+  .footer-statement {
+    max-width: 92%;
   }
 }
   </style>
@@ -1720,6 +1811,17 @@
         ></textarea>
       </div>
 
+      <div class="contact-honeypot" aria-hidden="true">
+        <label for="contactWebsite">Website</label>
+        <input
+          id="contactWebsite"
+          name="website"
+          type="text"
+          tabindex="-1"
+          autocomplete="off"
+        >
+      </div>
+
       <button
         type="submit"
         class="contact-submit"
@@ -1728,9 +1830,16 @@
       </button>
 
       <div class="contact-destination">
-        Messages are addressed to
+        Messages are delivered to
         support@hashhumanity.world
       </div>
+
+      <div
+        id="contactStatus"
+        class="contact-status"
+        role="status"
+        aria-live="polite"
+      ></div>
 
     </form>
 
@@ -1740,18 +1849,26 @@
 
 
 <script>
-  function openContactForm(topic) {
-    const dialog =
-      document.getElementById("contactDialog");
+  const CONTACT_ENDPOINT =
+    "https://us-central1-hashhumanity-58b9a.cloudfunctions.net/sendWhitePaperContact";
 
-    const topicSelect =
-      document.getElementById("contactTopic");
+  function openContactForm(topic) {
+    const dialog = document.getElementById("contactDialog");
+    const topicSelect = document.getElementById("contactTopic");
+    const status = document.getElementById("contactStatus");
+
+    if (status) {
+      status.textContent = "";
+      status.removeAttribute("data-state");
+    }
 
     if (topicSelect) {
       if (topic === "Support") {
         topicSelect.value = "Support";
-      } else {
+      } else if (topic === "Contact") {
         topicSelect.value = "General Inquiry";
+      } else if (topic) {
+        topicSelect.value = topic;
       }
     }
 
@@ -1761,8 +1878,7 @@
   }
 
   function closeContactForm() {
-    const dialog =
-      document.getElementById("contactDialog");
+    const dialog = document.getElementById("contactDialog");
 
     if (dialog) {
       dialog.close();
@@ -1771,67 +1887,124 @@
 
   document
     .getElementById("contactDialog")
-    ?.addEventListener(
-      "click",
-      function (event) {
-        if (event.target === this) {
-          this.close();
-        }
+    ?.addEventListener("click", function (event) {
+      if (event.target === this) {
+        this.close();
       }
-    );
+    });
 
   document
     .getElementById("contactForm")
-    ?.addEventListener(
-      "submit",
-      function (event) {
-        event.preventDefault();
+    ?.addEventListener("submit", async function (event) {
+      event.preventDefault();
 
-        const name =
-          document
-            .getElementById("contactName")
-            .value
-            .trim();
+      const form = this;
+      const submitButton = form.querySelector(".contact-submit");
+      const status = document.getElementById("contactStatus");
 
-        const email =
-          document
-            .getElementById("contactEmail")
-            .value
-            .trim();
+      const name =
+        document.getElementById("contactName").value.trim();
 
-        const topic =
-          document
-            .getElementById("contactTopic")
-            .value;
+      const email =
+        document.getElementById("contactEmail").value.trim();
 
-        const message =
-          document
-            .getElementById("contactMessage")
-            .value
-            .trim();
+      const topic =
+        document.getElementById("contactTopic").value;
 
-        const subject =
-          "Hash Humanity - " + topic;
+      const message =
+        document.getElementById("contactMessage").value.trim();
 
-        const body = [
-          "Name: " + name,
-          "Email: " + email,
-          "",
-          "Topic: " + topic,
-          "",
-          message
-        ].join("\n");
+      const website =
+        document.getElementById("contactWebsite").value.trim();
 
-        const mailto =
-          "mailto:support@hashhumanity.world" +
-          "?subject=" +
-          encodeURIComponent(subject) +
-          "&body=" +
-          encodeURIComponent(body);
-
-        window.location.href = mailto;
+      if (!name || !email || !topic || !message) {
+        if (status) {
+          status.textContent = "Please complete every required field.";
+          status.setAttribute("data-state", "error");
+        }
+        return;
       }
-    );
+
+      if (submitButton) {
+        submitButton.disabled = true;
+        submitButton.textContent = "Sending...";
+      }
+
+      if (status) {
+        status.textContent = "";
+        status.removeAttribute("data-state");
+      }
+
+      try {
+        const response = await fetch(CONTACT_ENDPOINT, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            name,
+            email,
+            topic,
+            message,
+            website,
+            source: "HumanKey White Paper"
+          })
+        });
+
+        let result = {};
+
+        try {
+          result = await response.json();
+        } catch {
+          result = {};
+        }
+
+        if (!response.ok || result.ok !== true) {
+          throw new Error(
+            result.error || "Message could not be sent."
+          );
+        }
+
+        form.reset();
+
+        if (status) {
+          status.textContent =
+            "Message sent. Thank you for contacting Hash Humanity.";
+          status.setAttribute("data-state", "success");
+        }
+
+        if (submitButton) {
+          submitButton.textContent = "Message Sent";
+        }
+
+        window.setTimeout(() => {
+          closeContactForm();
+
+          if (submitButton) {
+            submitButton.disabled = false;
+            submitButton.textContent = "Send Message";
+          }
+
+          if (status) {
+            status.textContent = "";
+            status.removeAttribute("data-state");
+          }
+        }, 1500);
+      } catch (error) {
+        console.error("[HumanKey contact]", error);
+
+        if (status) {
+          status.textContent =
+            "Your message could not be sent. Please try again.";
+          status.setAttribute("data-state", "error");
+        }
+
+        if (submitButton) {
+          submitButton.disabled = false;
+          submitButton.textContent = "Send Message";
+        }
+      }
+    });
 </script>
 
 </body>
