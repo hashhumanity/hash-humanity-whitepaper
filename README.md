@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="public/brand-logo-transparent-512.png" alt="Hash Humanity logo" width="112">
+  <img src="./logo.png" alt="Hash Humanity logo" width="112">
 </p>
 
 <h1 align="center">HumanKey</h1>
