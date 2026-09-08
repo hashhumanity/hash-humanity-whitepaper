@@ -1,192 +1,410 @@
 <p align="center">
-  <img src="logo.png" alt="Hash Humanity Logo" width="180"/>
+  <img src="public/brand-logo-transparent-512.png" alt="Hash Humanity logo" width="112">
 </p>
 
-<h1 align="center">Hash Humanity</h1>
+<h1 align="center">HumanKey</h1>
 
 <p align="center">
-  <strong>Human-Verified Access Layer for the Modern Internet</strong><br/>
-  Powered by World ID Zero Knowledge Proofs
+  <strong>Proof of Personhood for a Human Internet</strong>
 </p>
 
 <p align="center">
-  <em>White Paper – Version 1.1</em>
+  One living human. One persistent identity. One account.
+</p>
+
+<p align="center">
+  <em>You are the proof, not the product.</em>
 </p>
 
 ---
 
-# Executive Summary
+## What HumanKey Is
 
-Hash Humanity is a privacy-preserving human verification layer designed to restore trust, authenticity, and integrity to digital interaction. The modern internet has lost the ability to reliably distinguish real human participants from automated agents, AI-generated personas, and synthetic identities. This failure has degraded online discourse, enabled large-scale manipulation, compromised governance systems, and eroded confidence in digital communities.
+HumanKey is the proof-of-personhood protocol behind **Hash Humanity**, a human-verified social network designed around a simple principle:
 
-Existing solutions attempt to solve this problem by identifying users. Hash Humanity takes a fundamentally different approach. Instead of proving who a person is, Hash Humanity proves only that a participant is a unique real human being. This distinction allows platforms to enforce human authenticity without collecting, storing, or processing personal, biometric, or identity data.
+> An account should represent a real, living human, and that human should not be able to cheaply multiply themselves into dozens, hundreds, or thousands of apparent people.
 
-Hash Humanity is not a blockchain, not a token, and not a new identity protocol. It is an application-layer access and verification system built on top of World ID’s zero-knowledge Proof of Personhood. Its purpose is to make cryptographic human verification usable, scalable, and privacy-preserving for real-world platforms.
+Traditional authentication proves control of a credential. A password proves knowledge of a password. A phone number proves access to a phone number. An email proves access to an inbox. A passkey proves control of a cryptographic authenticator.
 
----
+None of those things, by themselves, prove that the account represents one unique human.
 
-# 1. The Problem
-
-Digital systems today cannot reliably distinguish between humans and machines. Automated bots generate content, influence opinions, manipulate markets, and participate in governance systems at scale. AI models can now convincingly imitate human communication. Identity farms create thousands of synthetic accounts. Together, these forces undermine the foundational assumption that a digital participant represents a real person.
-
-Traditional identity-based solutions attempt to address this by requiring government identification, biometric scanning, or centralized identity providers. While these methods can increase confidence in uniqueness, they introduce significant risks. They require users to surrender sensitive personal information, create centralized databases that become high-value attack targets, and enable surveillance, tracking, and long-term profiling.
-
-The core issue is that digital platforms do not need identity. They need authenticity. They need to know that each participant represents a real, unique human being — nothing more.
+HumanKey is designed to move the uniqueness boundary from the credential to the person.
 
 ---
 
-# 2. Hash Humanity’s Approach
+## Why It Exists
 
-Hash Humanity provides a verification layer that allows a user to prove their humanity without revealing any personal information. The system integrates World ID’s zero-knowledge Proof of Personhood, enabling users to generate cryptographic proofs locally on their device. These proofs demonstrate membership in the global set of verified humans without disclosing identity, biometrics, or any identifying attributes.
+The modern internet has an identity problem.
 
-Hash Humanity validates these proofs and issues short-lived access tokens that grant entry into human-verified environments. At no point does Hash Humanity store biometric data, identity attributes, or persistent user profiles. The system operates entirely on cryptographic assurance rather than trust in stored information.
+Automated systems now represent a majority of measured global web traffic, while increasingly capable AI systems can write, translate, argue, maintain synthetic personalities, generate profile imagery, react to current events, and operate continuously.
 
-This architecture enables platforms to build communities, governance systems, financial interactions, and communication environments that are provably human while remaining privacy-preserving.
+The problem is not automation itself.
 
----
+The problem is **synthetic participation**: one operator, organization, account farm, or government creating the appearance of a crowd.
 
-# 3. Design Principles
+That can distort:
 
-Hash Humanity is built around strict architectural principles. The system minimizes data collection, minimizes trust requirements, and minimizes attack surfaces. All sensitive computation occurs on the user’s device. Backend services remain stateless and privacy-preserving. No persistent identifiers are created. No cross-session tracking is possible. Every interaction is independently verified through cryptographic proof.
+- follower counts
+- likes and reactions
+- polls
+- comment sections
+- trending topics
+- perceived public sentiment
+- political enthusiasm
+- product popularity
+- harassment campaigns
+- mass reporting
+- reputation systems
+- community governance
 
-The goal is not merely compliance with privacy regulations, but the elimination of privacy risk by design.
+HumanKey does not attempt to decide what is true or what people are allowed to believe.
 
----
+It attempts to establish something more fundamental:
 
-# 4. System Overview
-
-When a user interacts with Hash Humanity, they authenticate using the World ID widget. This process produces a zero-knowledge proof on the user’s device. The proof demonstrates that the user is a member of the verified human set without revealing which member they are.
-
-The proof is submitted to the Hash Humanity backend, where it is validated using Firebase Cloud Functions. The system checks proof integrity and verifies that the associated nullifier has not been previously used for the same action. If the proof is valid, the system issues a short-lived access token that allows the user to enter human-verified environments.
-
-The backend stores only hashed nullifiers for replay protection. These hashes cannot be reverse-engineered or linked back to any individual.
-
----
-
-# 5. Cryptographic Foundations
-
-Hash Humanity relies on the Semaphore protocol provided by World ID. Semaphore combines zk-SNARKs, Merkle tree membership proofs, and nullifiers to enable anonymous yet verifiable participation.
-
-The Merkle tree represents the global set of verified humans. Each user occupies a leaf in the tree. When a user generates a proof, they demonstrate membership in the tree without revealing their leaf position. This preserves anonymity while ensuring uniqueness.
-
-Nullifiers prevent Sybil attacks. Each action produces a unique nullifier that cannot be reused. This ensures that one human cannot perform the same restricted action multiple times under different identities.
-
-Because all cryptographic computation occurs locally, Hash Humanity never handles biometric data or identity attributes.
+**Is there a real human behind this participation identity, and is that human already represented?**
 
 ---
 
-# Proof Generation Flow
+## Core Principle
 
-```mermaid
-flowchart TD
-
-    %% ====== SUPPORTED COLOR CLASSES ======
-    classDef device fill:#ffffff,stroke:#000000,color:#000000;
-    classDef backend fill:#000000,stroke:#ff0000,color:#ffffff;
-    classDef platform fill:#ff0000,stroke:#000000,color:#ffffff;
-    classDef decision fill:#ffffff,stroke:#ff0000,color:#000000;
-
-    %% ====== NODES ======
-    A[Start Verification]
-    B[World ID Widget]
-    C[Generate zk-SNARK Proof]
-    D[Include Merkle Path & Root]
-    E[Create Nullifier]
-
-    F[Submit Proof + Nullifier]
-    G[Verify Proof Against Merkle Root]
-    H{Nullifier Used?}
-    I[Store Hashed Nullifier]
-    J[Issue Access Token]
-    K[Reject Request]
-
-    L[Access Human-Only Environment]
-
-    %% ====== FLOWS ======
-    A --> B --> C --> D --> E --> F
-    F --> G --> H
-    H -- No --> I --> J --> L
-    H -- Yes --> K
-
-    %% ====== APPLY CLASSES ======
-    class A,B,C,D,E device;
-    class F,G,I,J backend;
-    class L platform;
-    class H decision;
+```text
+ONE HUMAN
+ONE IDENTITY
+ONE ACCOUNT
 ```
-;
-6. Frontend Architecture
-The frontend is built using React and Vite. These technologies were chosen for their performance, modularity, and compatibility with cryptographic workflows in the browser.
 
-The frontend integrates the World ID widget, orchestrates proof generation, manages ephemeral session data, and communicates with backend validation services. No user accounts, passwords, or personal information are required. The user experience is intentionally simple: verify once and gain access.
+HumanKey is designed so that creating another email address, browser profile, phone number, device, or IP address does not automatically create another person.
 
-Sensitive operations remain isolated to the client environment, ensuring that privacy boundaries are preserved.
+A credential is replaceable.
 
-7. Backend Architecture
-The backend is implemented using Firebase and Cloudflare.
+A human is not.
 
-Firebase Cloud Functions validate proofs, verify nullifiers, and issue short-lived access tokens. Firestore stores only hashed nullifiers required to prevent replay attacks. Firebase Authentication provides token infrastructure without maintaining user identity.
+---
 
-Cloudflare provides global routing, DDoS protection, bot mitigation, and Web Application Firewall capabilities. Cloudflare Workers may perform edge validation and rate limiting to reduce backend load. Cloudflare WebRTC enables encrypted peer-to-peer audio communication.
+## How HumanKey Works
 
-This hybrid architecture ensures global scalability, resilience, and performance while maintaining strict privacy guarantees.
+HumanKey separates proof of humanity, uniqueness, participation, authentication, and recovery into distinct security layers.
 
-8. Voice Room
-Voice Room is a real-time audio communication environment restricted to verified humans. It uses Cloudflare WebRTC to establish encrypted peer-to-peer audio channels between participants.
+```text
+Human
+  ↓
+Consent
+  ↓
+AWS Face Liveness
+  ↓
+Biometric Uniqueness Search
+  ↓
+Existing Human?
+  ├─ Yes → Existing HumanKey / Recovery
+  └─ No  → New HumanKey
+              ↓
+       ZK Membership
+              ↓
+        Passkey Binding
+              ↓
+       Active Identity
+```
 
-No audio is recorded, stored, or analyzed. The system exists solely as a human-verified communication layer. Communities can host discussions, debates, governance sessions, or social interactions without fear of bots, impersonators, or AI voices.
+### 1. Consent
 
-9. Pulse: Peer-to-Peer Crypto Transfers
-Pulse enables direct crypto transfers between verified humans. Hash Humanity does not custody funds, store wallet addresses, or log transactions. Its role is limited to verifying that both participants are unique humans at the moment of interaction.
+Biometric processing begins only after the user receives disclosure and provides consent.
 
-Transfers occur directly through the user’s chosen blockchain or wallet infrastructure. This creates a new trust primitive for decentralized finance, where authenticity is guaranteed without compromising privacy.
+The camera and liveness flow are not intended to begin before that boundary is crossed.
 
-10. Security Model
-Hash Humanity is designed around minimizing trust. There is no identity database to breach. There are no biometric records to steal. There are no user profiles to correlate.
+### 2. Liveness
 
-All backend services are stateless. Nullifiers prevent replay attacks. Cloudflare protects against network-level abuse. The cryptographic guarantees of World ID ensure uniqueness without disclosure.
+HumanKey currently uses **AWS Face Liveness** to establish that the enrolling or recovering participant is physically present during the ceremony.
 
-The system reduces risk by eliminating sensitive data entirely.
+The production implementation uses a liveness confidence threshold of **85**.
 
-11. Privacy and Compliance
-Hash Humanity is compliant with GDPR, CCPA, and global privacy regulations by design. Because no personal data is collected, stored, or processed, regulatory risk is inherently minimized.
+Liveness does not prove uniqueness by itself. It proves presence.
 
-Users cannot be tracked across sessions. No behavioral profiles can be constructed. No identity information exists within the system.
+### 3. Biometric Uniqueness
 
-Privacy is not a policy. It is an architectural consequence.
+After successful liveness, HumanKey compares the participant against the existing enrolled population.
 
-12. Applications
-Hash Humanity can be used for human-verified social platforms, governance voting systems, DAO participation, research studies, financial interaction gating, and AI-safe communication environments. Any system that requires authentic human participation without identity exposure can integrate Hash Humanity.
+The production AWS Rekognition path uses biometric search to determine whether the human already has an identity.
 
-13. Roadmap
-Hash Humanity begins as a centralized application layer built on Firebase. Future phases include federated verification endpoints, open-source validation libraries, and ultimately a decentralized verification network. Each phase reduces centralization while preserving cryptographic guarantees.
+The current similarity threshold is **90.0**.
 
-14. Governance
-As the system matures, governance will transition toward transparent, auditable frameworks aligned with decentralization and community oversight.
+If a match is found, HumanKey does not create another participation identity.
 
-15. License
-Hash Humanity core components are released under the MIT License.
+If no existing match is found, the enrollment can continue.
 
-16. World App Mini-App Compatibility
-Hash Humanity is designed to operate within WebView environments such as the World App Mini-App ecosystem. The system requires no persistent storage, no background processes, and no platform-specific dependencies, making it fully compatible with Mini-App constraints.
+### 4. Zero-Knowledge Membership
 
-17. Philosophy
-Humanity should be provable without being traceable.
-Trust should be mathematical.
-Identity should remain private.
+HumanKey separates enrollment from participation.
 
-Conclusion
-Hash Humanity restores authenticity to digital interaction without creating a surveillance system. It proves humanity, not identity. It replaces trust with cryptography. It enables human-verified digital spaces at global scale.
+The biometric layer establishes that a unique human exists.
 
-<hr style="border: 1px solid #ff0000;"/>
+The zero-knowledge layer allows that enrolled human to later prove valid membership without publicly exposing the biometric process or requiring public legal identity.
 
-<p align="center" style="color:#000000;">
-<strong style="color:#ff0000;">Hash Humanity</strong><br/>
-Privacy‑Preserving Human Verification for the Modern Internet<br/>
-Powered by World ID Zero‑Knowledge Proofs<br/>
-Built with React, Vite, Firebase, and Cloudflare
+HumanKey uses Semaphore components for zero-knowledge membership and scoped nullifiers.
+
+### 5. Passkeys
+
+After enrollment, routine authentication is handled with passkeys.
+
+The face establishes the human.
+
+The passkey authenticates the already-established human.
+
+Biometrics are not intended to be required every time the user signs in.
+
+---
+
+## Recovery Without Creating a Second Identity
+
+Recovery is a critical part of the protocol.
+
+A person may lose a phone, computer, authenticator, or passkey.
+
+They should not lose their human identity.
+
+HumanKey recovery is designed around this rule:
+
+> **Recover the human. Do not recreate the human.**
+
+```text
+Recovery Request
+  ↓
+Consent
+  ↓
+Single AWS Face Liveness Ceremony
+  ↓
+Existing Biometric Identity Search
+  ↓
+Existing HumanKey Resolved
+  ↓
+New Passkey Ceremony
+  ↓
+Same Account Restored
+```
+
+The current recovery design uses **one live biometric ceremony**, not two.
+
+A previous development issue that caused redundant facial verification was investigated and corrected so successful liveness continues through identity resolution without forcing a second scan.
+
+---
+
+## Security Model
+
+HumanKey is intentionally layered because no single control solves the entire problem.
+
+| Threat | HumanKey Control |
+|---|---|
+| Automated bot | Liveness, server-side state, identity controls |
+| One-human Sybil attack | Biometric uniqueness |
+| Account farm | Liveness, uniqueness, rate limits |
+| Presentation attack | AWS Face Liveness |
+| Credential theft | Passkeys |
+| Replay attack | Expiration, consumption, server-side transitions |
+| Ban evasion | Persistent human uniqueness |
+| Synthetic influence operation | Scarcity shifts from accounts to enrolled humans |
+
+Proof of personhood does not make a human honest.
+
+A verified human can still lie, spread misinformation, propagandize, harass, or behave badly.
+
+HumanKey addresses a narrower and more measurable problem:
+
+**one human should not be able to cheaply become one hundred apparent humans.**
+
+---
+
+## Server Authority
+
+The browser is treated as untrusted.
+
+Security-sensitive state transitions are enforced server-side.
+
+The server determines whether:
+
+- consent exists
+- a liveness result is valid
+- a result has already been consumed
+- a biometric match exists
+- enrollment may continue
+- recovery may continue
+- a passkey ceremony is authorized
+
+This reduces the value of manipulating client-side state.
+
+---
+
+## Replay Protection
+
+Security results are designed to be consumable.
+
+Once a sensitive result has been used for the authorized state transition, replay is rejected.
+
+This prevents a previously valid result from being reused as though a new ceremony had occurred.
+
+---
+
+## Rate Limiting
+
+Proof of personhood limits **identity multiplication**.
+
+Rate limiting limits **action multiplication**.
+
+The HumanKey architecture includes:
+
+- liveness attempt controls
+- cooldown periods
+- HTTP `429` responses
+- idempotency protections
+- provider ceilings
+- blocked-attempt tests
+- administrative kill-switch controls
+
+These controls help reduce abuse even when the participant is a real person.
+
+---
+
+## Current Validation
+
+At the time of the HumanKey v1.0 white paper:
+
+### Recovery regression suite
+
+```text
+Tests executed: 10
+Passed:         10
+Failed:          0
+Result:       PASS
+```
+
+### Broader security suite
+
+```text
+Passed:  182
+Skipped:   1
+Result:  PASS
+```
+
+The broader suite covers areas including:
+
+- consent gating
+- AWS liveness gating
+- invalid sessions
+- capture state
+- recovery
+- duplicate detection
+- provider response handling
+- biometric search
+- passkey authorization
+- replay protection
+- state transitions
+- calibration
+- multi-template behavior
+- rate limiting
+- blocked attempts
+
+Passing tests are evidence of the current implementation state. They are not a claim that security work is permanently finished.
+
+---
+
+## Technology
+
+### HumanKey security and biometric services
+
+- Python
+- FastAPI
+- Pydantic
+- AWS Face Liveness
+- AWS Rekognition
+- Semaphore
+- Passkeys / WebAuthn
+- automated regression and security testing
+
+### Hash Humanity application
+
+- React
+- JavaScript / JSX
+- HTML
+- CSS
+- Firebase
+
+The biometric/security authority is intentionally separated from the social application's presentation layer.
+
+---
+
+## Privacy Direction
+
+HumanKey is designed to verify humanity and uniqueness without requiring users to publicly disclose legal identity.
+
+The protocol's design direction is:
+
+- prove humanity without turning identity into public profile data
+- use mathematical biometric representations for uniqueness comparison
+- separate enrollment from routine participation
+- use zero-knowledge proofs for membership
+- use passkeys for routine authentication
+- keep recovery tied to the existing human identity
+- minimize unnecessary biometric processing
+
+Biometric representations remain sensitive data and must be treated accordingly.
+
+---
+
+## What HumanKey Does Not Do
+
+HumanKey does **not** determine:
+
+- whether a statement is true
+- whether an opinion is good
+- whether someone is politically correct
+- whether a user agrees with the majority
+- whether a human is kind
+- whether a human is intelligent
+
+It establishes a stronger foundation for online participation:
+
+**the participant is a real human, and the system has a technical basis for believing that human is not already represented by another active identity.**
+
+---
+
+## The Goal
+
+If 1,000 apparently independent people are participating in a conversation, there should be a meaningful technical reason to believe those accounts represent roughly 1,000 actual enrolled humans.
+
+Not:
+
+- one operator with 1,000 accounts
+- an account farm
+- a bot network
+- a synthetic government influence operation
+- an AI-managed crowd of fake citizens
+
+Actual people.
+
+---
+
+## HumanKey White Paper
+
+The full technical white paper documents the architecture, threat model, biometric uniqueness process, zero-knowledge layer, passkey model, recovery process, validation results, rate limiting, and security philosophy behind HumanKey.
+
+**Version:** 1.0  
+**Published:** September 2026  
+**Organization:** Hash Humanity
+
+---
+
+## Philosophy
+
+The objective is not to eliminate disagreement.
+
+It is to restore confidence that the disagreement is actually happening between people.
+
+**Let humans argue with humans.**
+
+---
+
+<p align="center">
+  <strong>ONE HUMAN. ONE ACCOUNT.</strong>
 </p>
 
-<p align="center" style="color:#000000;">
-<em>© 2026 Hash Humanity — Privacy by Design</em>
+<p align="center">
+  HumanKey · Hash Humanity
 </p>
