@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://hashhumanitywhitepaper.com/sitemap.xml
