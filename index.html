@@ -4,68 +4,56 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <meta name="google-site-verification" content="RSeRyaV3TYnK8dkVQ6XT4JyV7wAxZ3p4C6fy_xIn3Tc" />
+  <meta name="google-site-verification" content="RSeRyaV3TYnK8dkVQ6XT4JyV7wAxZ3p4C6fy_xIn3Tc">
 
-  <title>HumanKey White Paper v1.0 | Hash Humanity</title>
+  <title>HumanKey | Human Verification Social Media, Zero-Knowledge Proof & One Human One Account</title>
 
   <meta
     name="description"
-    content="HumanKey is Hash Humanity's proof-of-personhood protocol for a human internet: one living human, one persistent participation identity, one account."
+    content="HumanKey is the proof-of-personhood protocol behind Hash Humanity, a human verification social media platform built around one human, one account using biometric uniqueness, liveness, zero-knowledge proofs and passkeys."
+  >
+
+  <meta
+    name="keywords"
+    content="human verification social media, human verified social network, zero knowledge proof, proof of personhood, one human one account, bot resistant social media, sybil resistant social network, biometric human verification, privacy preserving human verification, HumanKey, Hash Humanity"
   >
 
   <meta name="robots" content="index,follow,max-image-preview:large">
 
   <link rel="canonical" href="https://hashhumanitywhitepaper.com/">
 
-  <meta
-    property="og:title"
-    content="HumanKey - Proof of Personhood for a Human Internet"
-  >
+  <link rel="alternate" hreflang="en" href="https://hashhumanitywhitepaper.com/">
+  <link rel="alternate" hreflang="es" href="https://hashhumanitywhitepaper.com/es/">
+  <link rel="alternate" hreflang="pt" href="https://hashhumanitywhitepaper.com/pt/">
+  <link rel="alternate" hreflang="zh" href="https://hashhumanitywhitepaper.com/zh/">
+  <link rel="alternate" hreflang="fr" href="https://hashhumanitywhitepaper.com/fr/">
+  <link rel="alternate" hreflang="de" href="https://hashhumanitywhitepaper.com/de/">
+  <link rel="alternate" hreflang="ms" href="https://hashhumanitywhitepaper.com/ms/">
+  <link rel="alternate" hreflang="ko" href="https://hashhumanitywhitepaper.com/ko/">
+  <link rel="alternate" hreflang="x-default" href="https://hashhumanitywhitepaper.com/">
 
+  <meta property="og:title" content="HumanKey - Human Verification for Social Media">
   <meta
     property="og:description"
-    content="Technical White Paper v1.0 by Hash Humanity."
+    content="Proof of personhood for a human social network: one human, one account, zero-knowledge membership, biometric uniqueness and passkeys."
   >
-
   <meta property="og:type" content="article">
   <meta property="og:site_name" content="Hash Humanity">
   <meta property="og:url" content="https://hashhumanitywhitepaper.com/">
-
-  <meta
-    property="og:image"
-    content="https://hashhumanitywhitepaper.com/humankey-social-card.jpg"
-  >
-
-  <meta
-    property="og:image:secure_url"
-    content="https://hashhumanitywhitepaper.com/humankey-social-card.jpg"
-  >
-
+  <meta property="og:image" content="https://hashhumanitywhitepaper.com/humankey-social-card.jpg">
+  <meta property="og:image:secure_url" content="https://hashhumanitywhitepaper.com/humankey-social-card.jpg">
   <meta property="og:image:type" content="image/jpeg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-
-  <meta
-    property="og:image:alt"
-    content="HumanKey - Proof of Personhood for a Human Internet"
-  >
+  <meta property="og:image:alt" content="HumanKey - Human Verification for Social Media">
 
   <meta name="twitter:card" content="summary_large_image">
-
-  <meta
-    name="twitter:title"
-    content="HumanKey - Proof of Personhood for a Human Internet"
-  >
-
+  <meta name="twitter:title" content="HumanKey - Human Verification for Social Media">
   <meta
     name="twitter:description"
-    content="Technical White Paper v1.0 by Hash Humanity."
+    content="One human. One account. Human verification, zero-knowledge membership, biometric uniqueness and passkey authentication."
   >
-
-  <meta
-    name="twitter:image"
-    content="https://hashhumanitywhitepaper.com/humankey-social-card.jpg"
-  >
+  <meta name="twitter:image" content="https://hashhumanitywhitepaper.com/humankey-social-card.jpg">
 
   <meta name="theme-color" content="#050505">
 
@@ -82,9 +70,7 @@
       --reading: 760px;
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     html {
       scroll-behavior: smooth;
@@ -116,8 +102,97 @@
       text-rendering: optimizeLegibility;
     }
 
-    a {
-      color: inherit;
+    a { color: inherit; }
+
+    .language-nav {
+      position: fixed;
+      top: 14px;
+      right: 14px;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: rgba(10, 10, 10, 0.82);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+
+    .language-nav label {
+      color: var(--muted);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .language-nav select {
+      appearance: none;
+      border: 0;
+      outline: 0;
+      background: transparent;
+      color: #f5f5f2;
+      font: inherit;
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    .language-nav option {
+      color: #111;
+      background: #fff;
+    }
+
+    .language-suggestion {
+      position: fixed;
+      left: 50%;
+      bottom: 18px;
+      transform: translateX(-50%);
+      z-index: 1000;
+      display: none;
+      width: min(calc(100% - 28px), 560px);
+      padding: 12px 14px;
+      border-radius: 14px;
+      background: rgba(12, 12, 12, 0.93);
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 18px 60px rgba(0,0,0,0.45);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .language-suggestion p {
+      margin: 0;
+      font-size: 13px;
+      color: #d8d8d4;
+    }
+
+    .language-suggestion-actions {
+      display: flex;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .language-suggestion button {
+      border: 0;
+      border-radius: 9px;
+      padding: 8px 11px;
+      font: inherit;
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    .language-suggestion .primary {
+      background: #f5f5f2;
+      color: #050505;
+      font-weight: 650;
+    }
+
+    .language-suggestion .secondary {
+      background: rgba(255,255,255,0.06);
+      color: #d8d8d4;
     }
 
     .hero {
@@ -169,9 +244,7 @@
       color: var(--muted);
     }
 
-    .eyebrow {
-      margin-bottom: 13px;
-    }
+    .eyebrow { margin-bottom: 13px; }
 
     h1 {
       margin: 0;
@@ -182,7 +255,7 @@
     }
 
     .subtitle {
-      max-width: 700px;
+      max-width: 740px;
       margin: 18px auto 0;
       font-size: clamp(19px, 2.2vw, 26px);
       line-height: 1.3;
@@ -215,9 +288,7 @@
       padding: 48px 0 28px;
     }
 
-    .label {
-      margin-bottom: 13px;
-    }
+    .label { margin-bottom: 13px; }
 
     .abstract p:first-of-type {
       margin-top: 0;
@@ -234,9 +305,7 @@
       line-height: 1.58;
     }
 
-    .toc-shell {
-      background: rgba(255, 255, 255, 0.014);
-    }
+    .toc-shell { background: rgba(255, 255, 255, 0.014); }
 
     .toc {
       width: min(calc(100% - 36px), var(--max));
@@ -267,9 +336,7 @@
       color: #d7d7d2;
       font-size: 13.5px;
       line-height: 1.38;
-      transition:
-        opacity 0.18s ease,
-        transform 0.18s ease;
+      transition: opacity 0.18s ease, transform 0.18s ease;
     }
 
     .toc a:hover {
@@ -353,9 +420,7 @@
       text-align: right;
     }
 
-    .references {
-      padding-top: 40px;
-    }
+    .references { padding-top: 40px; }
 
     .references h2 {
       margin: 0 0 17px;
@@ -438,59 +503,206 @@
       line-height: 1.5;
     }
 
-    .footer-legal span {
+    .footer-legal span { display: block; }
+
+    .footer-link-button,
+    .footer-email-button {
+      appearance: none;
+      border: 0;
+      padding: 0;
+      background: none;
+      color: #d8d8d4;
+      font: inherit;
+      cursor: pointer;
+    }
+
+    .footer-link-button { font-size: 13px; }
+    .footer-email-button { font-size: 12px; }
+
+    .contact-dialog {
+      width: min(calc(100% - 32px), 560px);
+      max-width: 560px;
+      padding: 0;
+      border: 0;
+      border-radius: 18px;
+      color: #f5f5f2;
+      background: #0a0a0a;
+      box-shadow: 0 28px 90px rgba(0, 0, 0, 0.72);
+    }
+
+    .contact-dialog::backdrop {
+      background: rgba(0, 0, 0, 0.78);
+      backdrop-filter: blur(8px);
+    }
+
+    .contact-form-shell {
+      position: relative;
+      padding: 34px;
+    }
+
+    .contact-close {
+      position: absolute;
+      top: 16px;
+      right: 18px;
+      width: 34px;
+      height: 34px;
+      padding: 0;
+      border: 0;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.055);
+      color: #d8d8d4;
+      font-size: 23px;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    .contact-close:hover { background: rgba(255, 255, 255, 0.09); }
+
+    .contact-kicker {
+      margin-bottom: 8px;
+      color: #888883;
+      font-size: 10px;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+    }
+
+    .contact-form-shell h2 {
+      margin: 0 0 10px;
+      font-size: 32px;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      font-weight: 580;
+    }
+
+    .contact-intro {
+      margin: 0 0 24px;
+      color: #aaa9a4;
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .contact-field { margin-bottom: 15px; }
+
+    .contact-field label {
       display: block;
+      margin-bottom: 6px;
+      color: #bcbcb7;
+      font-size: 12px;
+      font-weight: 550;
+    }
+
+    .contact-field input,
+    .contact-field select,
+    .contact-field textarea {
+      width: 100%;
+      border: 0;
+      border-radius: 10px;
+      outline: none;
+      padding: 12px 13px;
+      color: #f5f5f2;
+      background: rgba(255, 255, 255, 0.055);
+      font: inherit;
+      font-size: 14px;
+    }
+
+    .contact-field input:focus,
+    .contact-field select:focus,
+    .contact-field textarea:focus {
+      background: rgba(255, 255, 255, 0.085);
+    }
+
+    .contact-field textarea {
+      resize: vertical;
+      min-height: 130px;
+    }
+
+    .contact-field select { cursor: pointer; }
+
+    .contact-field option {
+      color: #111111;
+      background: #ffffff;
+    }
+
+    .contact-submit {
+      width: 100%;
+      margin-top: 4px;
+      padding: 12px 16px;
+      border: 0;
+      border-radius: 10px;
+      background: #f5f5f2;
+      color: #050505;
+      font-size: 14px;
+      font-weight: 650;
+      cursor: pointer;
+    }
+
+    .contact-submit:hover { opacity: 0.9; }
+
+    .contact-destination {
+      margin-top: 12px;
+      color: #6f6f6a;
+      font-size: 11px;
+      text-align: center;
+    }
+
+    .contact-status {
+      min-height: 18px;
+      margin-top: 10px;
+      color: #bcbcb7;
+      font-size: 12px;
+      text-align: center;
+    }
+
+    .contact-status[data-state="success"] { color: #f5f5f2; }
+    .contact-status[data-state="error"] { color: #f0b7b7; }
+
+    .contact-submit:disabled {
+      opacity: 0.6;
+      cursor: wait;
+    }
+
+    .contact-honeypot {
+      position: absolute !important;
+      left: -9999px !important;
+      width: 1px !important;
+      height: 1px !important;
+      overflow: hidden !important;
     }
 
     @media (max-width: 700px) {
-      .hero {
-        min-height: 64vh;
+      .language-nav {
+        top: 10px;
+        right: 10px;
       }
 
-      .hero-inner {
-        padding: 38px 0 42px;
-      }
+      .language-nav label { display: none; }
 
-      h1 {
-        font-size: clamp(52px, 17vw, 74px);
-      }
+      .hero { min-height: 64vh; }
 
-      .subtitle {
-        font-size: 19px;
-      }
+      .hero-inner { padding: 38px 0 42px; }
 
-      .meta {
-        margin-top: 21px;
-      }
+      h1 { font-size: clamp(52px, 17vw, 74px); }
 
-      .tagline {
-        margin-top: 24px;
-      }
+      .subtitle { font-size: 19px; }
 
-      .abstract {
-        padding: 40px 0 24px;
-      }
+      .meta { margin-top: 21px; }
 
-      .toc {
-        padding: 32px 0;
-      }
+      .tagline { margin-top: 24px; }
 
-      .toc-grid {
-        grid-template-columns: 1fr;
-      }
+      .abstract { padding: 40px 0 24px; }
+
+      .toc { padding: 32px 0; }
+
+      .toc-grid { grid-template-columns: 1fr; }
 
       main {
         padding-top: 8px;
         padding-bottom: 50px;
       }
 
-      .paper-section {
-        padding: 25px 0 13px;
-      }
+      .paper-section { padding: 25px 0 13px; }
 
-      .paper-section h2 {
-        margin-bottom: 14px;
-      }
+      .paper-section h2 { margin-bottom: 14px; }
 
       .flow {
         margin: 10px 0 12px;
@@ -502,24 +714,48 @@
         gap: 2px;
       }
 
-      .data-row strong {
-        text-align: left;
+      .data-row strong { text-align: left; }
+
+      p { font-size: 16px; }
+
+      .contact-form-shell {
+        padding: 28px 20px 24px;
       }
 
-      p {
-        font-size: 16px;
+      .contact-form-shell h2 { font-size: 28px; }
+
+      footer { padding: 38px 0 46px; }
+
+      .footer-links { gap: 7px 14px; }
+
+      .footer-statement { max-width: 92%; }
+
+      .language-suggestion {
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      .language-suggestion-actions {
+        width: 100%;
+      }
+
+      .language-suggestion button {
+        flex: 1;
       }
     }
 
     @media print {
+      .language-nav,
+      .language-suggestion {
+        display: none !important;
+      }
+
       body {
         background: #ffffff;
         color: #000000;
       }
 
-      .hero::before {
-        display: none;
-      }
+      .hero::before { display: none; }
 
       .hero {
         min-height: auto;
@@ -549,237 +785,30 @@
         color: #000000 !important;
       }
 
-      .paper-section {
-        break-inside: avoid-page;
-      }
+      .paper-section { break-inside: avoid-page; }
     }
-    .footer-link-button,
-.footer-email-button {
-  appearance: none;
-  border: 0;
-  padding: 0;
-  background: none;
-  color: #d8d8d4;
-  font: inherit;
-  cursor: pointer;
-}
-
-.footer-link-button {
-  font-size: 13px;
-}
-
-.footer-email-button {
-  font-size: 12px;
-}
-
-.footer-link-button:hover,
-.footer-email-button:hover {
-  opacity: 0.65;
-}
-
-.contact-dialog {
-  width: min(calc(100% - 32px), 560px);
-  max-width: 560px;
-  padding: 0;
-  border: 0;
-  border-radius: 18px;
-  color: #f5f5f2;
-  background: #0a0a0a;
-  box-shadow:
-    0 28px 90px rgba(0, 0, 0, 0.72);
-}
-
-.contact-dialog::backdrop {
-  background: rgba(0, 0, 0, 0.78);
-  backdrop-filter: blur(8px);
-}
-
-.contact-form-shell {
-  position: relative;
-  padding: 34px;
-}
-
-.contact-close {
-  position: absolute;
-  top: 16px;
-  right: 18px;
-  width: 34px;
-  height: 34px;
-  padding: 0;
-  border: 0;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.055);
-  color: #d8d8d4;
-  font-size: 23px;
-  line-height: 1;
-  cursor: pointer;
-}
-
-.contact-close:hover {
-  background: rgba(255, 255, 255, 0.09);
-}
-
-.contact-kicker {
-  margin-bottom: 8px;
-  color: #888883;
-  font-size: 10px;
-  letter-spacing: 0.24em;
-  text-transform: uppercase;
-}
-
-.contact-form-shell h2 {
-  margin: 0 0 10px;
-  font-size: 32px;
-  line-height: 1.1;
-  letter-spacing: -0.03em;
-  font-weight: 580;
-}
-
-.contact-intro {
-  margin: 0 0 24px;
-  color: #aaa9a4;
-  font-size: 14px;
-  line-height: 1.55;
-}
-
-.contact-field {
-  margin-bottom: 15px;
-}
-
-.contact-field label {
-  display: block;
-  margin-bottom: 6px;
-  color: #bcbcb7;
-  font-size: 12px;
-  font-weight: 550;
-}
-
-.contact-field input,
-.contact-field select,
-.contact-field textarea {
-  width: 100%;
-  border: 0;
-  border-radius: 10px;
-  outline: none;
-  padding: 12px 13px;
-  color: #f5f5f2;
-  background: rgba(255, 255, 255, 0.055);
-  font: inherit;
-  font-size: 14px;
-}
-
-.contact-field input:focus,
-.contact-field select:focus,
-.contact-field textarea:focus {
-  background: rgba(255, 255, 255, 0.085);
-}
-
-.contact-field textarea {
-  resize: vertical;
-  min-height: 130px;
-}
-
-.contact-field select {
-  cursor: pointer;
-}
-
-.contact-field option {
-  color: #111111;
-  background: #ffffff;
-}
-
-.contact-submit {
-  width: 100%;
-  margin-top: 4px;
-  padding: 12px 16px;
-  border: 0;
-  border-radius: 10px;
-  background: #f5f5f2;
-  color: #050505;
-  font-size: 14px;
-  font-weight: 650;
-  cursor: pointer;
-}
-
-.contact-submit:hover {
-  opacity: 0.9;
-}
-
-.contact-destination {
-  margin-top: 12px;
-  color: #6f6f6a;
-  font-size: 11px;
-  text-align: center;
-}
-
-.contact-status {
-  min-height: 18px;
-  margin-top: 10px;
-  color: #bcbcb7;
-  font-size: 12px;
-  text-align: center;
-}
-
-.contact-status[data-state="success"] {
-  color: #f5f5f2;
-}
-
-.contact-status[data-state="error"] {
-  color: #f0b7b7;
-}
-
-.contact-submit:disabled {
-  opacity: 0.6;
-  cursor: wait;
-}
-
-.contact-honeypot {
-  position: absolute !important;
-  left: -9999px !important;
-  width: 1px !important;
-  height: 1px !important;
-  overflow: hidden !important;
-}
-
-@media (max-width: 700px) {
-  .contact-form-shell {
-    padding: 28px 20px 24px;
-  }
-
-  .contact-form-shell h2 {
-    font-size: 28px;
-  }
-
-  footer {
-    padding: 38px 0 46px;
-  }
-
-  .footer-links {
-    gap: 7px 14px;
-  }
-
-  .footer-statement {
-    max-width: 92%;
-  }
-}
   </style>
 
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "TechArticle",
-    "headline": "HumanKey: Proof of Personhood for a Human Internet",
-    "alternativeHeadline": "HumanKey White Paper v1.0",
+    "headline": "HumanKey: Human Verification for Social Media",
+    "alternativeHeadline": "Zero-Knowledge Proof of Personhood - One Human, One Account",
     "datePublished": "2026-09-01",
+    "dateModified": "2026-09-11",
+    "inLanguage": "en",
     "author": {
       "@type": "Organization",
-      "name": "Hash Humanity"
+      "name": "Hash Humanity",
+      "url": "https://hashhumanity.world/"
     },
     "publisher": {
       "@type": "Organization",
-      "name": "Hash Humanity"
+      "name": "Hash Humanity",
+      "url": "https://hashhumanity.world/"
     },
-    "description": "Technical white paper describing HumanKey, Hash Humanity's proof-of-personhood protocol.",
+    "description": "Technical white paper for HumanKey, the proof-of-personhood protocol behind Hash Humanity, a human verification social media platform built around one human, one account using biometric uniqueness, zero-knowledge proofs and passkeys.",
     "mainEntityOfPage": "https://hashhumanitywhitepaper.com/"
   }
   </script>
@@ -787,14 +816,32 @@
 
 <body>
 
+  <div class="language-nav">
+    <label for="languagePicker">Language</label>
+    <select id="languagePicker" aria-label="White paper language">
+      <option value="/">English</option>
+      <option value="/es/">Español</option>
+      <option value="/pt/">Português</option>
+      <option value="/zh/">中文</option>
+      <option value="/fr/">Français</option>
+      <option value="/de/">Deutsch</option>
+      <option value="/ms/">Bahasa Melayu</option>
+      <option value="/ko/">한국어</option>
+    </select>
+  </div>
+
+  <div id="languageSuggestion" class="language-suggestion" role="status" aria-live="polite">
+    <p id="languageSuggestionText"></p>
+    <div class="language-suggestion-actions">
+      <button id="languageSuggestionGo" class="primary" type="button">Open</button>
+      <button id="languageSuggestionStay" class="secondary" type="button">Stay in English</button>
+    </div>
+  </div>
+
   <header class="hero">
     <div class="hero-inner">
 
-      <img
-        class="brand-logo"
-        src="./logo.png"
-        alt="Hash Humanity logo"
-      >
+      <img class="brand-logo" src="./logo.png" alt="Hash Humanity logo">
 
       <div class="eyebrow">
         Hash Humanity &middot; Technical White Paper
@@ -803,7 +850,8 @@
       <h1>HumanKey</h1>
 
       <div class="subtitle">
-        Proof of Personhood for a Human Internet
+        Human Verification for Social Media.<br>
+        Zero-Knowledge Proof. One Human. One Account.
       </div>
 
       <div class="meta">
@@ -835,9 +883,9 @@
 
     <p>The problem is not simply that a bot can talk. The problem is that one person, organization, or government can pretend to be a crowd.</p>
 
-    <p>HumanKey is the proof-of-personhood protocol behind Hash Humanity. Its foundation is deliberately simple: One living human. One persistent participation identity. One account.</p>
+    <p>HumanKey is the proof-of-personhood protocol behind Hash Humanity, a human verification social media platform built around a deliberately simple rule: One living human. One persistent participation identity. One account.</p>
 
-    <p>HumanKey combines explicit biometric consent, AWS Face Liveness, biometric uniqueness searching, mathematical biometric representations, zero-knowledge membership mechanisms, passkey authentication, controlled biometric account recovery, server-side state management, replay protections, rate limits, and automated security testing.</p>
+    <p>HumanKey combines explicit biometric consent, AWS Face Liveness, biometric uniqueness searching, mathematical biometric representations, zero-knowledge membership mechanisms, scoped nullifiers, passkey authentication, controlled biometric account recovery, server-side state management, replay protections, rate limits, and automated security testing.</p>
 
     <p>HumanKey does not decide whether somebody is telling the truth. It does not decide what somebody should believe. It does not require people to publish their legal identity. It answers a narrower question: Is there a unique living human behind this participation identity?</p>
 
@@ -865,8 +913,8 @@
         <a href="#section-14"><span>14</span>Duplicate Detection</a>
         <a href="#section-15"><span>15</span>Why Duplicate Resistance Matters So Much</a>
         <a href="#section-16"><span>16</span>Zero-Knowledge Membership</a>
-        <a href="#section-17"><span>17</span>Nullifiers</a>
-        <a href="#section-18"><span>18</span>Passkeys</a>
+        <a href="#section-17"><span>17</span>Nullifiers and Scoped Accountability</a>
+        <a href="#section-18"><span>18</span>Passkeys and Routine Authentication</a>
         <a href="#section-19"><span>19</span>Account Recovery</a>
         <a href="#section-20"><span>20</span>The HumanKey Recovery Process</a>
         <a href="#section-21"><span>21</span>The One-Scan Recovery Design</a>
@@ -897,52 +945,36 @@
     <section id="section-1" class="paper-section">
       <div class="section-kicker">01</div>
       <h2>The Internet Was Never Designed to Count People</h2>
-
       <p>Most internet authentication systems answer some version of the same question: Can you prove that you control this credential?</p>
-
       <p>That credential might be an email address, phone number, password, authentication application, OAuth account, security key, device, or passkey. Those systems can be extremely secure, but they still prove control of a credential. They do not prove human uniqueness.</p>
-
       <p>A platform can verify ten email addresses without knowing whether those addresses belong to ten humans or one human. Credential uniqueness is not human uniqueness.</p>
-
       <p>On most platforms, creating another identity is cheap. Create another email address. Buy another phone number. Clear the browser. Use another device. Change the IP address. Register another username. The credential changes. The human does not.</p>
-
       <p>HumanKey moves the uniqueness boundary from the credential to the person.</p>
     </section>
 
     <section id="section-2" class="paper-section">
       <div class="section-kicker">02</div>
       <h2>We Are Already Sharing the Internet With More Machines Than Humans</h2>
-
       <p>Automation itself is not bad. Search engines, businesses, security systems, and accessibility tools all use automation. The problem begins when automated systems impersonate independent human participants.</p>
-
-      <p>According to Imperva&#x27;s 2026 Bad Bot Report, automated systems accounted for more than 53 percent of global web traffic during 2025. Human traffic represented approximately 47 percent.</p>
-
+      <p>According to Imperva's 2026 Bad Bot Report, automated systems accounted for more than 53 percent of global web traffic during 2025. Human traffic represented approximately 47 percent.</p>
       <p>Artificial intelligence makes this considerably more important. The old bot was obvious. Those clues are disappearing. A capable automated persona can intentionally make mistakes, use slang, wait before responding, remember conversations, disagree with another bot, and maintain a fictional history.</p>
-
       <p>Trying to determine whether somebody is human solely by examining what they write is going to become increasingly unreliable. HumanKey takes the opposite approach. Instead of asking whether content looks human, it asks whether the participation identity was established by a unique living human.</p>
     </section>
 
     <section id="section-3" class="paper-section">
       <div class="section-kicker">03</div>
       <h2>The Real Problem Is Not Bots. It Is Synthetic People.</h2>
-
       <p>There is an important difference between automation and synthetic identity. A bot that retrieves weather information is automation. A bot pretending to be an ordinary citizen while arguing about a public issue is something entirely different. That is a synthetic person.</p>
-
       <p>Synthetic people become far more dangerous when they operate in groups. Five hundred apparently unrelated accounts supporting the same position can create a powerful social signal. If those accounts belong to one operator, the crowd exists only on the screen.</p>
-
       <p>That is synthetic consensus.</p>
     </section>
 
     <section id="section-4" class="paper-section">
       <div class="section-kicker">04</div>
       <h2>Duplicate Accounts Distort Almost Everything</h2>
-
       <p>Duplicate accounts are not a minor moderation problem. They corrupt the meaning of the social graph itself.</p>
-
       <p>They can manipulate follower counts, likes, polls, comments, reports, trends, hashtags, apparent popularity, apparent opposition, political enthusiasm, product popularity, and community sentiment.</p>
-
       <p>They also enable ban evasion, reputation resets, harassment through alternate accounts, sockpuppeting, account farming, fake grassroots support, manufactured customers, and manufactured fans.</p>
-
       <div class="data-row">
         <span>The underlying vulnerability is the same</span>
         <strong>one human can become many apparent humans.</strong>
@@ -952,67 +984,49 @@
     <section id="section-5" class="paper-section">
       <div class="section-kicker">05</div>
       <h2>What a Bot Farm Can Actually Do</h2>
-
       <p>A bot farm does not need to convince everybody. It only needs to alter the environment around the conversation.</p>
-
       <p>A coordinated network can introduce a narrative, repeat it through apparently unrelated accounts, like and share those accounts, attack competing narratives, create the appearance of momentum, expose genuine humans to the content, and encourage genuine humans to continue the amplification.</p>
-
       <p>The machine does not need to replace human opinion. It only needs to influence the environment in which human opinion develops.</p>
     </section>
 
     <section id="section-6" class="paper-section">
       <div class="section-kicker">06</div>
       <h2>Russian Influence Operations</h2>
-
       <p>In July 2024, the United States Department of Justice announced action against a Russian government-linked social media bot farm involving 968 fictitious accounts. The operation incorporated artificial intelligence and created false personas that frequently purported to belong to people in the United States.</p>
-
       <p>Those personas were used to distribute narratives supporting Russian government objectives.</p>
-
       <p>A message openly issued by a foreign government is interpreted one way. The same message apparently coming from hundreds of ordinary Americans is interpreted another way. That difference is exactly why synthetic identities have value.</p>
     </section>
 
     <section id="section-7" class="paper-section">
       <div class="section-kicker">07</div>
       <h2>Chinese Influence Operations</h2>
-
-      <p>The United States Department of Justice has documented another example involving China&#x27;s Ministry of Public Security. Federal prosecutors alleged that members of the 912 Special Project Working Group created thousands of fake social media personas. Some purported to be Americans.</p>
-
+      <p>The United States Department of Justice has documented another example involving China's Ministry of Public Security. Federal prosecutors alleged that members of the 912 Special Project Working Group created thousands of fake social media personas. Some purported to be Americans.</p>
       <p>According to DOJ, those personas were used to promote PRC narratives, attack critics, harass dissidents, and create the appearance that ordinary users supported positions favored by the Chinese government.</p>
-
       <p>The technological change is the ability to surround propaganda with synthetic citizens.</p>
     </section>
 
     <section id="section-8" class="paper-section">
       <div class="section-kicker">08</div>
       <h2>Manufacturing Consensus</h2>
-
       <p>The traditional internet account model makes identity multiplication economically attractive.</p>
-
       <p>Without proof of personhood, one operator plus automation plus 10,000 credentials can appear to be 10,000 humans.</p>
-
       <p>HumanKey changes the resource requirement. The security objective is straightforward: 10,000 independent HumanKey identities should require something approaching 10,000 independently enrolled humans.</p>
-
       <p>That does not eliminate coordinated movements. Ten thousand real people can still organize. What changes is the ability of one person to impersonate those 10,000 people.</p>
     </section>
 
     <section id="section-9" class="paper-section">
       <div class="section-kicker">09</div>
       <h2>Hash Humanity</h2>
-
       <p>Hash Humanity begins with a different assumption about social media. People should not have to compete with unlimited artificial identities simply to have a conversation.</p>
-
       <p>The platform is built around one human, one account; human verification without mandatory public identification; persistent identity; no engagement-ranking algorithm designed to maximize provocation; no behavioral advertising dependency; and freedom of human expression.</p>
-
-      <p>HumanKey proves humanity and uniqueness. It does not determine whether somebody&#x27;s opinion is correct.</p>
+      <p>HumanKey proves humanity and uniqueness. It does not determine whether somebody's opinion is correct.</p>
     </section>
 
     <section id="section-10" class="paper-section">
       <div class="section-kicker">10</div>
       <h2>HumanKey Architecture</h2>
-
-      <p>HumanKey separates several security problems that are often incorrectly treated as one problem.</p>
-
-      <p>It asks whether a live person is physically participating, whether that person appears to have enrolled already, whether the person can prove membership without publicly revealing biometric identity, whether the established human can authenticate securely later, and whether that human can recover the same identity after losing authentication credentials.</p>
+      <p>HumanKey separates security problems that are often incorrectly treated as one problem: live presence, biometric uniqueness, privacy-preserving membership, routine authentication, recovery, and abuse resistance.</p>
+      <p>The protocol asks whether a live person is physically participating, whether that person appears to have enrolled already, whether the person can later demonstrate valid HumanKey membership without exposing the underlying biometric record, whether the established human can authenticate securely through a passkey, and whether that human can recover the same identity after losing authentication credentials.</p>
 
       <div class="flow">
         <span class="flow-step">Human user</span>
@@ -1036,50 +1050,42 @@
         <span class="arrow">&rarr;</span>
         <span class="flow-step">Biometric representation associated</span>
         <span class="arrow">&rarr;</span>
-        <span class="flow-step">Zero-knowledge membership</span>
+        <span class="flow-step">Semaphore identity commitment</span>
+        <span class="arrow">&rarr;</span>
+        <span class="flow-step">Group membership</span>
         <span class="arrow">&rarr;</span>
         <span class="flow-step">Passkey binding</span>
         <span class="arrow">&rarr;</span>
         <span class="flow-step">Active HumanKey</span>
-        <span class="arrow">&rarr;</span>
-        <span class="flow-step">Hash Humanity</span>
       </div>
 
-      <p>No single component is expected to solve the entire problem. HumanKey uses layers.</p>
+      <p>No single component is expected to solve the entire problem. HumanKey uses layers, and the security boundary between those layers matters. A successful liveness result does not by itself create a social account. A biometric match does not by itself authorize arbitrary actions. A zero-knowledge proof does not replace passkey authentication. Each component answers a narrower question.</p>
     </section>
 
     <section id="section-11" class="paper-section">
       <div class="section-kicker">11</div>
       <h2>Consent Comes First</h2>
-
       <p>HumanKey does not treat access to a camera as permission to conduct biometric processing.</p>
-
       <div class="data-row">
         <span>The sequence is deliberate</span>
         <strong>Disclosure &gt; Consent &gt; Camera &gt; Liveness &gt; Uniqueness.</strong>
       </div>
-
       <p>Biometrics are sensitive. HumanKey therefore gates biometric operations behind the required consent state. The implementation includes automated tests covering consent gating and invalid session behavior.</p>
     </section>
 
     <section id="section-12" class="paper-section">
       <div class="section-kicker">12</div>
       <h2>Liveness</h2>
-
       <p>HumanKey uses AWS Face Liveness as its production liveness provider. The purpose is to determine whether a live participant is physically present rather than simply accepting a facial image.</p>
-
-      <p>HumanKey&#x27;s implemented policy has used a liveness confidence threshold of 85.</p>
-
+      <p>HumanKey's implemented policy has used a liveness confidence threshold of 85.</p>
       <p>Liveness makes attacks involving photographs, displayed images, prerecorded material, and other presentation techniques more difficult. It is one part of a larger security system and is not presented as mathematically infallible.</p>
     </section>
 
     <section id="section-13" class="paper-section">
       <div class="section-kicker">13</div>
       <h2>What Happens to the Face</h2>
-
-      <p>HumanKey does process a person&#x27;s face. There is no honest way to perform facial biometric comparison without processing facial information.</p>
-
-      <p>AWS Rekognition collections extract and retain mathematical facial representations used for comparison rather than operating as a conventional public photo album of enrolled users.</p>
+      <p>HumanKey does process a person's face. There is no honest way to perform facial biometric comparison without processing facial information.</p>
+      <p>AWS Rekognition collections store mathematical face vectors used for comparison rather than the source face images themselves. Those vectors are still biometric information and HumanKey treats them as sensitive.</p>
 
       <div class="flow">
         <span class="flow-step">Live face</span>
@@ -1095,17 +1101,14 @@
         <span class="flow-step">Uniqueness comparison</span>
       </div>
 
-      <p>The face vector is still biometric information and should be treated as sensitive. The privacy distinction is that the persistent biometric uniqueness record is a mathematical representation used for comparison, rather than an ordinary public photograph of the user&#x27;s face.</p>
+      <p>The privacy distinction is not that biometrics disappear. The distinction is that persistent uniqueness comparison can rely on a mathematical biometric representation instead of treating the enrollment record as a public photograph. HumanKey therefore separates public social identity from the underlying biometric uniqueness layer.</p>
     </section>
 
     <section id="section-14" class="paper-section">
       <div class="section-kicker">14</div>
       <h2>Duplicate Detection</h2>
-
-      <p>After liveness succeeds, HumanKey compares the candidate against the enrolled biometric population. The production AWS path has used SearchUsersByImage with a similarity threshold of 90.0.</p>
-
+      <p>After liveness succeeds, HumanKey compares the candidate against the enrolled biometric population. The production AWS path has used SearchUsersByImage with a UserMatchThreshold of 90.0.</p>
       <p>If the candidate strongly corresponds to an existing HumanKey participant, the system does not simply issue another identity. The event becomes duplicate protection or account recovery depending upon context.</p>
-
       <p>For a new unique participant, the AWS enrollment path includes creation of the Rekognition user and facial association process.</p>
 
       <div class="flow">
@@ -1124,21 +1127,17 @@
         <span class="flow-step">HumanKey commit</span>
       </div>
 
-      <p>This is the heart of HumanKey&#x27;s duplicate-account resistance.</p>
+      <p>HumanKey's current production policy uses a UserMatchThreshold of 90.0. That number is an application configuration rather than a universal biometric accuracy guarantee. Face matching is probabilistic, so the threshold remains subject to empirical calibration, adversarial testing, demographic performance evaluation, and production monitoring.</p>
+      <p>This is the heart of HumanKey's duplicate-account resistance.</p>
     </section>
 
     <section id="section-15" class="paper-section">
       <div class="section-kicker">15</div>
       <h2>Why Duplicate Resistance Matters So Much</h2>
-
       <p>A banned user on a conventional platform can create another email address. A scammer can abandon a damaged reputation. A harasser can create five accounts. A political operator can create hundreds of credentials.</p>
-
       <p>HumanKey changes that equation. Another email address does not create another face. Another browser does not create another human. Another phone does not create another human. Another IP address does not create another human.</p>
-
       <p>The uniqueness check follows the human rather than the credential.</p>
-
       <p>That dramatically raises the cost of sockpuppeting, account farming, ban evasion, harassment through alternate accounts, follower inflation, poll manipulation, reputation resets, fake grassroots campaigns, coordinated artificial amplification, and manufactured consensus.</p>
-
       <p>This is not merely a login feature. It changes what an account means.</p>
     </section>
 
@@ -1146,70 +1145,133 @@
       <div class="section-kicker">16</div>
       <h2>Zero-Knowledge Membership</h2>
 
-      <p>Proving human uniqueness creates an obvious privacy question. If biometrics establish that somebody is unique, does the social platform need access to those biometrics every time that person participates? No.</p>
-
-      <p>HumanKey separates enrollment from participation.</p>
+      <p>Establishing that a person is a unique human creates an immediate privacy question. If biometric information is used during enrollment, should the social platform need access to that biometric information every time the person participates?</p>
+      <p>No.</p>
+      <p>HumanKey separates establishment of humanity from later proof of membership.</p>
 
       <div class="flow">
-        <span class="flow-step">Biometric verification</span>
+        <span class="flow-step">Live human verified</span>
         <span class="arrow">&rarr;</span>
-        <span class="flow-step">Unique human established</span>
+        <span class="flow-step">Biometric uniqueness established</span>
         <span class="arrow">&rarr;</span>
-        <span class="flow-step">Membership commitment</span>
+        <span class="flow-step">Semaphore identity created</span>
         <span class="arrow">&rarr;</span>
-        <span class="flow-step">Semaphore membership</span>
+        <span class="flow-step">Identity commitment derived</span>
+        <span class="arrow">&rarr;</span>
+        <span class="flow-step">Commitment enters HumanKey group</span>
       </div>
 
+      <p>HumanKey uses Semaphore components for its zero-knowledge membership layer. A Semaphore identity contains private cryptographic material controlled by the participant and a public identity commitment derived from that identity.</p>
+      <p>The public commitment can be added to a Semaphore group without publishing the participant's underlying identity secret. Semaphore groups are represented with Merkle trees whose leaves contain member identity commitments.</p>
+      <p>Membership in that tree can later be proven with a zero-knowledge proof.</p>
+
       <div class="flow">
-        <span class="flow-step">Membership witness</span>
+        <span class="flow-step">Private identity secret</span>
+        <span class="arrow">&rarr;</span>
+        <span class="flow-step">Identity commitment</span>
+        <span class="arrow">&rarr;</span>
+        <span class="flow-step">Merkle-tree membership</span>
         <span class="arrow">&rarr;</span>
         <span class="flow-step">Zero-knowledge proof</span>
         <span class="arrow">&rarr;</span>
-        <span class="flow-step">Valid HumanKey participant</span>
+        <span class="flow-step">Membership verified</span>
       </div>
 
-      <p>The point is to establish membership in a set of verified humans and allow that membership to be demonstrated without unnecessarily exposing the underlying biometric identity.</p>
+      <p>Conceptually, the proof demonstrates that the participant controls an identity whose commitment exists inside the authorized HumanKey group. The verifier can validate group membership without requiring the participant to reveal which specific member of the group generated the proof.</p>
+      <p>The witness used to construct the proof contains the information necessary to demonstrate membership, including the participant's private identity material and the Merkle path that proves the corresponding commitment belongs to the current group tree. Those private values are inputs to proof generation rather than values that need to be publicly disclosed.</p>
+      <p>The verifier instead works with public proof information such as the applicable Merkle root, the proof itself, signal or message information when used, and the nullifier information required by the particular action.</p>
+
+      <div class="data-row">
+        <span>The verifier needs to establish</span>
+        <strong>Valid member, valid proof, valid scope. Not the member's biometric identity.</strong>
+      </div>
+
+      <p>This creates an important architectural boundary. Biometrics answer the enrollment question: is this a live and sufficiently unique human? Zero-knowledge membership can answer a later authorization question: is this participant a member of the authorized human set?</p>
+      <p>Those should not be treated as the same operation.</p>
+      <p>HumanKey therefore does not require a new biometric comparison merely to prove ordinary membership. Once enrollment is complete, routine authentication can be performed with passkeys and eligible privacy-preserving actions can use the zero-knowledge membership layer.</p>
+      <p>Zero knowledge also does not magically make the surrounding application anonymous. IP addresses, timestamps, browser characteristics, account identifiers, application logs, network metadata, and behavioral patterns can create linkability independently of the cryptographic proof.</p>
+      <p>HumanKey's privacy model therefore depends not only on the proof system but also on disciplined handling of application metadata and deliberate separation between biometric enrollment records, cryptographic membership material, authentication credentials, and public social identity.</p>
     </section>
 
     <section id="section-17" class="paper-section">
       <div class="section-kicker">17</div>
-      <h2>Nullifiers</h2>
+      <h2>Nullifiers and Scoped Accountability</h2>
 
-      <p>Anonymous participation creates another challenge. If the system does not publicly identify the person, how can it stop one valid member from repeatedly performing an action that should only happen once?</p>
+      <p>Anonymous or pseudonymous membership creates another problem. A system may need to allow a valid human to perform an action while preventing that same valid member from performing the identical restricted action repeatedly.</p>
+      <p>Nullifiers provide a mechanism for enforcing that constraint without requiring the member's legal identity to become public.</p>
+      <p>A nullifier is associated with the participant's cryptographic identity and an external scope defined by the application.</p>
 
-      <p>Nullifiers provide scoped accountability. Conceptually, a nullifier is derived from an identity secret and an action scope.</p>
+      <div class="flow">
+        <span class="flow-step">Valid private identity</span>
+        <span class="arrow">&rarr;</span>
+        <span class="flow-step">Action scope</span>
+        <span class="arrow">&rarr;</span>
+        <span class="flow-step">Nullifier</span>
+        <span class="arrow">&rarr;</span>
+        <span class="flow-step">Server checks prior use</span>
+      </div>
 
-      <p>The system can determine that a valid HumanKey member has already performed a particular scoped action without necessarily determining the person&#x27;s public legal identity.</p>
+      <p>The scope is important. HumanKey should not use one universal nullifier for unrelated activities because doing so could unnecessarily make separate actions linkable.</p>
+      <p>Instead, an application can define a specific scope for an operation. Examples might include one vote in a particular poll, one registration action, or another event where the system requires one eligible member to act only once.</p>
+
+      <div class="data-row">
+        <span>Different scope</span>
+        <strong>Different accountability context.</strong>
+      </div>
+
+      <p>When the same eligible member attempts to signal twice within the same protected scope, the verifier can detect reuse of the corresponding nullifier and reject the second action.</p>
+      <p>This provides an important distinction between anonymity and absence of accountability. HumanKey can support privacy-preserving membership while still enforcing rules against duplicate scoped actions.</p>
     </section>
 
     <section id="section-18" class="paper-section">
       <div class="section-kicker">18</div>
-      <h2>Passkeys</h2>
+      <h2>Passkeys and Routine Authentication</h2>
 
-      <p>A person should not need to perform biometric enrollment every time they log in. Once HumanKey establishes the human, routine authentication moves to passkeys.</p>
+      <p>A person should not need to perform biometric enrollment every time they sign into Hash Humanity.</p>
+      <p>Once HumanKey establishes the human and binds the resulting participation identity, routine authentication moves to passkeys using WebAuthn public-key cryptography.</p>
 
-      <p>The server issues a cryptographic challenge. The user&#x27;s authenticator signs it with a private key. The signed response returns to the server. The server verifies it with the public key and authenticates the user.</p>
+      <div class="flow">
+        <span class="flow-step">Server creates challenge</span>
+        <span class="arrow">&rarr;</span>
+        <span class="flow-step">Authenticator receives challenge</span>
+        <span class="arrow">&rarr;</span>
+        <span class="flow-step">Private key signs assertion</span>
+        <span class="arrow">&rarr;</span>
+        <span class="flow-step">Server verifies signature</span>
+        <span class="arrow">&rarr;</span>
+        <span class="flow-step">HumanKey account authenticated</span>
+      </div>
 
-      <p>The private key remains with the authenticator. The face establishes the human. The passkey authenticates the established human afterward.</p>
+      <p>The private credential key remains with the user's authenticator or credential provider. HumanKey stores the information necessary to verify the resulting public-key assertion rather than storing the participant's private authentication key.</p>
+      <p>Every authentication ceremony requires a server-generated challenge. The returned assertion must correspond to the expected challenge and relying-party context before authentication succeeds.</p>
+      <p>Challenges must be short-lived and single-use. Once consumed, the server must reject reuse. This is part of HumanKey's replay-protection model.</p>
+      <p>WebAuthn also binds passkeys to a relying-party domain and includes origin information in the authentication ceremony. Correct server-side verification therefore includes validating the expected relying-party ID, origin, challenge, credential, and signature.</p>
+
+      <div class="data-row">
+        <span>Enrollment</span>
+        <strong>The face establishes the human.</strong>
+      </div>
+
+      <div class="data-row">
+        <span>Routine login</span>
+        <strong>The passkey authenticates the established human.</strong>
+      </div>
+
+      <p>This separation reduces unnecessary biometric processing while giving routine authentication the phishing-resistant properties of origin-bound public-key credentials.</p>
     </section>
 
     <section id="section-19" class="paper-section">
       <div class="section-kicker">19</div>
       <h2>Account Recovery</h2>
-
       <p>Recovery is not an afterthought in HumanKey. It is one of the most important security boundaries in the protocol.</p>
-
       <p>A user can lose a phone. A computer can fail. A passkey can be deleted. An authenticator can become inaccessible. The human still exists.</p>
-
       <p>HumanKey follows a simple recovery principle: Recover the human. Do not recreate the human.</p>
-
       <p>Enrollment asks whether this is a new unique human. Recovery asks whether this is the human who already owns an existing HumanKey. Those are completely different operations.</p>
     </section>
 
     <section id="section-20" class="paper-section">
       <div class="section-kicker">20</div>
       <h2>The HumanKey Recovery Process</h2>
-
       <div class="flow">
         <span class="flow-step">Recovery request</span>
         <span class="arrow">&rarr;</span>
@@ -1221,12 +1283,10 @@
         <span class="arrow">&rarr;</span>
         <span class="flow-step">Search existing identity</span>
       </div>
-
       <div class="data-row">
         <span>No valid match</span>
         <strong>Safe failure or controlled retry.</strong>
       </div>
-
       <div class="flow">
         <span class="flow-step">Existing match</span>
         <span class="arrow">&rarr;</span>
@@ -1238,25 +1298,20 @@
         <span class="arrow">&rarr;</span>
         <span class="flow-step">Existing account restored</span>
       </div>
-
       <p>Recovery does not intentionally create another HumanKey identity. The same human returns to the same account.</p>
     </section>
 
     <section id="section-21" class="paper-section">
       <div class="section-kicker">21</div>
       <h2>The One-Scan Recovery Design</h2>
-
       <p>During development, a recovery problem was identified where facial verification could occur twice. That was not the intended architecture.</p>
-
       <p>Recovery should require one live biometric ceremony for the recovery event. The corrected design allows the successful liveness result to continue through identity resolution rather than automatically requiring another redundant scan.</p>
-
       <p>This reduces unnecessary biometric processing, user friction, provider calls, and the possibility of conflicting biometric state.</p>
     </section>
 
     <section id="section-22" class="paper-section">
       <div class="section-kicker">22</div>
       <h2>Recovery Preserves One Human, One Account</h2>
-
       <div class="flow">
         <span class="flow-step">Passkey lost</span>
         <span class="arrow">&rarr;</span>
@@ -1264,7 +1319,6 @@
         <span class="arrow">&rarr;</span>
         <span class="flow-step">Same human, two identities</span>
       </div>
-
       <div class="flow">
         <span class="flow-step">Passkey lost</span>
         <span class="arrow">&rarr;</span>
@@ -1280,95 +1334,51 @@
         <span class="arrow">&rarr;</span>
         <span class="flow-step">Same human, same account</span>
       </div>
-
-      <p>Recovery therefore reinforces HumanKey&#x27;s Sybil resistance rather than bypassing it.</p>
+      <p>Recovery therefore reinforces HumanKey's Sybil resistance rather than bypassing it.</p>
     </section>
 
     <section id="section-23" class="paper-section">
       <div class="section-kicker">23</div>
       <h2>Recovery Failure</h2>
-
       <p>A failed recovery match must not become a shortcut to creating another account.</p>
-
       <p>If the system cannot establish a sufficiently strong relationship with an existing HumanKey, the correct result is controlled failure or retry.</p>
-
       <p>Security-sensitive ambiguity should fail closed. HumanKey development has also included handling for stale biometric-only states so legitimate users are not incorrectly trapped by inconsistent identity state.</p>
     </section>
 
     <section id="section-24" class="paper-section">
       <div class="section-kicker">24</div>
       <h2>Recovery Security Testing</h2>
-
-      <p>Recovery has been tested independently because of the damage a weak recovery system could do to the one-human-one-account model.</p>
-
-      <div class="data-row">
-        <span>Tests executed</span>
-        <strong>10</strong>
-      </div>
-
-      <div class="data-row">
-        <span>Tests passed</span>
-        <strong>10</strong>
-      </div>
-
-      <div class="data-row">
-        <span>Tests failed</span>
-        <strong>0</strong>
-      </div>
-
-      <div class="data-row">
-        <span>Result</span>
-        <strong>PASS</strong>
-      </div>
-
+      <div class="data-row"><span>Tests executed</span><strong>10</strong></div>
+      <div class="data-row"><span>Tests passed</span><strong>10</strong></div>
+      <div class="data-row"><span>Tests failed</span><strong>0</strong></div>
+      <div class="data-row"><span>Result</span><strong>PASS</strong></div>
       <p>The test run followed investigation of the redundant face-scan behavior. When the corrective patch was subsequently checked, the implementation reported that the relevant correction was already present and no additional file changes were required.</p>
-
       <p>The regression suite completed 10 passed and 0 failed. This does not mean HumanKey can never contain another bug. It means every test in that recovery regression suite passed at that point in development.</p>
     </section>
 
     <section id="section-25" class="paper-section">
       <div class="section-kicker">25</div>
       <h2>Broader HumanKey Testing</h2>
-
       <p>Recovery is only one part of the testing program.</p>
-
-      <div class="data-row">
-        <span>Tests passed</span>
-        <strong>182</strong>
-      </div>
-
-      <div class="data-row">
-        <span>Tests skipped</span>
-        <strong>1</strong>
-      </div>
-
-      <div class="data-row">
-        <span>Result</span>
-        <strong>PASS</strong>
-      </div>
-
+      <div class="data-row"><span>Tests passed</span><strong>182</strong></div>
+      <div class="data-row"><span>Tests skipped</span><strong>1</strong></div>
+      <div class="data-row"><span>Result</span><strong>PASS</strong></div>
       <p>Testing has covered biometric consent, AWS gating, invalid sessions, required capture state, recovery, duplicate detection, provider response handling, biometric searching, passkey authorization, replay protection, state transitions, calibration, multi-template behavior, rate limiting, and blocked attempts.</p>
-
       <p>The purpose of the test suite is not merely to prove that legitimate enrollment works. A security system must also prove that invalid operations do not work.</p>
     </section>
 
     <section id="section-26" class="paper-section">
       <div class="section-kicker">26</div>
       <h2>Rate Limiting</h2>
-
       <p>Proof of personhood does not make humans harmless. A real human can spam, scrape, automate activity, or attack an API.</p>
-
       <p>HumanKey combines identity scarcity with rate controls. Implemented safeguards have included 3 applicable liveness attempts within a 24-hour control window, a 60-second cooldown, a 500-per-day global AWS liveness ceiling, HTTP 429 rejection, idempotency protections, an administrative kill switch, and automated blocked-attempt testing.</p>
-
       <p>Proof of personhood limits identity multiplication. Rate limiting limits action multiplication.</p>
     </section>
 
     <section id="section-27" class="paper-section">
       <div class="section-kicker">27</div>
       <h2>Replay Protection</h2>
-
       <p>A successful security ceremony should not become a permanent reusable ticket.</p>
-
       <div class="flow">
         <span class="flow-step">Session created</span>
         <span class="arrow">&rarr;</span>
@@ -1382,106 +1392,77 @@
         <span class="arrow">&rarr;</span>
         <span class="flow-step">Replay rejected</span>
       </div>
-
-      <p>This principle applies particularly to credential authorization and security-sensitive enrollment state.</p>
+      <p>This principle applies to passkey challenges, enrollment sessions, recovery sessions, and other one-time authorization artifacts. Security-sensitive results should be bound to the expected session or challenge, expire within a defined window, and become unusable after successful consumption.</p>
     </section>
 
     <section id="section-28" class="paper-section">
       <div class="section-kicker">28</div>
       <h2>Server-Side Authority</h2>
-
       <p>The browser is not trusted to decide whether somebody is human.</p>
-
       <p>A malicious user controls their browser. They can modify JavaScript, alter requests, manipulate local storage, and bypass interface screens.</p>
-
       <p>Security decisions therefore belong on the server. The interface can request a state transition. The server determines whether the transition is valid.</p>
+      <p>HumanKey's server-side authority model treats client state as untrusted input. Enrollment stage, liveness completion, uniqueness status, recovery authorization, passkey challenge state, proof validation, and replay state must be checked against authoritative server-side records before sensitive transitions are accepted.</p>
     </section>
 
     <section id="section-29" class="paper-section">
       <div class="section-kicker">29</div>
       <h2>Software Architecture</h2>
-
       <p>HumanKey and Hash Humanity use different technologies for different jobs.</p>
-
-      <p>HumanKey uses Python for biometric and security service logic and testing, FastAPI for the API layer, Pydantic for structured validation, AWS Face Liveness for production liveness verification, AWS Rekognition for production biometric uniqueness and matching, Semaphore for zero-knowledge membership components, and passkeys for cryptographic routine authentication.</p>
-
+      <p>HumanKey uses Python for biometric and security service logic and testing, FastAPI for the API layer, Pydantic for structured validation, AWS Face Liveness for production liveness verification, AWS Rekognition for production biometric uniqueness and matching, Semaphore components for zero-knowledge membership, and passkeys for cryptographic routine authentication.</p>
       <p>Hash Humanity uses React, JavaScript and JSX, HTML, CSS, and Firebase for appropriate application, hosting, account, and real-time functionality.</p>
-
-      <p>The biometric authority is deliberately separated from the presentation layer.</p>
+      <p>The biometric authority is deliberately separated from the presentation layer. That separation reduces the amount of security-critical trust placed in browser code and allows biometric, proof, authentication, and social application responsibilities to be reasoned about independently.</p>
     </section>
 
     <section id="section-30" class="paper-section">
       <div class="section-kicker">30</div>
       <h2>Language Accessibility</h2>
-
       <p>A human network should not define humanity according to language.</p>
-
       <p>Hash Humanity has been developed with internationalization support including English, Spanish, Portuguese, Chinese, German, French, Malay, and Korean.</p>
-
+      <p>The HumanKey white paper is published using separate crawlable language URLs with localized metadata so people and search engines can reach the same technical material in supported languages without changing the meaning of the protocol.</p>
       <p>If the objective is a human social network, geographical and linguistic boundaries should not determine who can participate in the conversation.</p>
     </section>
 
     <section id="section-31" class="paper-section">
       <div class="section-kicker">31</div>
       <h2>Security Threat Model</h2>
-
       <p>HumanKey considers several attacker classes.</p>
-
       <p><strong>Automated bot:</strong> attempts participation without a legitimate human. Defense includes liveness, server-side enrollment state, and identity controls.</p>
-
       <p><strong>Single-human Sybil attacker:</strong> attempts to create many identities. Primary defense is biometric uniqueness.</p>
-
       <p><strong>Account farm:</strong> attempts to manufacture large numbers of verified accounts. Defenses include liveness, uniqueness, and rate limits.</p>
-
       <p><strong>Presentation attacker:</strong> attempts photographs or prerecorded imagery. Defense is AWS Face Liveness.</p>
-
-      <p><strong>Credential attacker:</strong> attempts to steal login access. Defense is passkey public-key authentication.</p>
-
-      <p><strong>Replay attacker:</strong> attempts to reuse previously valid security artifacts. Defenses include expiry, consumption state, and server-side transitions.</p>
-
+      <p><strong>Credential attacker:</strong> attempts to steal login access. Defense is passkey public-key authentication plus correct challenge, RP ID, origin, credential, and signature validation.</p>
+      <p><strong>Replay attacker:</strong> attempts to reuse previously valid security artifacts. Defenses include expiry, consumption state, challenge binding, and server-side transitions.</p>
       <p><strong>Ban evader:</strong> attempts to return under another identity. Defense is persistent biometric uniqueness.</p>
-
       <p><strong>Influence operation:</strong> attempts to manufacture thousands of apparent independent citizens. Defense is changing the scarce resource from accounts to actual humans.</p>
+      <p><strong>Metadata correlation attacker:</strong> attempts to link supposedly private proof activity through IP addresses, timing, application identifiers, logging, or behavioral patterns. Mitigation depends on minimizing unnecessary metadata and maintaining separation between biometric enrollment, proof membership, authentication, and public social identity.</p>
+      <p><strong>False biometric match or non-match:</strong> probabilistic biometric systems can produce errors. Mitigation requires threshold calibration, recovery safeguards, testing, monitoring, and a fail-closed posture for security-sensitive ambiguity.</p>
     </section>
 
     <section id="section-32" class="paper-section">
       <div class="section-kicker">32</div>
       <h2>What HumanKey Does Not Do</h2>
-
       <p>HumanKey does not determine truth.</p>
-
       <p>A verified human can still lie, spread misinformation, be paid, participate in propaganda, harass somebody, or simply be an asshole.</p>
-
       <p>HumanKey does not attempt to technologically sanitize humanity. The protocol addresses a narrower problem: one human should not cheaply become a hundred apparent humans.</p>
-
       <p>Human disagreement remains. Synthetic population is what becomes dramatically harder.</p>
     </section>
 
     <section id="section-33" class="paper-section">
       <div class="section-kicker">33</div>
       <h2>Why That Difference Matters</h2>
-
       <p>Consider two platforms.</p>
-
       <p>Platform A allows one human to create fifty accounts.</p>
-
       <p>Platform B restricts one human with high confidence to one persistent identity.</p>
-
       <p>Both platforms contain imperfect people, but they do not have the same social dynamics. On Platform A, one attacker can appear to be fifty people. On Platform B, fifty identities should require something approaching fifty enrolled humans.</p>
-
       <p>That changes reputation, moderation, polls, voting, follower counts, harassment, ban enforcement, community governance, apparent popularity, political organization, and synthetic consensus.</p>
     </section>
 
     <section id="section-34" class="paper-section">
       <div class="section-kicker">34</div>
       <h2>Toward a Social Graph of Humans</h2>
-
       <p>Most social networks contain graphs of credentials. HumanKey attempts to create something closer to a graph of people.</p>
-
       <p>If ten conventional accounts disagree with you, you cannot automatically know whether ten people disagree with you. It might be ten. It might be five. It might be one.</p>
-
       <p>If ten valid HumanKey identities disagree with you, the architecture is specifically designed to provide substantially stronger evidence that ten independently enrolled humans are represented.</p>
-
       <p>That does not make them right. It makes them real participants.</p>
     </section>
 
@@ -1489,173 +1470,72 @@
       <div class="section-kicker">35</div>
       <h2>Current Validation Status</h2>
 
-      <div class="data-row">
-        <span>AWS Face Liveness</span>
-        <strong>Implemented</strong>
-      </div>
-
-      <div class="data-row">
-        <span>AWS biometric uniqueness</span>
-        <strong>Implemented</strong>
-      </div>
-
-      <div class="data-row">
-        <span>SearchUsersByImage</span>
-        <strong>Implemented</strong>
-      </div>
-
-      <div class="data-row">
-        <span>AWS user and face association</span>
-        <strong>Implemented</strong>
-      </div>
-
-      <div class="data-row">
-        <span>Biometric consent gating</span>
-        <strong>Implemented</strong>
-      </div>
-
-      <div class="data-row">
-        <span>Passkey authentication</span>
-        <strong>Implemented</strong>
-      </div>
-
-      <div class="data-row">
-        <span>Passkey replay protection</span>
-        <strong>Implemented</strong>
-      </div>
-
-      <div class="data-row">
-        <span>Semaphore membership components</span>
-        <strong>Implemented</strong>
-      </div>
-
-      <div class="data-row">
-        <span>Account recovery</span>
-        <strong>Implemented</strong>
-      </div>
-
-      <div class="data-row">
-        <span>Single-scan recovery correction</span>
-        <strong>Implemented</strong>
-      </div>
-
-      <div class="data-row">
-        <span>Recovery regression tests</span>
-        <strong>10 / 10 passed</strong>
-      </div>
-
-      <div class="data-row">
-        <span>Broader security regression tests</span>
-        <strong>182 passed</strong>
-      </div>
-
-      <div class="data-row">
-        <span>Broader regression skipped</span>
-        <strong>1</strong>
-      </div>
-
-      <div class="data-row">
-        <span>Rate-limit safeguards</span>
-        <strong>Implemented</strong>
-      </div>
-
-      <div class="data-row">
-        <span>Global AWS liveness ceiling</span>
-        <strong>500 / day</strong>
-      </div>
-
-      <div class="data-row">
-        <span>Administrative kill switch</span>
-        <strong>Implemented</strong>
-      </div>
+      <div class="data-row"><span>AWS Face Liveness</span><strong>Implemented</strong></div>
+      <div class="data-row"><span>AWS biometric uniqueness</span><strong>Implemented</strong></div>
+      <div class="data-row"><span>SearchUsersByImage</span><strong>Implemented</strong></div>
+      <div class="data-row"><span>AWS user and face association</span><strong>Implemented</strong></div>
+      <div class="data-row"><span>Biometric consent gating</span><strong>Implemented</strong></div>
+      <div class="data-row"><span>Passkey authentication</span><strong>Implemented</strong></div>
+      <div class="data-row"><span>Passkey replay protection</span><strong>Implemented</strong></div>
+      <div class="data-row"><span>Semaphore membership components</span><strong>Implemented</strong></div>
+      <div class="data-row"><span>Account recovery</span><strong>Implemented</strong></div>
+      <div class="data-row"><span>Single-scan recovery correction</span><strong>Implemented</strong></div>
+      <div class="data-row"><span>Recovery regression tests</span><strong>10 / 10 passed</strong></div>
+      <div class="data-row"><span>Broader security regression tests</span><strong>182 passed</strong></div>
+      <div class="data-row"><span>Broader regression skipped</span><strong>1</strong></div>
+      <div class="data-row"><span>Rate-limit safeguards</span><strong>Implemented</strong></div>
+      <div class="data-row"><span>Global AWS liveness ceiling</span><strong>500 / day</strong></div>
+      <div class="data-row"><span>Administrative kill switch</span><strong>Implemented</strong></div>
 
       <p>These results represent the implementation and testing status documented at the time of this white paper. They should change as the system changes.</p>
+      <p>These results describe implementation status and internal regression testing. They do not constitute an independent penetration test, third-party biometric accuracy certification, cryptographic audit, privacy audit, or proof that the system is free of vulnerabilities. Independent review remains part of the security work required before HumanKey should be treated as a mature production identity protocol.</p>
     </section>
 
     <section id="section-36" class="paper-section">
       <div class="section-kicker">36</div>
       <h2>Security Is Never Finished</h2>
-
       <p>No legitimate security engineer should claim that passing a test suite makes a system permanently secure.</p>
-
       <p>Attackers change. Providers change. Dependencies change. Browsers change. Artificial intelligence changes.</p>
-
-      <p>HumanKey therefore requires continuing regression testing, adversarial testing, provider monitoring, dependency maintenance, threshold calibration, penetration testing, privacy review, abuse monitoring, incident response, and threat-model revision.</p>
-
+      <p>HumanKey therefore requires continuing regression testing, adversarial testing, provider monitoring, dependency maintenance, threshold calibration, penetration testing, privacy review, cryptographic review, abuse monitoring, incident response, and threat-model revision.</p>
       <p>The goal is not to claim that HumanKey is impossible to defeat. The goal is to make defeating one-human-one-account dramatically more difficult and expensive than simply creating another internet account.</p>
     </section>
 
     <section id="section-37" class="paper-section">
       <div class="section-kicker">37</div>
       <h2>Where This Is Going</h2>
-
       <p>Artificial intelligence is going to become better at pretending to be us. That is not science fiction. It is already happening.</p>
-
       <p>Synthetic text will improve. Synthetic photographs will improve. Synthetic video will improve. Autonomous agents will improve. Persona management will improve.</p>
-
       <p>Eventually, asking whether a message sounds human will tell us almost nothing about whether a human actually produced it.</p>
-
       <p>So the question has to change.</p>
-
-      <div class="data-row">
-        <span>Not</span>
-        <strong>Does this look human?</strong>
-      </div>
-
-      <div class="data-row">
-        <span>But</span>
-        <strong>Is there actually a human behind this identity?</strong>
-      </div>
-
-      <div class="data-row">
-        <span>And then</span>
-        <strong>Is that human already represented?</strong>
-      </div>
-
+      <div class="data-row"><span>Not</span><strong>Does this look human?</strong></div>
+      <div class="data-row"><span>But</span><strong>Is there actually a human behind this identity?</strong></div>
+      <div class="data-row"><span>And then</span><strong>Is that human already represented?</strong></div>
       <p>That is the problem HumanKey was built to address.</p>
     </section>
 
     <section id="section-38" class="paper-section">
       <div class="section-kicker">38</div>
       <h2>Conclusion</h2>
-
       <p>The internet does not have a shortage of accounts. It has a shortage of confidence in what those accounts actually represent.</p>
-
       <p>Machines now generate the majority of measured web traffic. Governments have deployed fake social media personas. Bot farms have impersonated citizens. Disposable accounts enable harassment, fraud, ban evasion, artificial popularity, account farming, and manufactured consensus. Artificial intelligence is making those operations cheaper and more convincing.</p>
-
       <div class="data-row">
         <span>Hash Humanity starts from a different foundation</span>
         <strong>the human.</strong>
       </div>
-
-      <p>HumanKey uses liveness to establish live presence. It uses biometric uniqueness to make duplicate enrollment dramatically harder. It uses mathematical biometric representations so persistent uniqueness does not require turning the platform into a public gallery of enrollment photographs. It uses zero-knowledge membership to separate proof of humanity from public identity. It uses passkeys so users do not need to continually scan their faces just to log in. It uses biometric recovery to reconnect a person to the same identity when authentication credentials are lost. It uses rate limits to constrain abuse even when the actor is human. It uses server-side state controls and automated regression testing to enforce those boundaries.</p>
-
+      <p>HumanKey uses liveness to establish live presence. It uses biometric uniqueness to make duplicate enrollment dramatically harder. It uses mathematical biometric representations so persistent uniqueness does not require turning the platform into a public gallery of enrollment photographs. It uses zero-knowledge membership to separate proof of humanity from public identity. It uses scoped nullifiers to constrain duplicate actions without requiring public legal identity. It uses passkeys so users do not need to continually scan their faces just to log in. It uses biometric recovery to reconnect a person to the same identity when authentication credentials are lost. It uses rate limits to constrain abuse even when the actor is human. It uses server-side state controls and automated regression testing to enforce those boundaries.</p>
       <p>The objective is not to make everybody agree. I would not want that internet.</p>
-
       <p>The objective is not to decide what people are allowed to believe. I would not want that internet either.</p>
-
       <p>The objective is much simpler.</p>
-
       <p>Let humans argue with humans.</p>
-
       <p>Let people disagree. Let people change their minds. Let people be unpopular. Let people say things other people hate.</p>
-
       <p>But when 1,000 apparently independent people are speaking, there should be a meaningful technical reason to believe that something approaching 1,000 actual humans are behind those voices.</p>
-
       <p>Not one person with 1,000 email addresses. Not an account farm. Not a government running synthetic citizens. Not an AI system operating a crowd that does not exist.</p>
-
       <p>Actual people.</p>
-
       <p>That is what HumanKey is trying to restore to the internet.</p>
-
       <p>Not agreement. Not conformity. Not control.</p>
-
       <p>Human presence.</p>
-
       <p>Because in an internet increasingly filled with machines, proof that somebody is actually there is becoming one of the most valuable things we have.</p>
-
       <p>One human. One account.</p>
-
       <p>HumanKey.</p>
     </section>
 
@@ -1667,385 +1547,369 @@
 
       <ol>
         <li>Imperva / Thales, 2026 Bad Bot Report. Automated systems generated more than 53 percent of measured global web traffic during 2025.</li>
-
         <li>United States Department of Justice, July 2024. Justice Department disruption of a covert Russian government-operated AI-enhanced social media bot farm involving 968 fictitious accounts.</li>
-
-        <li>United States Department of Justice, Eastern District of New York, April 2023. Charges involving 34 officers of China&#x27;s Ministry of Public Security and allegations concerning thousands of false online personas operated by the 912 Special Project Working Group.</li>
-
+        <li>United States Department of Justice, Eastern District of New York, April 2023. Charges involving 34 officers of China's Ministry of Public Security and allegations concerning thousands of false online personas operated by the 912 Special Project Working Group.</li>
         <li>Office of the Director of National Intelligence. Assessments concerning foreign malign influence operations and efforts by foreign governments to exploit social divisions in the United States.</li>
-
         <li>Amazon Web Services, Amazon Rekognition Developer Guide. Documentation concerning Rekognition collections, mathematical face vectors, face indexing, user vectors, facial searching, and biometric comparison.</li>
-
         <li>Amazon Web Services, Amazon Rekognition Face Liveness. Documentation concerning probabilistic liveness analysis, liveness confidence scoring, reference imagery, and presentation-attack defenses.</li>
-
-        <li>Amazon Web Services, Responsible AI Service Card for Rekognition Face Matching. Documentation describing facial feature extraction, mathematical face-vector representations, and similarity-based matching.</li>
+        <li>Amazon Web Services, Responsible AI Service Card for Rekognition Face Matching. Documentation describing facial feature extraction, mathematical face-vector representations, similarity-based matching, and threshold calibration considerations.</li>
+        <li>Semaphore documentation, Privacy & Scaling Explorations. Documentation concerning identities, identity commitments, Merkle-tree groups, zero-knowledge membership proofs, scopes, and nullifiers.</li>
+        <li>W3C Web Authentication and passkey documentation. Documentation concerning public-key credentials, challenges, relying-party identifiers, origins, and authentication assertions.</li>
       </ol>
 
     </section>
 
   </main>
 
- <footer>
+  <footer>
 
-  <div class="footer-brand">
-    Hash Humanity &middot; HumanKey
-  </div>
-
-  <div class="footer-statement">
-    Proof of personhood for a human internet.
-    One living human. One persistent participation identity. One account.
-  </div>
-
-  <nav class="footer-links" aria-label="Footer navigation">
-
-    <a href="https://hashhumanity.world/">
-      Hash Humanity
-    </a>
-
-    <a href="https://hashhumanity.world/humankey/">
-      HumanKey
-    </a>
-
-    <button
-      type="button"
-      class="footer-link-button"
-      onclick="openContactForm('Contact')"
-    >
-      Contact
-    </button>
-
-    <button
-      type="button"
-      class="footer-link-button"
-      onclick="openContactForm('Support')"
-    >
-      Support
-    </button>
-
-  </nav>
-
-  <div class="footer-contact">
-    Questions, technical inquiries, or support:
-    <button
-      type="button"
-      class="footer-email-button"
-      onclick="openContactForm('General Inquiry')"
-    >
-      support@hashhumanity.world
-    </button>
-  </div>
-
-  <div class="footer-legal">
-    <span>
-      HumanKey Technical White Paper &middot; Version 1.0 &middot; September 2026
-    </span>
-
-    <span>
-      &copy; 2026 Hash Humanity. All rights reserved.
-    </span>
-  </div>
-
-</footer>
-
-
-<dialog id="contactDialog" class="contact-dialog">
-
-  <div class="contact-form-shell">
-
-    <button
-      type="button"
-      class="contact-close"
-      aria-label="Close contact form"
-      onclick="closeContactForm()"
-    >
-      &times;
-    </button>
-
-    <div class="contact-kicker">
-      Hash Humanity
+    <div class="footer-brand">
+      Hash Humanity &middot; HumanKey
     </div>
 
-    <h2>Contact Us</h2>
+    <div class="footer-statement">
+      Human verification for social media.
+      Zero-knowledge proof of personhood.
+      One living human. One persistent participation identity. One account.
+    </div>
 
-    <p class="contact-intro">
-      Questions about HumanKey, technical inquiries, support requests,
-      or partnership discussions can be sent directly to our team.
-    </p>
+    <nav class="footer-links" aria-label="Footer navigation">
 
-    <form id="contactForm">
+      <a href="https://hashhumanity.world/">
+        Hash Humanity
+      </a>
 
-      <div class="contact-field">
-        <label for="contactName">
-          Name
-        </label>
+      <a href="https://hashhumanity.world/humankey/">
+        HumanKey
+      </a>
 
-        <input
-          id="contactName"
-          name="name"
-          type="text"
-          autocomplete="name"
-          required
-        >
-      </div>
-
-      <div class="contact-field">
-        <label for="contactEmail">
-          Email
-        </label>
-
-        <input
-          id="contactEmail"
-          name="email"
-          type="email"
-          autocomplete="email"
-          required
-        >
-      </div>
-
-      <div class="contact-field">
-        <label for="contactTopic">
-          Topic
-        </label>
-
-        <select
-          id="contactTopic"
-          name="topic"
-          required
-        >
-          <option value="General Inquiry">
-            General Inquiry
-          </option>
-
-          <option value="HumanKey Technical Inquiry">
-            HumanKey Technical Inquiry
-          </option>
-
-          <option value="Support">
-            Support
-          </option>
-
-          <option value="Security">
-            Security
-          </option>
-
-          <option value="Press or Media">
-            Press or Media
-          </option>
-
-          <option value="Partnership">
-            Partnership
-          </option>
-        </select>
-      </div>
-
-      <div class="contact-field">
-        <label for="contactMessage">
-          Message
-        </label>
-
-        <textarea
-          id="contactMessage"
-          name="message"
-          rows="6"
-          required
-        ></textarea>
-      </div>
-
-      <div class="contact-honeypot" aria-hidden="true">
-        <label for="contactWebsite">Website</label>
-        <input
-          id="contactWebsite"
-          name="website"
-          type="text"
-          tabindex="-1"
-          autocomplete="off"
-        >
-      </div>
-
-      <button
-        type="submit"
-        class="contact-submit"
-      >
-        Send Message
+      <button type="button" class="footer-link-button" onclick="openContactForm('Contact')">
+        Contact
       </button>
 
-      <div class="contact-destination">
-        Messages are delivered to
+      <button type="button" class="footer-link-button" onclick="openContactForm('Support')">
+        Support
+      </button>
+
+    </nav>
+
+    <div class="footer-contact">
+      Questions, technical inquiries, or support:
+      <button
+        type="button"
+        class="footer-email-button"
+        onclick="openContactForm('General Inquiry')"
+      >
         support@hashhumanity.world
+      </button>
+    </div>
+
+    <div class="footer-legal">
+      <span>
+        HumanKey Technical White Paper &middot; Version 1.0 &middot; September 2026
+      </span>
+      <span>
+        &copy; 2026 Hash Humanity. All rights reserved.
+      </span>
+    </div>
+
+  </footer>
+
+  <dialog id="contactDialog" class="contact-dialog">
+
+    <div class="contact-form-shell">
+
+      <button
+        type="button"
+        class="contact-close"
+        aria-label="Close contact form"
+        onclick="closeContactForm()"
+      >
+        &times;
+      </button>
+
+      <div class="contact-kicker">
+        Hash Humanity
       </div>
 
-      <div
-        id="contactStatus"
-        class="contact-status"
-        role="status"
-        aria-live="polite"
-      ></div>
+      <h2>Contact Us</h2>
 
-    </form>
+      <p class="contact-intro">
+        Questions about HumanKey, technical inquiries, support requests,
+        or partnership discussions can be sent directly to our team.
+      </p>
 
-  </div>
+      <form id="contactForm">
 
-</dialog>
+        <div class="contact-field">
+          <label for="contactName">Name</label>
+          <input id="contactName" name="name" type="text" autocomplete="name" required>
+        </div>
 
+        <div class="contact-field">
+          <label for="contactEmail">Email</label>
+          <input id="contactEmail" name="email" type="email" autocomplete="email" required>
+        </div>
 
-<script>
-  const CONTACT_ENDPOINT =
-    "https://us-central1-hashhumanity-58b9a.cloudfunctions.net/sendWhitePaperContact";
+        <div class="contact-field">
+          <label for="contactTopic">Topic</label>
+          <select id="contactTopic" name="topic" required>
+            <option value="General Inquiry">General Inquiry</option>
+            <option value="HumanKey Technical Inquiry">HumanKey Technical Inquiry</option>
+            <option value="Support">Support</option>
+            <option value="Security">Security</option>
+            <option value="Press or Media">Press or Media</option>
+            <option value="Partnership">Partnership</option>
+          </select>
+        </div>
 
-  function openContactForm(topic) {
-    const dialog = document.getElementById("contactDialog");
-    const topicSelect = document.getElementById("contactTopic");
-    const status = document.getElementById("contactStatus");
+        <div class="contact-field">
+          <label for="contactMessage">Message</label>
+          <textarea id="contactMessage" name="message" rows="6" required></textarea>
+        </div>
 
-    if (status) {
-      status.textContent = "";
-      status.removeAttribute("data-state");
-    }
+        <div class="contact-honeypot" aria-hidden="true">
+          <label for="contactWebsite">Website</label>
+          <input id="contactWebsite" name="website" type="text" tabindex="-1" autocomplete="off">
+        </div>
 
-    if (topicSelect) {
-      if (topic === "Support") {
-        topicSelect.value = "Support";
-      } else if (topic === "Contact") {
-        topicSelect.value = "General Inquiry";
-      } else if (topic) {
-        topicSelect.value = topic;
-      }
-    }
+        <button type="submit" class="contact-submit">
+          Send Message
+        </button>
 
-    if (dialog && typeof dialog.showModal === "function") {
-      dialog.showModal();
-    }
-  }
+        <div class="contact-destination">
+          Messages are delivered to
+          support@hashhumanity.world
+        </div>
 
-  function closeContactForm() {
-    const dialog = document.getElementById("contactDialog");
+        <div id="contactStatus" class="contact-status" role="status" aria-live="polite"></div>
 
-    if (dialog) {
-      dialog.close();
-    }
-  }
+      </form>
 
-  document
-    .getElementById("contactDialog")
-    ?.addEventListener("click", function (event) {
-      if (event.target === this) {
-        this.close();
-      }
-    });
+    </div>
 
-  document
-    .getElementById("contactForm")
-    ?.addEventListener("submit", async function (event) {
-      event.preventDefault();
+  </dialog>
 
-      const form = this;
-      const submitButton = form.querySelector(".contact-submit");
+  <script>
+    const CONTACT_ENDPOINT =
+      "https://us-central1-hashhumanity-58b9a.cloudfunctions.net/sendWhitePaperContact";
+
+    function openContactForm(topic) {
+      const dialog = document.getElementById("contactDialog");
+      const topicSelect = document.getElementById("contactTopic");
       const status = document.getElementById("contactStatus");
-
-      const name =
-        document.getElementById("contactName").value.trim();
-
-      const email =
-        document.getElementById("contactEmail").value.trim();
-
-      const topic =
-        document.getElementById("contactTopic").value;
-
-      const message =
-        document.getElementById("contactMessage").value.trim();
-
-      const website =
-        document.getElementById("contactWebsite").value.trim();
-
-      if (!name || !email || !topic || !message) {
-        if (status) {
-          status.textContent = "Please complete every required field.";
-          status.setAttribute("data-state", "error");
-        }
-        return;
-      }
-
-      if (submitButton) {
-        submitButton.disabled = true;
-        submitButton.textContent = "Sending...";
-      }
 
       if (status) {
         status.textContent = "";
         status.removeAttribute("data-state");
       }
 
-      try {
-        const response = await fetch(CONTACT_ENDPOINT, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            name,
-            email,
-            topic,
-            message,
-            website,
-            source: "HumanKey White Paper"
-          })
-        });
-
-        let result = {};
-
-        try {
-          result = await response.json();
-        } catch {
-          result = {};
+      if (topicSelect) {
+        if (topic === "Support") {
+          topicSelect.value = "Support";
+        } else if (topic === "Contact") {
+          topicSelect.value = "General Inquiry";
+        } else if (topic) {
+          topicSelect.value = topic;
         }
+      }
 
-        if (!response.ok || result.ok !== true) {
-          throw new Error(
-            result.error || "Message could not be sent."
-          );
-        }
+      if (dialog && typeof dialog.showModal === "function") {
+        dialog.showModal();
+      }
+    }
 
-        form.reset();
+    function closeContactForm() {
+      const dialog = document.getElementById("contactDialog");
+      if (dialog) dialog.close();
+    }
 
-        if (status) {
-          status.textContent =
-            "Message sent. Thank you for contacting Hash Humanity.";
-          status.setAttribute("data-state", "success");
+    document
+      .getElementById("contactDialog")
+      ?.addEventListener("click", function (event) {
+        if (event.target === this) this.close();
+      });
+
+    document
+      .getElementById("contactForm")
+      ?.addEventListener("submit", async function (event) {
+        event.preventDefault();
+
+        const form = this;
+        const submitButton = form.querySelector(".contact-submit");
+        const status = document.getElementById("contactStatus");
+
+        const name = document.getElementById("contactName").value.trim();
+        const email = document.getElementById("contactEmail").value.trim();
+        const topic = document.getElementById("contactTopic").value;
+        const message = document.getElementById("contactMessage").value.trim();
+        const website = document.getElementById("contactWebsite").value.trim();
+
+        if (!name || !email || !topic || !message) {
+          if (status) {
+            status.textContent = "Please complete every required field.";
+            status.setAttribute("data-state", "error");
+          }
+          return;
         }
 
         if (submitButton) {
-          submitButton.textContent = "Message Sent";
+          submitButton.disabled = true;
+          submitButton.textContent = "Sending...";
         }
 
-        window.setTimeout(() => {
-          closeContactForm();
+        if (status) {
+          status.textContent = "";
+          status.removeAttribute("data-state");
+        }
+
+        try {
+          const response = await fetch(CONTACT_ENDPOINT, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              name,
+              email,
+              topic,
+              message,
+              website,
+              source: "HumanKey White Paper"
+            })
+          });
+
+          let result = {};
+
+          try {
+            result = await response.json();
+          } catch {
+            result = {};
+          }
+
+          if (!response.ok || result.ok !== true) {
+            throw new Error(result.error || "Message could not be sent.");
+          }
+
+          form.reset();
+
+          if (status) {
+            status.textContent =
+              "Message sent. Thank you for contacting Hash Humanity.";
+            status.setAttribute("data-state", "success");
+          }
+
+          if (submitButton) {
+            submitButton.textContent = "Message Sent";
+          }
+
+          window.setTimeout(() => {
+            closeContactForm();
+
+            if (submitButton) {
+              submitButton.disabled = false;
+              submitButton.textContent = "Send Message";
+            }
+
+            if (status) {
+              status.textContent = "";
+              status.removeAttribute("data-state");
+            }
+          }, 1500);
+        } catch (error) {
+          console.error("[HumanKey contact]", error);
+
+          if (status) {
+            status.textContent =
+              "Your message could not be sent. Please try again.";
+            status.setAttribute("data-state", "error");
+          }
 
           if (submitButton) {
             submitButton.disabled = false;
             submitButton.textContent = "Send Message";
           }
-
-          if (status) {
-            status.textContent = "";
-            status.removeAttribute("data-state");
-          }
-        }, 1500);
-      } catch (error) {
-        console.error("[HumanKey contact]", error);
-
-        if (status) {
-          status.textContent =
-            "Your message could not be sent. Please try again.";
-          status.setAttribute("data-state", "error");
         }
+      });
+  </script>
 
-        if (submitButton) {
-          submitButton.disabled = false;
-          submitButton.textContent = "Send Message";
-        }
+  <script>
+    (() => {
+      const picker = document.getElementById("languagePicker");
+
+      const routeToLang = {
+        en: "/",
+        es: "/es/",
+        pt: "/pt/",
+        zh: "/zh/",
+        fr: "/fr/",
+        de: "/de/",
+        ms: "/ms/",
+        ko: "/ko/"
+      };
+
+      const labels = {
+        es: "Español",
+        pt: "Português",
+        zh: "中文",
+        fr: "Français",
+        de: "Deutsch",
+        ms: "Bahasa Melayu",
+        ko: "한국어"
+      };
+
+      if (picker) {
+        picker.addEventListener("change", (event) => {
+          window.location.href = event.target.value;
+        });
       }
-    });
-</script>
+
+      const normalize = (value) => {
+        if (!value) return "en";
+        const lang = String(value).toLowerCase().replace("_", "-");
+        if (lang.startsWith("zh")) return "zh";
+        return lang.split("-")[0];
+      };
+
+      const browserLanguage = normalize(
+        navigator.languages?.[0] ||
+        navigator.language ||
+        "en"
+      );
+
+      const suggestion = document.getElementById("languageSuggestion");
+      const suggestionText = document.getElementById("languageSuggestionText");
+      const goButton = document.getElementById("languageSuggestionGo");
+      const stayButton = document.getElementById("languageSuggestionStay");
+
+      const dismissed =
+        sessionStorage.getItem("humankey-language-suggestion-dismissed") === "1";
+
+      if (
+        !dismissed &&
+        browserLanguage !== "en" &&
+        routeToLang[browserLanguage] &&
+        labels[browserLanguage]
+      ) {
+        suggestionText.textContent =
+          `Your browser language is ${labels[browserLanguage]}. Open this white paper in ${labels[browserLanguage]}?`;
+
+        suggestion.style.display = "flex";
+
+        goButton.addEventListener("click", () => {
+          window.location.href = routeToLang[browserLanguage];
+        });
+
+        stayButton.addEventListener("click", () => {
+          sessionStorage.setItem(
+            "humankey-language-suggestion-dismissed",
+            "1"
+          );
+          suggestion.style.display = "none";
+        });
+      }
+    })();
+  </script>
 
 </body>
 </html>
