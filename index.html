@@ -1097,6 +1097,86 @@ body{
 }
 </style>
 
+
+<style id="hh-clean-editorial-v4">
+  /* CLEAN EDITORIAL PASS: remove boxed/card treatment */
+  .paper-section,
+  .hh-diagram-frame,
+  .hh-node,
+  .hh-zone,
+  .data-row,
+  .references,
+  .toc,
+  .hero,
+  .language-nav,
+  .language-suggestion,
+  footer {
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  .paper-section,
+  .hh-diagram-frame,
+  .hh-node,
+  .hh-zone,
+  .data-row,
+  .references,
+  .toc,
+  .hero {
+    border-radius: 0 !important;
+  }
+
+  .paper-section {
+    border: 0 !important;
+  }
+
+  .hh-diagram-frame {
+    border: 0 !important;
+    border-top: 1px solid rgba(255,255,255,.16) !important;
+    border-bottom: 1px solid rgba(255,255,255,.16) !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  .hh-node,
+  .hh-zone {
+    border: 0 !important;
+    border-left: 1px solid rgba(255,255,255,.18) !important;
+    padding-left: 14px !important;
+  }
+
+  .data-row {
+    border: 0 !important;
+    border-bottom: 1px solid rgba(255,255,255,.12) !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  .references {
+    border: 0 !important;
+    border-top: 1px solid rgba(255,255,255,.16) !important;
+  }
+
+  /* Make the actual Hash Humanity logo clearly white and visible. */
+  .brand-logo {
+    filter: brightness(0) invert(1) !important;
+    opacity: 1 !important;
+    mix-blend-mode: normal !important;
+    width: clamp(78px, 9vw, 118px) !important;
+    height: auto !important;
+    object-fit: contain !important;
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+  }
+
+  .brand,
+  .hero-brand,
+  .brand-lockup {
+    opacity: 1 !important;
+  }
+</style>
+
 </head>
 
 <body>
