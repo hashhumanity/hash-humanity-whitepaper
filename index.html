@@ -933,22 +933,188 @@
     ]
   }
   </script>
+
+<style id="hh-premium-whitepaper-v2">
+:root{
+  --ink:#f5f5f2;--soft:#c9c9c4;--muted:#8d8d88;--line:rgba(255,255,255,.12);
+  --line2:rgba(255,255,255,.06);--glass:rgba(255,255,255,.035);
+  --black:#030303;--charcoal:#0a0a0a;--max:1180px;--reading:820px;
+}
+html{background:var(--black)!important}
+body{
+  background:
+    radial-gradient(900px 480px at 50% -180px,rgba(255,255,255,.09),transparent 68%),
+    linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px),
+    var(--black)!important;
+  background-size:auto,64px 64px,64px 64px,auto!important;
+  color:var(--ink)!important;
+  letter-spacing:-.01em;
+}
+.hero{min-height:auto!important;padding:34px 24px 26px!important;border-bottom:1px solid var(--line)!important}
+.hero-inner{max-width:var(--max)!important;margin:auto!important;text-align:left!important;position:relative}
+.brand-logo{width:70px!important;height:70px!important;object-fit:contain!important;margin:0 0 22px!important;filter:drop-shadow(0 0 20px rgba(255,255,255,.10))}
+.eyebrow,.label{font-size:11px!important;letter-spacing:.18em!important;text-transform:uppercase!important;color:var(--muted)!important}
+.hero h1{font-size:clamp(58px,9vw,124px)!important;line-height:.82!important;letter-spacing:-.065em!important;margin:14px 0 18px!important;font-weight:760!important}
+.subtitle{max-width:900px!important;font-size:clamp(21px,3vw,38px)!important;line-height:1.06!important;letter-spacing:-.035em!important;color:var(--soft)!important}
+.meta{margin-top:22px!important;padding-top:14px!important;border-top:1px solid var(--line)!important;display:flex!important;gap:18px!important;flex-wrap:wrap!important;font-size:12px!important;color:var(--muted)!important}
+.tagline{margin-top:14px!important;font-size:13px!important;letter-spacing:.08em!important;text-transform:uppercase!important}
+.abstract,.paper-section,.toc-shell,main>section,body>section{max-width:var(--max)!important}
+.abstract{padding:32px 24px 26px!important}
+.abstract p,.paper-section p{margin:0 0 10px!important}
+.paper-section{padding:26px 24px!important;border-top:1px solid var(--line2)!important}
+.paper-section h2{font-size:clamp(30px,4vw,54px)!important;line-height:.98!important;letter-spacing:-.045em!important;margin:0 0 14px!important}
+.paper-section h3{margin:18px 0 7px!important;letter-spacing:-.025em!important}
+.toc-shell{padding:22px 24px!important}
+.language-nav{top:14px!important;right:16px!important;z-index:50!important;backdrop-filter:blur(16px);background:rgba(5,5,5,.72)!important;border:1px solid var(--line)!important}
+.hh-diagram{max-width:var(--max);margin:18px auto 24px;padding:0 24px}
+.hh-diagram-frame{position:relative;overflow:hidden;border:1px solid var(--line);background:linear-gradient(145deg,rgba(255,255,255,.045),rgba(255,255,255,.012));box-shadow:0 28px 90px rgba(0,0,0,.42);padding:26px}
+.hh-diagram-frame:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.025),transparent);transform:translateX(-100%);animation:hhscan 9s linear infinite;pointer-events:none}
+@keyframes hhscan{to{transform:translateX(100%)}}
+.hh-kicker{font-size:10px;letter-spacing:.19em;text-transform:uppercase;color:var(--muted);margin-bottom:18px}
+.hh-flow{display:grid;grid-template-columns:repeat(7,1fr);gap:7px;align-items:stretch}
+.hh-node{min-height:88px;border:1px solid var(--line);background:rgba(0,0,0,.36);padding:13px 11px;display:flex;flex-direction:column;justify-content:space-between}
+.hh-node b{font-size:12px;letter-spacing:.04em}.hh-node small{font-size:10px;color:var(--muted);line-height:1.35}
+.hh-arrow{display:none}
+.hh-statement{font-size:clamp(27px,5vw,66px);line-height:.93;letter-spacing:-.055em;font-weight:760;max-width:1000px}
+.hh-statement .dim{color:#6e6e69}
+.hh-split{display:grid;grid-template-columns:1fr 90px 1fr;gap:18px;align-items:center}
+.hh-crowd{border:1px solid var(--line);padding:18px;min-height:180px}
+.hh-crowd strong{font-size:clamp(28px,4vw,52px);letter-spacing:-.04em}
+.hh-crowd p{color:var(--muted);margin:8px 0 0}
+.hh-vs{text-align:center;color:var(--muted);font-size:11px;letter-spacing:.2em}
+.hh-recovery{display:grid;grid-template-columns:repeat(8,1fr);gap:6px}
+.hh-recovery .hh-node{min-height:74px}
+.hh-quote{margin-top:18px;padding-top:16px;border-top:1px solid var(--line);font-size:clamp(20px,3vw,34px);font-weight:700;letter-spacing:-.035em}
+.hh-trust{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.hh-trust>div{padding:20px;border:1px solid var(--line);background:rgba(0,0,0,.3)}
+.hh-trust h4{margin:0 0 8px;font-size:12px;letter-spacing:.14em;text-transform:uppercase}
+.hh-trust p{margin:0;color:var(--muted);font-size:13px}
+@media(max-width:760px){
+  .hero{padding-top:86px!important}.brand-logo{width:58px!important;height:58px!important}
+  .hh-flow,.hh-recovery{grid-template-columns:1fr 1fr}
+  .hh-split{grid-template-columns:1fr}.hh-vs{padding:2px 0}
+  .hh-trust{grid-template-columns:1fr}
+  .paper-section,.abstract,.toc-shell,.hh-diagram{padding-left:18px!important;padding-right:18px!important}
+  .hh-diagram-frame{padding:18px}
+}
+@media(prefers-reduced-motion:reduce){.hh-diagram-frame:before{animation:none}}
+</style>
+
+
+<style id="hh-language-professional-v3">
+.language-nav{
+  position:fixed!important;
+  top:18px!important;
+  right:20px!important;
+  z-index:1200!important;
+  display:flex!important;
+  align-items:center!important;
+  gap:0!important;
+  height:42px!important;
+  padding:0!important;
+  border:1px solid rgba(255,255,255,.14)!important;
+  border-radius:3px!important;
+  background:rgba(5,5,5,.88)!important;
+  box-shadow:0 10px 34px rgba(0,0,0,.32)!important;
+  backdrop-filter:blur(18px)!important;
+  -webkit-backdrop-filter:blur(18px)!important;
+  overflow:hidden!important;
+}
+.language-nav:before{
+  content:"LANGUAGE";
+  display:flex;
+  align-items:center;
+  align-self:stretch;
+  padding:0 13px;
+  border-right:1px solid rgba(255,255,255,.10);
+  color:#777772;
+  font-size:9px;
+  font-weight:700;
+  letter-spacing:.18em;
+}
+.language-nav label{display:none!important}
+.language-nav .select-wrap{
+  position:relative;
+  height:100%;
+  display:flex;
+  align-items:center;
+}
+.language-nav .select-wrap:after{
+  content:"";
+  position:absolute;
+  right:14px;
+  top:50%;
+  width:6px;
+  height:6px;
+  border-right:1px solid #aaa9a3;
+  border-bottom:1px solid #aaa9a3;
+  transform:translateY(-68%) rotate(45deg);
+  pointer-events:none;
+}
+.language-nav select{
+  appearance:none!important;
+  -webkit-appearance:none!important;
+  min-width:132px!important;
+  height:100%!important;
+  padding:0 38px 0 14px!important;
+  border:0!important;
+  border-radius:0!important;
+  outline:none!important;
+  background:#050505!important;
+  color:#f5f5f2!important;
+  font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif!important;
+  font-size:11px!important;
+  font-weight:650!important;
+  letter-spacing:.025em!important;
+  cursor:pointer!important;
+}
+.language-nav select:focus-visible{
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.55)!important;
+}
+.language-nav option{
+  background:#0a0a0a!important;
+  color:#f5f5f2!important;
+}
+.language-suggestion{
+  border-radius:3px!important;
+  border:1px solid rgba(255,255,255,.14)!important;
+  background:rgba(5,5,5,.96)!important;
+}
+.language-suggestion button{border-radius:2px!important}
+@media(max-width:760px){
+  .language-nav{
+    top:14px!important;
+    right:14px!important;
+    height:38px!important;
+  }
+  .language-nav:before{display:none!important}
+  .language-nav select{
+    min-width:112px!important;
+    padding-left:12px!important;
+    font-size:10px!important;
+  }
+}
+</style>
+
 </head>
 
 <body>
 
-  <div class="language-nav">
+  <div class="language-nav" aria-label="Language selection">
     <label for="languagePicker">Language</label>
-    <select id="languagePicker" aria-label="White paper language">
-      <option value="/">English</option>
-      <option value="/es/">Español</option>
-      <option value="/pt/">Português</option>
-      <option value="/zh/">中文</option>
-      <option value="/fr/">Français</option>
-      <option value="/de/">Deutsch</option>
-      <option value="/ms/">Bahasa Melayu</option>
-      <option value="/ko/">한국어</option>
-    </select>
+    <div class="select-wrap">
+      <select id="languagePicker" aria-label="White paper language">
+        <option value="/">English</option>
+        <option value="/es/">EspaÃ±ol</option>
+        <option value="/pt/">PortuguÃªs</option>
+        <option value="/zh/">ä¸­æ–‡</option>
+        <option value="/fr/">FranÃ§ais</option>
+        <option value="/de/">Deutsch</option>
+        <option value="/ms/">Bahasa Melayu</option>
+        <option value="/ko/">í•œêµ­ì–´</option>
+      </select>
+    </div>
   </div>
 
   <div id="languageSuggestion" class="language-suggestion" role="status" aria-live="polite">
@@ -987,6 +1153,19 @@
 
     </div>
   </header>
+
+<section class="hh-diagram" aria-label="The identity problem">
+  <div class="hh-diagram-frame">
+    <div class="hh-kicker">The identity problem</div>
+    <div class="hh-statement">THE INTERNET CAN COUNT ACCOUNTS.<br><span class="dim">IT CANNOT COUNT PEOPLE.</span></div>
+    <div class="hh-split" style="margin-top:24px">
+      <div class="hh-crowd"><strong>1 HUMAN â†’ 1,000 ACCOUNTS</strong><p>One operator can manufacture the appearance of a crowd.</p></div>
+      <div class="hh-vs">VERSUS</div>
+      <div class="hh-crowd"><strong>1 HUMAN â†’ 1 HUMANKEY</strong><p>The goal is one persistent participation identity per independently enrolled human.</p></div>
+    </div>
+  </div>
+</section>
+
 
   <section class="abstract">
 
@@ -1145,7 +1324,23 @@
 
     <section id="section-10" class="paper-section">
       <div class="section-kicker">10</div>
-      <h2>HumanKey Architecture</h2>
+      
+<section class="hh-diagram" aria-label="HumanKey architecture">
+  <div class="hh-diagram-frame">
+    <div class="hh-kicker">HumanKey security ceremony</div>
+    <div class="hh-flow">
+      <div class="hh-node"><b>01 CONSENT</b><small>Permission before biometric processing</small></div>
+      <div class="hh-node"><b>02 LIVENESS</b><small>Is a live person physically present?</small></div>
+      <div class="hh-node"><b>03 18+</b><small>Adult eligibility gate</small></div>
+      <div class="hh-node"><b>04 UNIQUE</b><small>Is this human already represented?</small></div>
+      <div class="hh-node"><b>05 HUMANKEY</b><small>Persistent participation identity</small></div>
+      <div class="hh-node"><b>06 ZK</b><small>Private membership proof</small></div>
+      <div class="hh-node"><b>07 PASSKEY</b><small>Routine authentication without rescanning</small></div>
+    </div>
+  </div>
+</section>
+
+<h2>HumanKey Architecture</h2>
       <p>HumanKey separates security problems that are often incorrectly treated as one problem: live presence, biometric uniqueness, privacy-preserving membership, routine authentication, recovery, and abuse resistance.</p>
       <p>The protocol asks whether a live person is physically participating, whether that person appears to have enrolled already, whether the person can later demonstrate valid HumanKey membership without exposing the underlying biometric record, whether the established human can authenticate securely through a passkey, and whether that human can recover the same identity after losing authentication credentials.</p>
 
@@ -1383,7 +1578,25 @@
 
     <section id="section-19" class="paper-section">
       <div class="section-kicker">19</div>
-      <h2>Account Recovery</h2>
+      
+<section class="hh-diagram" aria-label="HumanKey recovery">
+  <div class="hh-diagram-frame">
+    <div class="hh-kicker">Recovery architecture</div>
+    <div class="hh-recovery">
+      <div class="hh-node"><b>PASSKEY LOST</b><small>Access credential unavailable</small></div>
+      <div class="hh-node"><b>SESSION</b><small>Dedicated recovery state</small></div>
+      <div class="hh-node"><b>CONSENT</b><small>Biometric permission</small></div>
+      <div class="hh-node"><b>LIVE SCAN</b><small>Fresh liveness ceremony</small></div>
+      <div class="hh-node"><b>MATCH</b><small>Resolve existing human</small></div>
+      <div class="hh-node"><b>AUTHORIZE</b><small>Recovery gate passes</small></div>
+      <div class="hh-node"><b>NEW PASSKEY</b><small>New authenticator credential</small></div>
+      <div class="hh-node"><b>SAME HUMANKEY</b><small>No second identity created</small></div>
+    </div>
+    <div class="hh-quote">RECOVER THE HUMAN. DO NOT RECREATE THE HUMAN.</div>
+  </div>
+</section>
+
+<h2>Account Recovery</h2>
       <p>Recovery is not an afterthought in HumanKey. It is one of the most important security boundaries in the protocol.</p>
       <p>A user can lose a phone. A computer can fail. A passkey can be deleted. An authenticator can become inaccessible. The human still exists.</p>
       <p>HumanKey follows a simple recovery principle: Recover the human. Do not recreate the human.</p>
@@ -1518,7 +1731,18 @@
 
     <section id="section-28" class="paper-section">
       <div class="section-kicker">28</div>
-      <h2>Server-Side Authority</h2>
+      
+<section class="hh-diagram" aria-label="Client server trust boundary">
+  <div class="hh-diagram-frame">
+    <div class="hh-kicker">Trust boundary</div>
+    <div class="hh-trust">
+      <div><h4>Browser / Client</h4><p>Requests transitions. Displays state. Treated as potentially hostile.</p></div>
+      <div><h4>Server Authority</h4><p>Validates consent, ceremony state, liveness, uniqueness, recovery, passkey challenges, proofs and replay state.</p></div>
+    </div>
+  </div>
+</section>
+
+<h2>Server-Side Authority</h2>
       <p>The browser is not trusted to decide whether somebody is human.</p>
       <p>A malicious user controls their browser. They can modify JavaScript, alter requests, manipulate local storage, and bypass interface screens.</p>
       <p>Security decisions therefore belong on the server. The interface can request a state transition. The server determines whether the transition is valid.</p>
@@ -1680,7 +1904,101 @@
 
     </section>
 
-  </main>
+  
+<section class="paper-section" id="human-speech-human-responsibility">
+  <div class="section-number">HUMAN SPEECH / HUMAN RESPONSIBILITY</div>
+  <h2>We Are Not Trying to Sanitize the Internet</h2>
+
+  <p>Hash Humanity is not being built to make the internet polite.</p>
+
+  <p>Real people disagree. They argue. They have unpopular opinions. They say things other people do not like. Sometimes they are offensive. Sometimes they are wrong.</p>
+
+  <p>That is part of dealing with actual humans.</p>
+
+  <p>We are not interested in building a platform where disagreement automatically becomes harassment or where an unpopular opinion disappears because enough people do not like it.</p>
+
+  <p><strong>HumanKey verifies humans. It does not verify opinions.</strong></p>
+
+  <p>Hash Humanity should not tell somebody what political position to have, what religion to believe in, what ideas they are allowed to question, or which side of an argument they are supposed to take.</p>
+
+  <p>But there is an important distinction between protecting free expression and pretending that absolutely anything goes.</p>
+
+  <p><strong>Not all speech and conduct is legal.</strong></p>
+
+  <p>Credible threats, exploitation, fraud, unlawful harassment, impersonation, illegal content, and other unlawful activity do not become acceptable simply because the person behind them is human. Hash Humanity uses moderation tools for situations where platform rules or the law actually require action.</p>
+
+  <h3>Moderation Is Not A Popularity Contest</h3>
+
+  <p>A report is a request for review. It is not a vote to remove somebody.</p>
+
+  <p>If 5,000 people report one person because they hate what that person believes, that does not make the person's opinion a violation. Hash Humanity was built to resist manufactured crowds. It would make very little sense to turn around and let crowds control moderation.</p>
+
+  <p>Reports should trigger review, not automatic guilt. Moderation should focus on conduct and actual rule violations, not ideology, popularity, political position, religion, culture, or which side of an argument has the larger crowd.</p>
+
+  <div class="hh-diagram-frame" style="margin:20px 0">
+    <div class="hh-kicker">Proportional enforcement</div>
+    <div class="hh-flow" style="grid-template-columns:repeat(5,1fr)">
+      <div class="hh-node"><b>REPORT</b><small>A user asks for review</small></div>
+      <div class="hh-node"><b>REVIEW</b><small>Context and conduct are examined</small></div>
+      <div class="hh-node"><b>WARNING</b><small>Used when a warning is appropriate</small></div>
+      <div class="hh-node"><b>RESTRICTION</b><small>Used when stronger action is necessary</small></div>
+      <div class="hh-node"><b>ACCOUNT ACTION</b><small>Reserved for serious or repeated violations</small></div>
+    </div>
+  </div>
+
+  <p>Not every report should end with punishment. Not every violation should end with deletion. Severity matters. Context matters. Patterns matter. Serious situations can also require immediate action without moving through every intermediate step.</p>
+
+  <h3>Blocking Is User Control</h3>
+
+  <p>Not every disagreement needs Hash Humanity standing in the middle of it.</p>
+
+  <p>Sometimes the answer is simple. I do not want to interact with this person anymore. Block them.</p>
+
+  <p>Blocking gives people direct control over their own experience without requiring the platform to decide who won an argument. Blocking is not the same thing as platform censorship. It is a user deciding who gets access to them.</p>
+
+  <h3>Content Removal Is Not The Same As Removing A Human</h3>
+
+  <p>Removing a post, issuing a warning, temporarily restricting an account, suspending access, and permanently removing an account are different actions and should be treated that way.</p>
+
+  <p>HumanKey makes permanent account action more serious than it is on an ordinary social network. Hash Humanity is built around one human, one account. A person should not be able to defeat moderation by deleting an account and immediately returning with a fresh identity. At the same time, a moderation mistake should not casually erase a person's ability to participate.</p>
+
+  <p>That means moderation, account deletion, recovery, biometric uniqueness, passkeys, and HumanKey identity have to be considered together.</p>
+
+  <p>As the moderation system matures, meaningful account restrictions should have a review and appeal path appropriate to the severity of the action. HumanKey abuse is also its own security category. Attempts to create multiple HumanKeys, manipulate recovery, evade identity controls, impersonate another person, or deliberately defeat human verification are attacks on the integrity of the system, not ordinary disagreements over content.</p>
+
+  <h3>Privacy Is Not Optional</h3>
+
+  <p>Hash Humanity is firmly against the idea of turning the internet into a police state.</p>
+
+  <p><strong>Human verification should not become human surveillance.</strong></p>
+
+  <p>HumanKey exists to establish that a real, unique human is participating. It was not created to track people, profile what they believe, monitor their private lives, or create a database that can be bought by advertisers, data brokers, governments, political organizations, or anybody else.</p>
+
+  <p><strong>Hash Humanity user data will never be sold. Under any circumstances.</strong></p>
+
+  <p>We do not believe a person's identity, behavior, relationships, conversations, or participation should become a product simply because they chose to use a social network.</p>
+
+  <p>Hash Humanity does not voluntarily disclose private user information to third parties. When disclosure is legally compelled, Hash Humanity will require valid legal process applicable to the information being requested. Where the law permits, requests that are invalid, unlawful, or overly broad should be challenged. For private user information that legally requires a warrant, Hash Humanity will require a valid warrant.</p>
+
+  <p>We will not sell access to user information. We will not voluntarily create surveillance back doors. We will not quietly turn HumanKey into a tool for watching people.</p>
+
+  <p>There is an enormous difference between proving that a human exists and building a system designed to watch that human.</p>
+
+  <p><strong>HumanKey is meant to prove humanity, not police it.</strong></p>
+
+  <h3>The Principle</h3>
+
+  <p>The goal is not to sanitize human conversation.</p>
+
+  <p>The goal is to keep the people participating in that conversation human, give those humans meaningful control over who they interact with, and step in when behavior crosses boundaries that actually require us to step in.</p>
+
+  <div class="hh-diagram-frame" style="margin:20px 0">
+    <div class="hh-statement">FREE SPEECH DOES NOT REQUIRE SANITIZED SPEECH.<br><span class="dim">HUMAN SPEECH CAN BE MESSY.</span></div>
+    <div class="hh-quote">WE ARE OKAY WITH THAT.</div>
+  </div>
+</section>
+
+</main>
 
   <footer>
 
@@ -1970,13 +2288,13 @@
       };
 
       const labels = {
-        es: "Español",
-        pt: "Português",
-        zh: "中文",
-        fr: "Français",
+        es: "EspaÃ±ol",
+        pt: "PortuguÃªs",
+        zh: "ä¸­æ–‡",
+        fr: "FranÃ§ais",
         de: "Deutsch",
         ms: "Bahasa Melayu",
-        ko: "한국어"
+        ko: "í•œêµ­ì–´"
       };
 
       if (picker) {
