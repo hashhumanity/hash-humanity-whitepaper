@@ -1098,83 +1098,213 @@ body{
 </style>
 
 
-<style id="hh-clean-editorial-v4">
-  /* CLEAN EDITORIAL PASS: remove boxed/card treatment */
-  .paper-section,
-  .hh-diagram-frame,
-  .hh-node,
-  .hh-zone,
-  .data-row,
-  .references,
-  .toc,
-  .hero,
-  .language-nav,
-  .language-suggestion,
-  footer {
-    background: transparent !important;
-    box-shadow: none !important;
-  }
 
-  .paper-section,
-  .hh-diagram-frame,
-  .hh-node,
-  .hh-zone,
-  .data-row,
-  .references,
-  .toc,
-  .hero {
-    border-radius: 0 !important;
-  }
+<style id="hh-art-direction-v5">
+:root{
+  --ink:#050505;
+  --paper:#f5f5f2;
+  --muted:#989b9f;
+  --hair:rgba(255,255,255,.14);
+  --hair2:rgba(255,255,255,.07);
+  --panel:#0a0a0a;
+}
+html{scroll-behavior:smooth}
+body{
+  background:var(--ink)!important;
+  color:var(--paper)!important;
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif!important;
+  letter-spacing:-.012em;
+}
+main{max-width:1180px!important;margin:0 auto!important;padding:0 34px 80px!important}
+.paper-section{
+  max-width:900px!important;
+  margin:0 auto!important;
+  padding:42px 0 34px!important;
+  border:0!important;
+  border-top:1px solid var(--hair2)!important;
+  background:transparent!important;
+  box-shadow:none!important;
+}
+.paper-section h2{
+  margin:6px 0 18px!important;
+  max-width:820px;
+  font-size:clamp(32px,4.4vw,58px)!important;
+  line-height:.98!important;
+  letter-spacing:-.048em!important;
+  font-weight:720!important;
+}
+.paper-section h3{
+  margin:34px 0 12px!important;
+  font-size:clamp(20px,2.3vw,28px)!important;
+  line-height:1.05!important;
+  letter-spacing:-.03em!important;
+}
+.paper-section p{
+  max-width:760px!important;
+  margin:0 0 10px!important;
+  font-size:16px!important;
+  line-height:1.62!important;
+  color:#d6d6d2!important;
+}
+.section-kicker,.hh-kicker{
+  color:#8e9195!important;
+  font-size:10px!important;
+  line-height:1!important;
+  letter-spacing:.22em!important;
+  font-weight:760!important;
+  text-transform:uppercase!important;
+}
+.hero{
+  position:relative!important;
+  min-height:72vh!important;
+  padding:30px 0 52px!important;
+  display:grid!important;
+  align-content:center!important;
+  overflow:hidden!important;
+  background:transparent!important;
+  border:0!important;
+}
+.hero::before{
+  content:"";
+  position:absolute;
+  width:430px;height:540px;
+  right:2%;top:50%;
+  transform:translateY(-48%);
+  opacity:.5;
+  background:
+    radial-gradient(circle at 62% 14%,rgba(255,255,255,.8) 0 1px,transparent 1.8px),
+    radial-gradient(circle at 72% 21%,rgba(255,255,255,.7) 0 1px,transparent 1.8px),
+    radial-gradient(circle at 78% 31%,rgba(255,255,255,.55) 0 1px,transparent 1.8px),
+    radial-gradient(circle at 81% 42%,rgba(255,255,255,.72) 0 1px,transparent 1.8px),
+    radial-gradient(circle at 76% 54%,rgba(255,255,255,.48) 0 1px,transparent 1.8px),
+    radial-gradient(circle at 67% 65%,rgba(255,255,255,.72) 0 1px,transparent 1.8px),
+    radial-gradient(circle at 58% 76%,rgba(255,255,255,.55) 0 1px,transparent 1.8px),
+    radial-gradient(circle at 48% 84%,rgba(255,255,255,.45) 0 1px,transparent 1.8px);
+  border-right:1px solid rgba(255,255,255,.14);
+  border-radius:48% 52% 44% 56%/38% 42% 58% 62%;
+  pointer-events:none;
+}
+.hero h1{font-size:clamp(66px,10vw,138px)!important;line-height:.78!important;letter-spacing:-.075em!important;margin:18px 0 24px!important}
+.hero .subtitle,.hero p{max-width:660px!important}
+.brand-logo{
+  display:block!important;
+  width:150px!important;
+  max-width:150px!important;
+  height:auto!important;
+  min-height:44px!important;
+  opacity:1!important;
+  filter:brightness(0) invert(1) contrast(2)!important;
+  mix-blend-mode:normal!important;
+  object-fit:contain!important;
+  object-position:left center!important;
+  margin:0 0 24px!important;
+  padding:0!important;
+  background:transparent!important;
+  border:0!important;
+  position:relative!important;
+  z-index:20!important;
+}
+.hh-diagram-frame{
+  position:relative!important;
+  max-width:none!important;
+  margin:28px 0 30px!important;
+  padding:24px 0!important;
+  border:0!important;
+  border-top:1px solid var(--hair)!important;
+  border-bottom:1px solid var(--hair)!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+}
+.hh-diagram-frame::before{
+  content:"";
+  position:absolute;top:-1px;left:0;width:72px;height:1px;background:#fff;
+}
+.hh-flow,.hh-recovery{
+  display:grid!important;
+  gap:0!important;
+  margin-top:20px!important;
+}
+.hh-node{
+  position:relative!important;
+  min-height:118px!important;
+  padding:18px 18px 18px 20px!important;
+  border:0!important;
+  border-left:1px solid var(--hair)!important;
+  border-radius:0!important;
+  background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,0))!important;
+}
+.hh-node::before{
+  content:"";
+  position:absolute;left:-3px;top:18px;width:5px;height:5px;border-radius:50%;background:#fff;
+  box-shadow:0 0 18px rgba(255,255,255,.65);
+}
+.hh-node b{display:block!important;font-size:13px!important;letter-spacing:.02em!important;margin-bottom:9px!important}
+.hh-node small{display:block!important;color:#8e9195!important;line-height:1.45!important;font-size:11px!important}
+.hh-boundary{
+  display:grid!important;
+  grid-template-columns:1fr 100px 1fr!important;
+  gap:0!important;
+  align-items:stretch!important;
+  margin-top:20px!important;
+}
+.hh-zone{
+  padding:24px!important;
+  min-height:180px!important;
+  border:1px solid var(--hair)!important;
+  border-radius:0!important;
+  background:linear-gradient(145deg,rgba(255,255,255,.04),rgba(255,255,255,.008))!important;
+}
+.hh-trust-line{
+  display:grid!important;place-items:center!important;
+  color:#777!important;font-size:9px!important;letter-spacing:.2em!important;
+  border-top:1px dashed var(--hair)!important;border-bottom:1px dashed var(--hair)!important;
+}
+.data-row{
+  display:grid!important;grid-template-columns:1fr auto!important;gap:24px!important;
+  padding:13px 0!important;margin:0!important;
+  border:0!important;border-bottom:1px solid var(--hair2)!important;
+  background:transparent!important;border-radius:0!important;
+}
+.data-row span{color:#8f9295!important;font-size:12px!important}
+.data-row strong{font-size:13px!important}
+.hh-statement{
+  font-size:clamp(30px,5vw,62px)!important;
+  line-height:.94!important;letter-spacing:-.05em!important;font-weight:760!important;
+  max-width:900px!important;
+}
+.hh-statement .dim{color:#62656a!important}
+.hh-quote{
+  margin-top:18px!important;padding-top:14px!important;border-top:1px solid var(--hair2)!important;
+  color:#9a9da1!important;font-size:10px!important;letter-spacing:.13em!important;line-height:1.6!important;
+}
+.references{
+  max-width:900px!important;margin:20px auto 0!important;padding:42px 0!important;
+  border:0!important;border-top:1px solid var(--hair)!important;background:transparent!important;
+}
+.toc{border:0!important;background:transparent!important;box-shadow:none!important}
+footer{background:transparent!important;border-top:1px solid var(--hair)!important;box-shadow:none!important}
+.language-nav{border-radius:2px!important;background:rgba(5,5,5,.9)!important;box-shadow:none!important}
 
-  .paper-section {
-    border: 0 !important;
-  }
-
-  .hh-diagram-frame {
-    border: 0 !important;
-    border-top: 1px solid rgba(255,255,255,.16) !important;
-    border-bottom: 1px solid rgba(255,255,255,.16) !important;
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-  }
-
-  .hh-node,
-  .hh-zone {
-    border: 0 !important;
-    border-left: 1px solid rgba(255,255,255,.18) !important;
-    padding-left: 14px !important;
-  }
-
-  .data-row {
-    border: 0 !important;
-    border-bottom: 1px solid rgba(255,255,255,.12) !important;
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-  }
-
-  .references {
-    border: 0 !important;
-    border-top: 1px solid rgba(255,255,255,.16) !important;
-  }
-
-  /* Make the actual Hash Humanity logo clearly white and visible. */
-  .brand-logo {
-    filter: brightness(0) invert(1) !important;
-    opacity: 1 !important;
-    mix-blend-mode: normal !important;
-    width: clamp(78px, 9vw, 118px) !important;
-    height: auto !important;
-    object-fit: contain !important;
-    background: transparent !important;
-    border: 0 !important;
-    box-shadow: none !important;
-  }
-
-  .brand,
-  .hero-brand,
-  .brand-lockup {
-    opacity: 1 !important;
-  }
+/* technical connector treatment */
+.hh-flow .hh-node:not(:last-child)::after{
+  content:"";
+  position:absolute;right:-1px;top:20px;width:1px;height:calc(100% - 40px);
+  background:linear-gradient(180deg,transparent,var(--hair),transparent);
+}
+@media(max-width:760px){
+  main{padding-left:20px!important;padding-right:20px!important}
+  .paper-section{padding:32px 0 26px!important}
+  .hero{min-height:64vh!important;padding-top:72px!important}
+  .hero::before{width:240px;height:340px;right:-80px;opacity:.3}
+  .brand-logo{width:124px!important;max-width:124px!important}
+  .hh-flow,.hh-recovery{grid-template-columns:1fr!important}
+  .hh-node{min-height:auto!important;padding:16px 14px 16px 18px!important;border-left:1px solid var(--hair)!important;border-bottom:1px solid var(--hair2)!important}
+  .hh-boundary{grid-template-columns:1fr!important}
+  .hh-trust-line{min-height:54px;border:0!important;border-left:1px dashed var(--hair)!important}
+  .data-row{grid-template-columns:1fr!important;gap:4px!important}
+}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
 </style>
 
 </head>
@@ -1209,6 +1339,15 @@ body{
     <div class="hero-inner">
 
       <img class="brand-logo" src="./logo.png" alt="Hash Humanity logo">
+        <div class="hh-logo-fallback" aria-hidden="true" style="
+          color:#fff;
+          font-size:13px;
+          font-weight:800;
+          letter-spacing:.18em;
+          text-transform:uppercase;
+          margin-top:-14px;
+          margin-bottom:24px;
+        ">HASH HUMANITY</div>
 
       <div class="eyebrow">
         Hash Humanity &middot; Technical White Paper
