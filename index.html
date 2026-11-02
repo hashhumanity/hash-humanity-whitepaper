@@ -40,13 +40,6 @@
   <link rel="canonical" href="https://hashhumanitywhitepaper.com/">
 
   <link rel="alternate" hreflang="en" href="https://hashhumanitywhitepaper.com/">
-  <link rel="alternate" hreflang="es" href="https://hashhumanitywhitepaper.com/es/">
-  <link rel="alternate" hreflang="pt" href="https://hashhumanitywhitepaper.com/pt/">
-  <link rel="alternate" hreflang="zh" href="https://hashhumanitywhitepaper.com/zh/">
-  <link rel="alternate" hreflang="fr" href="https://hashhumanitywhitepaper.com/fr/">
-  <link rel="alternate" hreflang="de" href="https://hashhumanitywhitepaper.com/de/">
-  <link rel="alternate" hreflang="ms" href="https://hashhumanitywhitepaper.com/ms/">
-  <link rel="alternate" hreflang="ko" href="https://hashhumanitywhitepaper.com/ko/">
   <link rel="alternate" hreflang="x-default" href="https://hashhumanitywhitepaper.com/">
 
   <meta property="og:type" content="article">
@@ -2492,83 +2485,8 @@ footer{background:transparent!important;border-top:1px solid var(--hair)!importa
       });
   </script>
 
-  <script>
-    (() => {
-      const picker = document.getElementById("languagePicker");
 
-      const routeToLang = {
-        en: "/",
-        es: "/es/",
-        pt: "/pt/",
-        zh: "/zh/",
-        fr: "/fr/",
-        de: "/de/",
-        ms: "/ms/",
-        ko: "/ko/"
-      };
 
-      const labels = {
-        es: "EspaÃ±ol",
-        pt: "PortuguÃªs",
-        zh: "ä¸­æ–‡",
-        fr: "FranÃ§ais",
-        de: "Deutsch",
-        ms: "Bahasa Melayu",
-        ko: "í•œêµ­ì–´"
-      };
-
-      if (picker) {
-        picker.addEventListener("change", (event) => {
-          window.location.href = event.target.value;
-        });
-      }
-
-      const normalize = (value) => {
-        if (!value) return "en";
-        const lang = String(value).toLowerCase().replace("_", "-");
-        if (lang.startsWith("zh")) return "zh";
-        return lang.split("-")[0];
-      };
-
-      const browserLanguage = normalize(
-        navigator.languages?.[0] ||
-        navigator.language ||
-        "en"
-      );
-
-      const suggestion = document.getElementById("languageSuggestion");
-      const suggestionText = document.getElementById("languageSuggestionText");
-      const goButton = document.getElementById("languageSuggestionGo");
-      const stayButton = document.getElementById("languageSuggestionStay");
-
-      const dismissed =
-        sessionStorage.getItem("humankey-language-suggestion-dismissed") === "1";
-
-      if (
-        !dismissed &&
-        browserLanguage !== "en" &&
-        routeToLang[browserLanguage] &&
-        labels[browserLanguage]
-      ) {
-        suggestionText.textContent =
-          `Your browser language is ${labels[browserLanguage]}. Open this white paper in ${labels[browserLanguage]}?`;
-
-        suggestion.style.display = "flex";
-
-        goButton.addEventListener("click", () => {
-          window.location.href = routeToLang[browserLanguage];
-        });
-
-        stayButton.addEventListener("click", () => {
-          sessionStorage.setItem(
-            "humankey-language-suggestion-dismissed",
-            "1"
-          );
-          suggestion.style.display = "none";
-        });
-      }
-    })();
-  </script>
-
+  <script src="/i18n.js" defer></script>
 </body>
 </html>
