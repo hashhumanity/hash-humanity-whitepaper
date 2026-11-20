@@ -39,6 +39,29 @@
 
   <link rel="canonical" href="https://hashhumanitywhitepaper.com/">
 
+  <link
+    rel="icon"
+    id="hh-favicon"
+    type="image/png"
+    href="/logo-black-transparent.png"
+  >
+
+  <script>
+    (() => {
+      const icon = document.getElementById("hh-favicon");
+      const scheme = window.matchMedia("(prefers-color-scheme: dark)");
+
+      const updateIcon = () => {
+        icon.href = scheme.matches
+          ? "/logo-white-transparent.png"
+          : "/logo-black-transparent.png";
+      };
+
+      updateIcon();
+      scheme.addEventListener("change", updateIcon);
+    })();
+  </script>
+
   <link rel="alternate" hreflang="en" href="https://hashhumanitywhitepaper.com/">
   <link rel="alternate" hreflang="es" href="https://hashhumanitywhitepaper.com/es/">
   <link rel="alternate" hreflang="pt" href="https://hashhumanitywhitepaper.com/pt/">
@@ -840,7 +863,7 @@
         "url": "https://hashhumanity.world/",
         "logo": {
           "@type": "ImageObject",
-          "url": "https://hashhumanitywhitepaper.com/logo.png"
+          "url": "https://hashhumanitywhitepaper.com/logo-black-transparent.png"
         }
       },
       {
